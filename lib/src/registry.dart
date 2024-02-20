@@ -11,7 +11,7 @@ final class Registry {
   final List<RegistryItem> _methods = [];
 
   Registry({required this.packages, required this.currentApiVersion}) {
-    final newPackages = [...packages, CorePackage(decls: _methods)];
+    final newPackages = [...packages, CorePackage()];
     for (final package in newPackages) {
       if (package.methods.isEmpty) {
         continue;

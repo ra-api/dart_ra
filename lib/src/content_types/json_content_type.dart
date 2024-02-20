@@ -5,9 +5,10 @@ import 'package:meta/meta.dart';
 
 import '../content_type.dart';
 
+// typedef JsonType = Map<String, dynamic>;
+
 @immutable
-final class JsonContentType<T extends Object>
-    implements ResponseContentType<T> {
+base class JsonContentType<T extends Object> implements ResponseContentType<T> {
   const JsonContentType();
 
   @override

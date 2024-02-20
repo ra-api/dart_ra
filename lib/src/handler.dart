@@ -1,4 +1,5 @@
 import 'package:mab/mab.dart';
+import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
@@ -90,6 +91,13 @@ final class ApiHandler {
       ctx.putIfAbsent(param.id, () => val);
     }
 
-    return MethodContext(ctx);
+    final methods =
+        _registry.methods.map(MethodDecl.new).toList(growable: false);
+
+    return MethodContext(
+      ctx,
+      methods: methods,
+      current: MethodDecl(handler),
+    );
   }
 }

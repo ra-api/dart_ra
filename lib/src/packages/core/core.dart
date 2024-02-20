@@ -1,16 +1,13 @@
 import '../../method.dart';
 import '../../package.dart';
-import '../../registry.dart';
 import 'spec_method.dart';
 
 final class CorePackage extends Package {
-  final List<RegistryItem> decls;
-
-  CorePackage({required this.decls});
+  const CorePackage();
   @override
   List<Method> get methods {
     return [
-      SpecMethod(decls: decls),
+      SpecMethod(),
     ];
   }
 
