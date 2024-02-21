@@ -66,7 +66,7 @@ final class ApiHandler {
       body: body,
     );
 
-    return handler.method.handle(ctx);
+    return (await handler.method.handle(ctx))..decl(MethodDecl(handler));
   }
 
   Future<MethodContext> _methodContext({

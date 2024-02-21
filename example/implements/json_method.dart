@@ -34,9 +34,15 @@ final class MethodJsonContentType extends ResponseContentType<JsonResponse> {
 
   /// Переводим все это в байты
   @override
-  Uint8List apply(JsonResponse data) {
+  Uint8List apply(data, decl) {
     final json = data.export();
-    return utf8.encode(jsonEncode(json));
+    final response = <String, dynamic>{};
+    if (decl != null) {
+      response.putIfAbsent('version', () => decl.version);
+    }
+
+    response['data'] = json;
+    return utf8.encode(jsonEncode(response));
   }
 
   /// Реализуем mimeType

@@ -1,7 +1,7 @@
-import 'package:mab/mab.dart';
+import '../../../implements/json_method.dart';
 
-final class CartSaveMethodLegacy extends Method<JsonContentType, String> {
-  const CartSaveMethodLegacy();
+final class CartSaveMethodLegacy extends JsonMethod {
+  CartSaveMethodLegacy();
 
   @override
   String get name => 'save';
@@ -10,10 +10,14 @@ final class CartSaveMethodLegacy extends Method<JsonContentType, String> {
   double get version => 1;
 
   @override
-  Future<MethodResponse<JsonContentType, String>> handle(ctx) async {
-    return response..body('Cart save legacy method');
+  Future<MethodJsonResponse> handle(ctx) async {
+    return response..body(Foo());
   }
+}
 
+final class Foo implements JsonResponse {
   @override
-  ResponseContentType<String> get contentType => JsonContentType();
+  JsonType export() {
+    return {'message': 'Cart save legacy method'};
+  }
 }

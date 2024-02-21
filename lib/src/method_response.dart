@@ -1,4 +1,5 @@
 import 'package:mab/mab.dart';
+import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 
@@ -6,6 +7,7 @@ enum _Key {
   statusCode,
   headers,
   body,
+  decl,
 }
 
 /// Это будет переделано
@@ -32,16 +34,21 @@ class MethodResponse<C extends ResponseContentType, T extends Object> {
     _data[_Key.body] = value;
   }
 
+  void decl(MethodDecl value) {
+    _data[_Key.decl] = value;
+  }
+
   Response build() {
     final statusCode = _data[_Key.statusCode] as int;
     final body = _data[_Key.body] as T;
     final headers = _data[_Key.headers] as Map<String, String>;
+    final decl = _data[_Key.decl] as MethodDecl?;
 
     headers['content-type'] = _contentType.mimeType;
 
     return Response(
       statusCode,
-      body: _contentType.apply(body),
+      body: _contentType.apply(body, decl),
       headers: headers,
     );
   }

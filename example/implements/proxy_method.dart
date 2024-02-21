@@ -28,7 +28,7 @@ final class MethodProxyContentType extends ResponseContentType<Uint8List> {
   /// Отдаем как есть ничего не делая, как были байты так и останутся,
   /// но интерфейс надо реализовать
   @override
-  Uint8List apply(Uint8List data) => data;
+  Uint8List apply(Uint8List data, _) => data;
 
   /// Делаем mimeType управляемым через конструктор
   @override

@@ -4,10 +4,11 @@ version: 1.0.0
 publish_to: 'none'
 
 environment:
-  sdk: ^3.2.6
+  sdk: ^3.2.3
 
 dependencies:
   drift: ^2.15.0
+  essential_xlsx: ^2.0.0
   request_builder:
     git:
       url: https://github.com/karbunkul/dart_request_builder.git
