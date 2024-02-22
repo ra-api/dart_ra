@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import 'package:mab/src/data_type.dart';
+part of 'data_types.dart';
 
 class BoolDataType extends DataType<String, bool> {
   @override

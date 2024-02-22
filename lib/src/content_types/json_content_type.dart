@@ -1,11 +1,4 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:meta/meta.dart';
-
-import '../content_type.dart';
-
-// typedef JsonType = Map<String, dynamic>;
+part of 'content_types.dart';
 
 @immutable
 base class JsonContentType<T extends Object> implements ResponseContentType<T> {

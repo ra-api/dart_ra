@@ -13,9 +13,7 @@ final class DataTypeException extends ApiException {
   }
 
   @override
-  JsonType? extraFields(bool verbose) {
-    if (!verbose) return null;
-
+  JsonType? get verboseFields {
     final fields = {
       'required': parameter.isRequired,
       'summary': parameter.summary,
@@ -27,6 +25,6 @@ final class DataTypeException extends ApiException {
       fields.putIfAbsent('dataType', () => methodParam.dataType.summary);
     }
 
-    return {'param': fields};
+    return fields;
   }
 }

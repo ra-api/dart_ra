@@ -1,3 +1,5 @@
+library exceptions;
+
 import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
 
@@ -12,5 +14,6 @@ abstract base class ApiException implements Exception {
 
   String get reason;
 
-  JsonType? extraFields(bool verbose) => null;
+  JsonType? get extraFields => null;
+  JsonType? get verboseFields => null;
 }

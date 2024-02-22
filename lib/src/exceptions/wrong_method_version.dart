@@ -15,9 +15,7 @@ final class WrongMethodVersionException extends ApiException {
   }
 
   @override
-  JsonType? extraFields(bool verbose) {
-    if (!verbose) return null;
-
+  JsonType? get verboseFields {
     return {'availableVersions': availableVersions};
   }
 }

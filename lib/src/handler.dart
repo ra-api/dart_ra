@@ -69,15 +69,17 @@ final class ApiHandler {
         body: body,
       );
       return (await handler.method.handle(ctx))..decl(MethodDecl(handler));
-    } on ApiException catch (e) {
+    } on ApiException catch (error) {
+      final body = {
+        'error': {
+          'message': error.reason,
+          ...error.extraFields ?? {},
+          if (verbose) ...{'verbose': error.verboseFields},
+        },
+      };
       return MethodResponse<JsonContentType, JsonType>(JsonContentType())
-        ..statusCode(e.statusCode)
-        ..body({
-          'error': {
-            'message': e.reason,
-            ...(e.extraFields(verbose) ?? {}),
-          },
-        });
+        ..statusCode(error.statusCode)
+        ..body(body);
     }
   }
 
