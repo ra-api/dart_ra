@@ -1,4 +1,5 @@
 import 'package:mab/mab.dart';
+import 'package:mab/src/exceptions/exceptions.dart';
 import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 
@@ -11,6 +12,7 @@ final class ApiHandler {
   /// Текущая актуальная версия, если в методе не указана версия,
   /// то ему будет присвоена [currentApiVersion]
   final double currentApiVersion;
+  final bool verbose;
 
   /// Пакеты с которыми запускается сервер
   final List<Package> packages;
@@ -24,6 +26,7 @@ final class ApiHandler {
   ApiHandler({
     required this.currentApiVersion,
     required this.packages,
+    required this.verbose,
   });
 
   /// Метод отвечает за поиск метода из реестра, подготовки и проверки
@@ -36,37 +39,46 @@ final class ApiHandler {
     required Map<String, String> headers,
     required Stream<List<int>> body,
   }) async {
-    final handler = _registry.find(
-      package: package,
-      method: method,
-      version: version,
-    );
-
-    if (handler == null) {
-      final versions = _registry.availableVersions(
+    try {
+      final handler = _registry.find(
         package: package,
         method: method,
+        version: version,
       );
 
-      if (versions.isEmpty) {
-        return MethodResponse<JsonContentType, String>(JsonContentType())
-          ..statusCode(404)
-          ..body('method not found');
-      } else {
-        return MethodResponse<JsonContentType, String>(JsonContentType())
-          ..statusCode(400)
-          ..body('wrong method version $version, available versions $versions');
+      if (handler == null) {
+        final versions = _registry.availableVersions(
+          package: package,
+          method: method,
+        );
+
+        if (versions.isEmpty) {
+          throw MethodNotFoundException();
+        } else {
+          throw WrongMethodVersionException(
+            invalidVersion: version,
+            availableVersions: versions,
+          );
+        }
       }
+
+      final ctx = await _methodContext(
+        handler: handler,
+        queries: queries,
+        headers: queries,
+        body: body,
+      );
+      return (await handler.method.handle(ctx))..decl(MethodDecl(handler));
+    } on ApiException catch (e) {
+      return MethodResponse<JsonContentType, JsonType>(JsonContentType())
+        ..statusCode(e.statusCode)
+        ..body({
+          'error': {
+            'message': e.reason,
+            ...(e.extraFields(verbose) ?? {}),
+          },
+        });
     }
-
-    final ctx = await _methodContext(
-      handler: handler,
-      queries: queries,
-      headers: queries,
-      body: body,
-    );
-
-    return (await handler.method.handle(ctx))..decl(MethodDecl(handler));
   }
 
   Future<MethodContext> _methodContext({
@@ -84,11 +96,20 @@ final class ApiHandler {
         MethodDataSource.body => await body.toList(),
       };
 
-      final val = (raw == null && !param.isRequired)
-          ? param.initial
-          : await param.dataType.convert(raw);
+      try {
+        final val = (raw == null && !param.isRequired)
+            ? param.initial
+            : await param.dataType.convert(raw);
 
-      ctx.putIfAbsent(param.id, () => val);
+        ctx.putIfAbsent(param.id, () => val);
+      } on ApiException {
+        break;
+      } on Object catch (e, st) {
+        throw Error.throwWithStackTrace(
+          DataTypeException(parameter: param),
+          st,
+        );
+      }
     }
 
     final methods =
@@ -98,6 +119,7 @@ final class ApiHandler {
       ctx,
       methods: methods,
       current: MethodDecl(handler),
+      verbose: verbose,
     );
   }
 }

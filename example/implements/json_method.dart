@@ -3,9 +3,6 @@ import 'dart:typed_data';
 
 import 'package:mab/mab.dart';
 
-/// Алиас чтобы не писать постоянно Map<String, dynamic>
-typedef JsonType = Map<String, dynamic>;
-
 /// Интерфейс который должен быть реализован
 abstract class JsonResponse {
   JsonType export();

@@ -1,3 +1,5 @@
+typedef JsonType = Map<String, dynamic>;
+
 /// Источники для параметров на уровне метода
 enum MethodDataSource {
   query('query'),

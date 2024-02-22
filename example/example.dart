@@ -17,6 +17,7 @@ Future<void> main() async {
     packages: [
       CartPackage(),
     ],
+    verbose: true,
     poweredBy: 'MAB',
   ).create();
 

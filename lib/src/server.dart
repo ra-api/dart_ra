@@ -15,12 +15,14 @@ final class Server {
   final List<Package> packages;
   final String? poweredBy;
   final double currentApiVersion;
+  final bool verbose;
 
   const Server({
     required this.currentApiVersion,
     required this.packages,
     this.port = 80,
     this.poweredBy,
+    this.verbose = false,
   });
 
   Future<HttpServer> create() async {
@@ -43,9 +45,9 @@ final class Server {
     }
 
     final handler = ApiHandler(
-      currentApiVersion: currentApiVersion,
-      packages: packages,
-    );
+        currentApiVersion: currentApiVersion,
+        packages: packages,
+        verbose: verbose);
     final path = url.path.substring(4).split('.');
     final method = path.removeLast();
     final package = path.join('.');
