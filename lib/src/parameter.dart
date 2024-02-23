@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mab/mab.dart';
 import 'package:mab/src/data_source_context.dart';
 import 'package:meta/meta.dart';
@@ -27,5 +29,5 @@ abstract class Parameter<I, O> {
 
   bool get isRequired => initial == null;
 
-  I? extract(DataSourceContext ctx);
+  FutureOr<I?> extract(DataSourceContext ctx);
 }

@@ -12,6 +12,8 @@ final class CartSaveMethod extends JsonMethod {
   Future<MethodJsonResponse> handle(ctx) async {
     /// Получаем проверенный сконвертированный тип данных по параметру
     final preview = ctx.value<bool>('preview');
+    final body = ctx.value('body');
+    print(body);
     final cart = Cart(preview: preview);
 
     /// response это getter который реализован в Json
@@ -29,6 +31,8 @@ final class CartSaveMethod extends JsonMethod {
         initial: false,
         summary: 'Предпросмотр промоакций для заказа',
       ),
+
+      MethodBodyParameter(dataType: JsonBodyDataType()),
     ];
   }
 }

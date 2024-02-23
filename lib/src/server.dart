@@ -58,7 +58,7 @@ final class Server {
       version: _version(request),
       queries: _queries(request),
       headers: request.headers,
-      body: request.read(),
+      body: request.read().asBroadcastStream(),
     );
 
     return res.build();

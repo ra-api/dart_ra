@@ -89,7 +89,7 @@ final class ApiHandler {
     required Map<String, String> headers,
     required Stream<List<int>> body,
   }) async {
-    final ctx = <String, Object>{};
+    final ctx = <String, dynamic>{};
 
     final dataSourceCtx = DataSourceContext(
       headers: headers,
@@ -98,7 +98,7 @@ final class ApiHandler {
     );
 
     for (final param in handler.params) {
-      final raw = param.extract(dataSourceCtx);
+      final raw = await param.extract(dataSourceCtx);
 
       try {
         final val = (raw == null && !param.isRequired)

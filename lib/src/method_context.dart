@@ -6,7 +6,7 @@ import 'method_decl.dart';
 /// по имени и приведения извлеченного значения до [T]
 @immutable
 final class MethodContext {
-  final Map<String, Object> _context;
+  final Map<String, dynamic> _context;
   final List<MethodDecl> methods;
   final MethodDecl current;
   final bool verbose;
