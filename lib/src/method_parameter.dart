@@ -1,19 +1,18 @@
+import 'package:mab/src/data_source_context.dart';
 import 'package:mab/src/parameter.dart';
 import 'package:meta/meta.dart';
 
-import 'data_type.dart';
 import 'types.dart';
 
 /// Параметр уровня метод
 @immutable
-class MethodParameter<I, O> extends Parameter<I, O> {
+abstract base class MethodParameter<I, O> extends Parameter<I, O> {
   final MethodDataSource source;
-  final DataType<I, O> dataType;
 
   const MethodParameter({
     required super.id,
     required this.source,
-    required this.dataType,
+    required super.dataType,
     super.summary,
     super.initial,
   });
@@ -21,22 +20,36 @@ class MethodParameter<I, O> extends Parameter<I, O> {
 
 /// Query параметр, задаем изначально нужный [source]
 @immutable
-class QueryParameter<T> extends MethodParameter<String, T> {
-  const QueryParameter({
+base class MethodQueryParameter<T> extends MethodParameter<String, T> {
+  const MethodQueryParameter({
     required super.id,
     required super.dataType,
     super.summary,
     super.initial,
   }) : super(source: MethodDataSource.query);
+
+  @override
+  String? extract(DataSourceContext ctx) => ctx.query(id);
 }
 
-/// Header параметр, задаем изначально нужный [source]
-@immutable
-class HeaderParameter<T> extends MethodParameter<String, T> {
-  const HeaderParameter({
-    required super.id,
-    required super.dataType,
-    super.summary,
-    super.initial,
-  }) : super(source: MethodDataSource.header);
-}
+// /// Header параметр, задаем изначально нужный [source]
+// @immutable
+// class MethodHeaderParameter<T> extends MethodParameter<String, T> {
+//   const MethodHeaderParameter({
+//     required super.id,
+//     required super.dataType,
+//     super.summary,
+//     super.initial,
+//   }) : super(source: MethodDataSource.header);
+// }
+//
+// /// Header параметр, задаем изначально нужный [source]
+// @immutable
+// class MethodBodyParameter<T> extends MethodParameter<Uint8List, T> {
+//   const MethodBodyParameter({
+//     required super.id,
+//     required super.dataType,
+//     super.summary,
+//     super.initial,
+//   }) : super(source: MethodDataSource.body);
+// }

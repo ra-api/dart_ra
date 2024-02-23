@@ -14,7 +14,7 @@ Future<void> main() async {
   final server = await Server(
     currentApiVersion: 2,
     port: 3000,
-    packages: [
+    packages: const [
       CartPackage(),
     ],
     verbose: true,

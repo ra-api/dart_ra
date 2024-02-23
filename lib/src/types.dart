@@ -12,7 +12,6 @@ enum MethodDataSource {
 
 /// Источники для параметров на уровне пакета
 enum PackageDataSource {
-  query('query'),
   header('header'),
   cookie('cookie');
 

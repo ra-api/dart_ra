@@ -8,6 +8,8 @@ import 'methods/methods.dart';
 /// - [CartSaveMethod] и [CartSaveMethodLegacy] имеют одинаковое название
 /// но разный ответ, для демонстарции этой фичи
 final class CartPackage extends Package {
+  const CartPackage();
+
   @override
   String get name => 'cart';
 

@@ -1,4 +1,5 @@
 import 'package:mab/mab.dart';
+import 'package:mab/src/data_source_context.dart';
 import 'package:meta/meta.dart';
 
 /// Базовый класс параметра
@@ -8,6 +9,8 @@ abstract class Parameter<I, O> {
   /// получить из [MethodContext]
   final String id;
 
+  final DataType<I, O> dataType;
+
   /// Изначальное значение, если значение не задано то параметр
   /// считается обязательным
   final O? initial;
@@ -15,7 +18,14 @@ abstract class Parameter<I, O> {
   /// Описание параметра, думаю о том чтобы сделать это поле обязательным
   final String? summary;
 
-  const Parameter({required this.id, this.summary, this.initial});
+  const Parameter({
+    required this.id,
+    required this.dataType,
+    this.summary,
+    this.initial,
+  });
 
   bool get isRequired => initial == null;
+
+  I? extract(DataSourceContext ctx);
 }

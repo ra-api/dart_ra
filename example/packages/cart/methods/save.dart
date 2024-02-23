@@ -23,7 +23,7 @@ final class CartSaveMethod extends JsonMethod {
     return [
       /// Задаем query параметр preview который если не передан
       /// будет равен false, то есть не обязателен
-      QueryParameter<bool>(
+      MethodQueryParameter(
         id: 'preview',
         dataType: BoolDataType(),
         initial: false,
@@ -39,7 +39,7 @@ final class CartSaveMethod extends JsonMethod {
 final class Cart implements JsonResponse {
   final bool preview;
 
-  Cart({required this.preview});
+  const Cart({required this.preview});
 
   /// Реализуем данный метод, для простоты руками без всяких json_serializable
   /// и freezed

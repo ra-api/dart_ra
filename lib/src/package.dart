@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import 'method.dart';
+import 'package_parameter.dart';
 
 /// Интерфейс для создания нового пакета, пакет это некий неймспейс для методов
 @immutable
@@ -12,4 +13,6 @@ abstract base class Package {
 
   /// Методы, которые входят в пакет
   List<Method> get methods;
+
+  List<PackageParameter> get params => [];
 }

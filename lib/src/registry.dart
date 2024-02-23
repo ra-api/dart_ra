@@ -1,3 +1,4 @@
+import 'package:mab/src/parameter.dart';
 import 'package:meta/meta.dart';
 
 import 'method.dart';
@@ -95,4 +96,11 @@ final class RegistryItem {
     required this.package,
     required this.version,
   });
+
+  List<Parameter> get params {
+    return [
+      ...method.params,
+      ...package.params,
+    ];
+  }
 }

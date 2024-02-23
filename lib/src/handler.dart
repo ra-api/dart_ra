@@ -1,5 +1,5 @@
 import 'package:mab/mab.dart';
-import 'package:mab/src/exceptions/exceptions.dart';
+import 'package:mab/src/data_source_context.dart';
 import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 
@@ -91,12 +91,14 @@ final class ApiHandler {
   }) async {
     final ctx = <String, Object>{};
 
-    for (final param in handler.method.params) {
-      var raw = switch (param.source) {
-        MethodDataSource.query => queries[param.id],
-        MethodDataSource.header => headers[param.id],
-        MethodDataSource.body => await body.toList(),
-      };
+    final dataSourceCtx = DataSourceContext(
+      headers: headers,
+      queries: queries,
+      body: body,
+    );
+
+    for (final param in handler.params) {
+      final raw = param.extract(dataSourceCtx);
 
       try {
         final val = (raw == null && !param.isRequired)
