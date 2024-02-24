@@ -23,7 +23,6 @@ final class CartPackage extends Package {
   }
 
   @override
-  // TODO: implement params
   List<PackageParameter> get params {
     return [
       PackageHeaderParameter(
