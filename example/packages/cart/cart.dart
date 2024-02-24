@@ -21,4 +21,16 @@ final class CartPackage extends Package {
       CartSaveMethodLegacy(),
     ];
   }
+
+  @override
+  // TODO: implement params
+  List<PackageParameter> get params {
+    return [
+      PackageHeaderParameter(
+        id: 'auth',
+        dataType: BoolDataType(),
+        initial: true,
+      ),
+    ];
+  }
 }

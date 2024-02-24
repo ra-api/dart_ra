@@ -13,5 +13,6 @@ export 'src/method_context.dart';
 export 'src/method_parameter.dart';
 export 'src/method_response.dart';
 export 'src/package.dart';
+export 'src/package_parameter.dart';
 export 'src/server.dart';
 export 'src/types.dart';

@@ -23,7 +23,7 @@ final class MethodDecl {
   }
 
   List<Parameter> get parameters {
-    return _registryItem.method.params;
+    return _registryItem.params;
   }
 
   Map<String, dynamic> export() {
@@ -36,7 +36,7 @@ final class MethodDecl {
       'contentType': _registryItem.method.contentType.mimeType,
     };
 
-    if (_registryItem.method.params.isNotEmpty) {
+    if (_registryItem.params.isNotEmpty) {
       final params = parameters.map(
         (e) {
           return {
@@ -55,6 +55,10 @@ final class MethodDecl {
 
   String _source(Parameter param) {
     if (param is MethodParameter) {
+      return param.source.source;
+    }
+
+    if (param is PackageParameter) {
       return param.source.source;
     }
 
