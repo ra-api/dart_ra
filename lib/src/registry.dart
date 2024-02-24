@@ -98,9 +98,25 @@ final class RegistryItem {
   });
 
   List<Parameter> get params {
+    final packageParams = package.params.where((element) {
+      if (element.constraints?.isNotEmpty == true) {
+        bool res = false;
+        for (final constraint in element.constraints!) {
+          if (constraint.allow(method)) {
+            res = true;
+            break;
+          }
+        }
+
+        return res;
+      }
+
+      return true;
+    }).toList(growable: false);
+
     return [
       ...method.params,
-      ...package.params,
+      ...packageParams,
     ];
   }
 }

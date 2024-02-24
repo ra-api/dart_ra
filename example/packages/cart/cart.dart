@@ -29,6 +29,9 @@ final class CartPackage extends Package {
         id: 'auth',
         dataType: BoolDataType(),
         initial: true,
+        constraints: [
+          MethodConstraint<ReportMethod>.allow(),
+        ],
       ),
     ];
   }
