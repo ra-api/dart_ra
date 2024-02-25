@@ -1,6 +1,6 @@
 import 'method.dart';
 
-enum _ConstraintKind { all, allow, deny }
+enum _ConstraintKind { allow, deny }
 
 final class MethodConstraint<T extends Method> {
   final _ConstraintKind _kind;
@@ -9,14 +9,9 @@ final class MethodConstraint<T extends Method> {
 
   bool allow(Method method) {
     return switch (_kind) {
-      _ConstraintKind.all => true,
       _ConstraintKind.deny => method is! T,
       _ConstraintKind.allow => method is T,
     };
-  }
-
-  factory MethodConstraint.all() {
-    return MethodConstraint._(_ConstraintKind.all);
   }
 
   factory MethodConstraint.allow() {

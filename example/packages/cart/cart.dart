@@ -30,6 +30,7 @@ final class CartPackage extends Package {
         dataType: BoolDataType(),
         initial: true,
         constraints: [
+          MethodConstraint<CartSaveMethodLegacy>.allow(),
           MethodConstraint<ReportMethod>.allow(),
         ],
       ),
