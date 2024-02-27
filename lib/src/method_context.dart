@@ -1,3 +1,4 @@
+import 'package:mab/mab.dart';
 import 'package:meta/meta.dart';
 
 import 'method_decl.dart';
@@ -18,9 +19,21 @@ final class MethodContext {
     required this.verbose,
   });
 
+  /// Позволяет достать значение из контекста по id параметра
   T value<T>(String id) {
+    if (!_context.containsKey(id)) {
+      throw MethodContextInvalidIdException(id: id);
+    }
+
     final val = _context[id];
 
-    return val != null ? val as T : val;
+    if (val != null && val is! T) {
+      throw MethodContextCastException(
+        actual: val.runtimeType,
+        expected: T,
+      );
+    }
+
+    return val;
   }
 }

@@ -18,6 +18,7 @@ final class MethodDecl {
   String get package => _registryItem.package.name;
   String get name => _registryItem.method.name;
   double get version => _registryItem.version;
+  String get mimeType => _registryItem.method.contentType.mimeType;
   String get summary {
     return _registryItem.method.summary ?? 'Method $package.$name';
   }
@@ -32,8 +33,8 @@ final class MethodDecl {
       'package': package,
       'name': name,
       'summary': summary,
-      'version': _registryItem.version,
-      'contentType': _registryItem.method.contentType.mimeType,
+      'version': version,
+      'mimeType': mimeType,
     };
 
     if (_registryItem.params.isNotEmpty) {
