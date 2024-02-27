@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:mab/mab.dart';
 import 'package:meta/meta.dart';
@@ -58,10 +59,19 @@ final class Server {
       version: _version(request),
       queries: _queries(request),
       headers: request.headers,
-      body: request.read().asBroadcastStream(),
+      body: await _body(request),
     );
 
     return res.build();
+  }
+
+  Future<Uint8List> _body(Request request) async {
+    final bytes = await request.read().fold<List<int>>(
+      <int>[],
+      (previous, element) => previous..addAll(element),
+    );
+
+    return Uint8List.fromList(bytes);
   }
 
   Map<String, String> _queries(Request request) {

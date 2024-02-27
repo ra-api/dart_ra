@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:mab/mab.dart';
 import 'package:mab/src/data_source_context.dart';
 import 'package:mab/src/method_decl.dart';
@@ -37,7 +39,7 @@ final class ApiHandler {
     required double version,
     required Map<String, String> queries,
     required Map<String, String> headers,
-    required Stream<List<int>> body,
+    required Uint8List body,
   }) async {
     try {
       final handler = _registry.find(
@@ -87,7 +89,7 @@ final class ApiHandler {
     required RegistryItem handler,
     required Map<String, String> queries,
     required Map<String, String> headers,
-    required Stream<List<int>> body,
+    required Uint8List body,
   }) async {
     final ctx = <String, dynamic>{};
 

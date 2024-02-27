@@ -1,6 +1,8 @@
 part of 'data_types.dart';
 
 class JsonBodyDataType extends DataType<Uint8List, JsonType> {
+  const JsonBodyDataType();
+
   @override
   FutureOr<JsonType> convert(Uint8List data) {
     return jsonDecode(utf8.decode(data));

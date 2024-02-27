@@ -60,6 +60,6 @@ base class MethodBodyParameter<T> extends MethodParameter<Uint8List, T> {
 
   @override
   FutureOr<Uint8List> extract(DataSourceContext ctx) async {
-    return ctx.body();
+    return ctx.body;
   }
 }

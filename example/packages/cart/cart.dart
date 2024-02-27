@@ -31,7 +31,6 @@ final class CartPackage extends Package {
         initial: true,
         constraints: [
           MethodConstraint<CartSaveMethodLegacy>.allow(),
-          MethodConstraint<ReportMethod>.allow(),
         ],
       ),
     ];

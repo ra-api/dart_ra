@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:essential_xlsx/essential_xlsx.dart';
-import 'package:mab/src/method_context.dart';
+import 'package:mab/mab.dart';
 
-import '../../../implements/proxy_method.dart';
+import '../../../implements/implements.dart';
 
 final class ReportMethod extends ProxyMethod {
   @override
@@ -13,6 +13,10 @@ final class ReportMethod extends ProxyMethod {
     //     .header(header: 'token', value: '123')
     //     .get('https://postman-echo.com/get');
     // final res = await req;
+
+    final Person person = ctx.value<Person>('body');
+
+    print(person.name);
 
     final List<Map<String, dynamic>> data = <Map<String, dynamic>>[
       {'name': 'Isaque', 'phone': '22 2777-2339', 'age': '32'},
@@ -40,10 +44,35 @@ final class ReportMethod extends ProxyMethod {
   }
 
   @override
+  List<MethodParameter> get params {
+    return [
+      LimitParameter(),
+      MethodBodyParameter(
+        dataType: ModelBodyDataType<Person>(onTransform: Person.fromJson),
+      ),
+    ];
+  }
+
+  @override
   String get mimeType {
     return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
   }
 
   @override
   String get name => 'report';
+}
+
+/// Пример модели
+final class Person {
+  final String name;
+  final int age;
+
+  const Person({required this.name, required this.age});
+
+  factory Person.fromJson(JsonType json) {
+    return Person(
+      name: json['name'],
+      age: json['age'],
+    );
+  }
 }

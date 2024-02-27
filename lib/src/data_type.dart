@@ -6,6 +6,8 @@ import 'package:meta/meta.dart';
 /// и валидации.
 @immutable
 abstract class DataType<I, O> {
+  const DataType();
+
   /// Описание для DataType в кратце для чего он нужен и какие
   /// функции выполняет
   String get summary;

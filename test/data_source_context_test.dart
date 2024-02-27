@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:mab/src/data_source_context.dart';
 import 'package:test/test.dart';
@@ -21,13 +22,13 @@ void main() {
       expect(ctx.query('missing'), isNull);
     });
 
-    test('body', () async {
-      expect(await ctx.body(), equals(utf8.encode('foo')));
+    test('body', () {
+      expect(ctx.body, equals(utf8.encode('foo')));
     });
   });
 }
 
-Stream<List<int>> _body(String data) {
+Uint8List _body(String data) {
   final bytes = utf8.encode(data);
-  return Stream<List<int>>.value(List<int>.from(bytes));
+  return Uint8List.fromList(bytes);
 }

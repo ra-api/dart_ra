@@ -29,7 +29,7 @@ base class PackageHeaderParameter<T> extends PackageParameter<String, T> {
     super.constraints,
     super.summary,
     super.initial,
-  }) : super(source: PackageDataSource.cookie);
+  }) : super(source: PackageDataSource.header);
 
   @override
   String? extract(ctx) => ctx.header(id);
