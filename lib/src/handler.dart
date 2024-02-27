@@ -109,7 +109,7 @@ final class ApiHandler {
 
         ctx.putIfAbsent(param.id, () => val);
       } on ApiException {
-        break;
+        rethrow;
       } on Object catch (e, st) {
         throw Error.throwWithStackTrace(
           DataTypeException(parameter: param),

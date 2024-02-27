@@ -14,7 +14,7 @@ final class ReportMethod extends ProxyMethod {
     //     .get('https://postman-echo.com/get');
     // final res = await req;
 
-    final Person person = ctx.value<Person>('body');
+    final person = ctx.value<Person>('body');
 
     print(person.name);
 
@@ -46,9 +46,15 @@ final class ReportMethod extends ProxyMethod {
   @override
   List<MethodParameter> get params {
     return [
+      MethodQueryParameter(
+        id: 'search',
+        dataType: StringDataType(pattern: RegExp(r'^\d{3}-\d{2}$')),
+      ),
       LimitParameter(),
       MethodBodyParameter(
-        dataType: ModelBodyDataType<Person>(onTransform: Person.fromJson),
+        dataType: ModelBodyDataType<Person>(
+          onTransform: Person.fromJson,
+        ),
       ),
     ];
   }

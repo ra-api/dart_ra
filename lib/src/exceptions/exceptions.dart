@@ -4,6 +4,7 @@ import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
 
 part 'data_type.dart';
+part 'data_type_validate.dart';
 part 'method_not_found.dart';
 part 'wrong_method_version.dart';
 

@@ -18,9 +18,9 @@ final class MethodContext {
     required this.verbose,
   });
 
-  value<T>(String id) {
+  T value<T>(String id) {
     final val = _context[id];
 
-    return val as T;
+    return val != null ? val as T : val;
   }
 }
