@@ -2,6 +2,14 @@ import 'package:mab/mab.dart';
 
 import 'packages/packages.dart';
 
+enum ApiVersion {
+  v1(1.0),
+  v2(2.0);
+
+  final double version;
+  const ApiVersion(this.version);
+}
+
 Future<void> main() async {
   /// Конфигурируем сервер и создаем его, на выходе получаем экземпляр shelf
   /// сервера с хендлером который отвечает за роутинг, выполнение и отдачу
@@ -12,9 +20,10 @@ Future<void> main() async {
   ///
   /// Перед запуском надо установить зависимости, dart pub get в консоли
   final server = await Server(
-    currentApiVersion: 2,
+    currentApiVersion: ApiVersion.v2.version,
     port: 3000,
     packages: const [
+      // SubPackage(path: 'star-wars', package: CartPackage()),
       CartPackage(),
     ],
     verbose: true,

@@ -30,6 +30,13 @@ void main() {
         equals(1),
         reason: 'Must be return 1 as dynamic',
       );
+
+      expect(
+        ctx.value('limit'),
+        isNull,
+        reason: 'Must be return null',
+      );
+
       expect(
         ctx.value<int>('baz'),
         equals(1),

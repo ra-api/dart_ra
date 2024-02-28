@@ -36,3 +36,17 @@ final class CartPackage extends Package {
     ];
   }
 }
+
+final class SubPackage extends Package {
+  final String path;
+  final Package package;
+
+  const SubPackage({required this.path, required this.package});
+  @override
+  List<Method<ResponseContentType<Object>, Object>> get methods {
+    return package.methods;
+  }
+
+  @override
+  String get name => '$path/${package.name}';
+}
