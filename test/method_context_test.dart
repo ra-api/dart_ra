@@ -12,7 +12,9 @@ void main() {
     final decl = MethodDecl(
       RegistryItem(
         key: 'key',
-        method: FixtureMethod(fakeName: 'bar'),
+        method: FixtureMethod(
+          fakeName: 'bar',
+        ),
         httpMethod: 'GET',
         package: FixturePackage(fakeName: 'foo'),
         version: 1,

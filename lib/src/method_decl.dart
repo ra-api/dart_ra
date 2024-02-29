@@ -12,9 +12,7 @@ final class MethodDecl {
 
   const MethodDecl(this._registryItem);
 
-  /// Заглушка
   String get httpMethod => _registryItem.httpMethod;
-
   String get package => _registryItem.package.name;
   String get name => _registryItem.method.name;
   double get version => _registryItem.version;
@@ -27,7 +25,7 @@ final class MethodDecl {
     return _registryItem.params;
   }
 
-  Map<String, dynamic> export() {
+  JsonType export() {
     final res = <String, dynamic>{
       'method': httpMethod,
       'package': package,
