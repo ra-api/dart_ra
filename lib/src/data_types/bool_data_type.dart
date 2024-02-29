@@ -19,7 +19,7 @@ class BoolDataType extends DataType<String, bool> {
     };
     final str = data.toLowerCase();
     if (!allowed.contains(str)) {
-      throw Exception();
+      throw DataTypeValidateException(dataType: this);
     }
 
     return _positive.contains(str);

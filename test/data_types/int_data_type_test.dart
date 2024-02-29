@@ -12,7 +12,10 @@ void main() {
 
     test('Failed convert', () async {
       final payload = 'hello world';
-      expect(() => dataType.convert(payload), throwsException);
+      expect(
+        () => dataType.convert(payload),
+        throwsA(isA<DataTypeValidateException>()),
+      );
     });
   });
 }

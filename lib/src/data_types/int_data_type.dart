@@ -5,9 +5,13 @@ class IntDataType extends DataType<String, int> {
 
   @override
   FutureOr<int> convert(String data) {
-    return int.parse(data);
+    try {
+      return int.parse(data);
+    } on Object {
+      throw DataTypeValidateException(dataType: this);
+    }
   }
 
   @override
-  String get summary => 'jghfhfhf';
+  String get summary => 'Convert string to int value';
 }

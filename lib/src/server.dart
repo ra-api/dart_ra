@@ -46,9 +46,10 @@ final class Server {
     }
 
     final handler = ApiHandler(
-        currentApiVersion: currentApiVersion,
-        packages: packages,
-        verbose: verbose);
+      currentApiVersion: currentApiVersion,
+      packages: packages,
+      verbose: verbose,
+    );
     final path = url.path.substring(4).split('.');
     final method = path.removeLast();
     final package = path.join('.');

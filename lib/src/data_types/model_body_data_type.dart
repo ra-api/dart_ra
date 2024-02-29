@@ -10,8 +10,12 @@ final class ModelBodyDataType<T> extends DataType<Uint8List, T> {
 
   @override
   FutureOr<T> convert(Uint8List data) {
-    final json = jsonDecode(utf8.decode(data));
-    return onTransform(json);
+    try {
+      final json = jsonDecode(utf8.decode(data));
+      return onTransform(json);
+    } on Object {
+      throw DataTypeValidateException(dataType: this);
+    }
   }
 
   @override

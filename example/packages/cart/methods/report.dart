@@ -42,7 +42,7 @@ final class ReportMethod extends ProxyMethod {
   List<MethodParameter> get params {
     return [
       MethodQueryParameter(id: 'from', dataType: DateTimeDataType()),
-      MethodQueryParameter(id: 'to', dataType: DateTimeDataType()),
+      // MethodQueryParameter(id: 'to', dataType: DateTimeDataType()),
       MethodQueryParameter(
         id: 'count',
         dataType: IntDataType(),

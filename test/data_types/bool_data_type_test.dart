@@ -38,7 +38,10 @@ void _checkWrongCases() {
 void _checkExceptions(String input) {
   test('Check datatype logic if $input, must be throw exception', () {
     final datatype = BoolDataType();
-    expect(() => datatype.convert(input), throwsException);
+    expect(
+      () => datatype.convert(input),
+      throwsA(isA<DataTypeValidateException>()),
+    );
   });
 }
 

@@ -5,7 +5,11 @@ class JsonBodyDataType extends DataType<Uint8List, JsonType> {
 
   @override
   FutureOr<JsonType> convert(Uint8List data) {
-    return jsonDecode(utf8.decode(data));
+    try {
+      return jsonDecode(utf8.decode(data));
+    } on Object {
+      throw DataTypeValidateException(dataType: this);
+    }
   }
 
   @override

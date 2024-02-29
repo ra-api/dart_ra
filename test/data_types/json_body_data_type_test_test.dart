@@ -15,7 +15,10 @@ void main() {
 
     test('Failed convert', () async {
       final payload = utf8.encode('hello world');
-      expect(() => dataType.convert(payload), throwsException);
+      expect(
+        () => dataType.convert(payload),
+        throwsA(isA<DataTypeValidateException>()),
+      );
     });
   });
 }

@@ -9,7 +9,7 @@ final class DataTypeException extends ApiException {
 
   @override
   String get reason {
-    return 'param ${parameter.id} value is wrong';
+    return 'Param "${parameter.id}" value is wrong';
   }
 
   @override
