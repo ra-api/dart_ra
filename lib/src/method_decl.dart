@@ -13,9 +13,7 @@ final class MethodDecl {
   const MethodDecl(this._registryItem);
 
   /// Заглушка
-  String get httpMethod {
-    return "GET";
-  }
+  String get httpMethod => _registryItem.httpMethod;
 
   String get package => _registryItem.package.name;
   String get name => _registryItem.method.name;

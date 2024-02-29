@@ -18,7 +18,5 @@ final class FixtureMethod extends Method {
   @override
   String get name => _fake(fakeName);
 
-  T _fake<T>(T? value) {
-    return value ?? (throw UnimplementedError());
-  }
+  T _fake<T>(T? value) => value ?? (throw UnimplementedError());
 }

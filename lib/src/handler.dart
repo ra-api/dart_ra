@@ -40,6 +40,7 @@ final class ApiHandler {
     required Map<String, String> queries,
     required Map<String, String> headers,
     required Uint8List body,
+    required String httpMethod,
   }) async {
     try {
       final handler = _registry.find(
@@ -62,6 +63,10 @@ final class ApiHandler {
             availableVersions: versions,
           );
         }
+      }
+
+      if (handler.httpMethod != httpMethod) {
+        throw MethodNotFoundException();
       }
 
       final ctx = await _methodContext(

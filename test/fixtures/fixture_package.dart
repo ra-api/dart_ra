@@ -13,27 +13,13 @@ final class FixturePackage extends Package {
   });
 
   @override
-  List<Method> get methods {
-    if (fakeMethods != null) {
-      return fakeMethods!;
-    }
-
-    throw UnimplementedError();
-  }
+  List<Method> get methods => _fake(fakeMethods);
 
   @override
-  String get name {
-    if (fakeName != null) {
-      return fakeName!;
-    }
-    throw UnimplementedError();
-  }
+  String get name => _fake(fakeName);
 
   @override
-  List<PackageParameter> get params {
-    if (fakeParams != null) {
-      return fakeParams!;
-    }
-    return super.params;
-  }
+  List<PackageParameter> get params => _fake(fakeParams);
+
+  T _fake<T>(T? value) => value ?? (throw UnimplementedError());
 }

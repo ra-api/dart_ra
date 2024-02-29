@@ -61,6 +61,7 @@ final class Server {
       queries: _queries(request),
       headers: request.headers,
       body: await _body(request),
+      httpMethod: request.method,
     );
 
     return res.build();

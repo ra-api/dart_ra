@@ -1,8 +1,7 @@
+import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
 import 'package:meta/meta.dart';
 
-import 'method.dart';
-import 'package.dart';
 import 'packages/core/core.dart';
 
 @immutable
@@ -40,11 +39,22 @@ final class Registry {
           method: method.name,
           version: method.version,
         ),
+        httpMethod: _httpMethod(method),
         method: method,
         package: package,
         version: method.version ?? currentApiVersion,
       ),
     );
+  }
+
+  String _httpMethod(Method method) {
+    try {
+      method.params
+          .firstWhere((element) => element.source == MethodDataSource.body);
+      return 'POST';
+    } on Object {
+      return 'GET';
+    }
   }
 
   List<RegistryItem> get methods => List.unmodifiable(_methods);
@@ -89,12 +99,14 @@ final class RegistryItem {
   final Package package;
   final Method method;
   final double version;
+  final String httpMethod;
 
   const RegistryItem({
     required this.key,
     required this.method,
     required this.package,
     required this.version,
+    required this.httpMethod,
   });
 
   List<Parameter> get params {
