@@ -1,6 +1,5 @@
 import 'package:mab/mab.dart';
 
-import '../../implements/proxy_method.dart';
 import 'methods/methods.dart';
 
 /// Демо пакет, содержит один метод
@@ -43,7 +42,7 @@ final class SubPackage extends Package {
 
   const SubPackage({required this.path, required this.package});
   @override
-  List<Method<ResponseContentType<Object>, Object>> get methods {
+  List<Method<Object>> get methods {
     return package.methods;
   }
 

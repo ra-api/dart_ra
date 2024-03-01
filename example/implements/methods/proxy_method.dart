@@ -1,9 +1,6 @@
-import 'dart:typed_data';
+part of 'methods.dart';
 
-import 'package:mab/mab.dart';
-
-abstract base class ProxyMethod
-    extends Method<MethodProxyContentType, Uint8List> {
+abstract base class ProxyMethod extends Method<Uint8List> {
   String get mimeType;
 
   @override
@@ -36,7 +33,6 @@ final class MethodProxyContentType extends ResponseContentType<Uint8List> {
 }
 
 /// Прячем дженерики
-final class MethodProxyResponse
-    extends MethodResponse<MethodProxyContentType, Uint8List> {
+final class MethodProxyResponse extends MethodResponse<Uint8List> {
   MethodProxyResponse(super.contentType);
 }

@@ -1,5 +1,4 @@
 library app_implemets;
 
-export 'json_method.dart';
+export 'methods/methods.dart';
 export 'parameters/parameters.dart';
-export 'proxy_method.dart';

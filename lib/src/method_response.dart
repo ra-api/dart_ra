@@ -12,7 +12,7 @@ enum _Key {
 
 /// Это будет переделано
 @immutable
-class MethodResponse<C extends ResponseContentType, T extends Object> {
+class MethodResponse<T extends Object> {
   final ResponseContentType<T> _contentType;
 
   MethodResponse(this._contentType);

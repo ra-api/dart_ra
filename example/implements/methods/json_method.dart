@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:mab/mab.dart';
+part of 'methods.dart';
 
 /// Интерфейс который должен быть реализован
 abstract class JsonResponse {
@@ -9,8 +6,7 @@ abstract class JsonResponse {
 }
 
 /// Делаем новый базовый класс для наследования и прячем таким образом дженерики
-abstract base class JsonMethod
-    extends Method<MethodJsonContentType, JsonResponse> {
+abstract base class JsonMethod extends Method<JsonResponse> {
   @override
   ResponseContentType<JsonResponse> get contentType => MethodJsonContentType();
 
@@ -48,7 +44,6 @@ final class MethodJsonContentType extends ResponseContentType<JsonResponse> {
 }
 
 /// Убираем дженерики
-final class MethodJsonResponse
-    extends MethodResponse<MethodJsonContentType, JsonResponse> {
+final class MethodJsonResponse extends MethodResponse<JsonResponse> {
   MethodJsonResponse(super.contentType);
 }

@@ -84,7 +84,7 @@ final class ApiHandler {
           if (verbose) ...{'verbose': error.verboseFields},
         },
       };
-      return MethodResponse<JsonContentType, JsonType>(JsonContentType())
+      return MethodResponse<JsonType>(JsonContentType())
         ..statusCode(error.statusCode)
         ..body(body);
     }

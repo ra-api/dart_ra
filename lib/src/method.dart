@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 /// Базовый класс, для задания нового метода
 @immutable
-abstract base class Method<C extends ResponseContentType, O extends Object> {
+abstract base class Method<O extends Object> {
   const Method();
 
   /// Имя метода в camelCase нотации, пока на это проверки нет
@@ -24,10 +24,10 @@ abstract base class Method<C extends ResponseContentType, O extends Object> {
 
   /// Место для имплементаци бизнес логики и формирования
   /// ответа сервера на запрос
-  Future<MethodResponse<C, O>> handle(MethodContext ctx);
+  Future<MethodResponse<O>> handle(MethodContext ctx);
 
   /// Getter для отправки ответа
-  MethodResponse<C, O> get response => MethodResponse<C, O>(contentType);
+  MethodResponse<O> get response => MethodResponse<O>(contentType);
 
   /// Набор параметров метода
   List<MethodParameter> get params => [];

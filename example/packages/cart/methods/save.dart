@@ -1,6 +1,6 @@
 import 'package:mab/mab.dart';
 
-import '../../../implements/json_method.dart';
+import '../../../implements/implements.dart';
 
 final class CartSaveMethod extends JsonMethod {
   CartSaveMethod();
