@@ -27,8 +27,7 @@ final class CartSaveMethod extends JsonMethod {
       /// будет равен false, то есть не обязателен
       MethodQueryParameter(
         id: 'preview',
-        dataType: BoolDataType(),
-        initial: false,
+        dataType: BoolDataType(initial: false),
         summary: 'Предпросмотр промоакций для заказа',
       ),
 

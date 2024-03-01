@@ -1,7 +1,7 @@
 part of 'data_types.dart';
 
 class IntDataType extends DataType<String, int> {
-  const IntDataType();
+  const IntDataType({super.initial});
 
   @override
   FutureOr<int> convert(String data) {

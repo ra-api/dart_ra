@@ -26,10 +26,9 @@ final class CartPackage extends Package {
     return [
       PackageHeaderParameter(
         id: 'auth',
-        dataType: BoolDataType(),
-        initial: true,
+        dataType: BoolDataType(initial: true),
         constraints: [
-          MethodConstraint<CartSaveMethodLegacy>.allow(),
+          MethodConstraint<ReportMethod>.deny(),
         ],
       ),
     ];

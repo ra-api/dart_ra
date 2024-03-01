@@ -16,7 +16,6 @@ abstract base class PackageParameter<I, O> extends Parameter<I, O> {
     required super.dataType,
     this.constraints,
     super.summary,
-    super.initial,
   });
 }
 
@@ -28,7 +27,6 @@ base class PackageHeaderParameter<T> extends PackageParameter<String, T> {
     required super.dataType,
     super.constraints,
     super.summary,
-    super.initial,
   }) : super(source: PackageDataSource.header);
 
   @override

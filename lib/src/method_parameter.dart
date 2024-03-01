@@ -17,7 +17,8 @@ abstract base class MethodParameter<I, O> extends Parameter<I, O> {
     required this.source,
     required super.dataType,
     super.summary,
-    super.initial,
+    super.optional,
+    // super.initial,
   });
 }
 
@@ -28,7 +29,7 @@ base class MethodQueryParameter<T> extends MethodParameter<String, T> {
     required super.id,
     required super.dataType,
     super.summary,
-    super.initial,
+    super.optional,
   }) : super(source: MethodDataSource.query);
 
   @override
@@ -42,7 +43,7 @@ base class MethodHeaderParameter<T> extends MethodParameter<String, T> {
     required super.id,
     required super.dataType,
     super.summary,
-    super.initial,
+    super.optional,
   }) : super(source: MethodDataSource.header);
 
   @override
@@ -55,8 +56,11 @@ base class MethodBodyParameter<T> extends MethodParameter<Uint8List, T> {
   const MethodBodyParameter({
     required super.dataType,
     super.summary,
-    super.initial,
-  }) : super(source: MethodDataSource.body, id: 'body');
+  }) : super(
+          source: MethodDataSource.body,
+          id: 'body',
+          optional: false,
+        );
 
   @override
   FutureOr<Uint8List> extract(DataSourceContext ctx) async {

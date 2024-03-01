@@ -109,7 +109,7 @@ final class ApiHandler {
 
       try {
         final val = (raw == null && !param.isRequired)
-            ? param.initial
+            ? param.dataType.initial
             : await param.dataType.convert(raw);
 
         ctx.putIfAbsent(param.id, () => val);

@@ -1,7 +1,7 @@
 part of 'data_types.dart';
 
 class BoolDataType extends DataType<String, bool> {
-  const BoolDataType();
+  const BoolDataType({super.initial});
   @override
   String get summary {
     final positive = _positive.join(', ');

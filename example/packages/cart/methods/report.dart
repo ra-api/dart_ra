@@ -11,6 +11,9 @@ final class ReportMethod extends ProxyMethod {
     final fromDate = ctx.value<DateTime>('from');
     final to = fromDate.add(Duration(days: ctx.value<int>('count')));
 
+    final person = ctx.value<Person>('body');
+    print(person.name);
+
     print('from $fromDate to $to');
 
     final List<Map<String, dynamic>> data = <Map<String, dynamic>>[
@@ -42,11 +45,10 @@ final class ReportMethod extends ProxyMethod {
   List<MethodParameter> get params {
     return [
       MethodQueryParameter(id: 'from', dataType: DateTimeDataType()),
-      // MethodQueryParameter(id: 'to', dataType: DateTimeDataType()),
       MethodQueryParameter(
         id: 'count',
-        dataType: IntDataType(),
-        initial: 7,
+        dataType: IntDataType(initial: 5),
+        optional: true,
       ),
       MethodQueryParameter(
         id: 'search',

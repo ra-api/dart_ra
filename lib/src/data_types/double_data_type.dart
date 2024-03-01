@@ -1,7 +1,7 @@
 part of 'data_types.dart';
 
 class DoubleDataType extends DataType<String, double> {
-  const DoubleDataType();
+  const DoubleDataType({super.initial});
 
   @override
   FutureOr<double> convert(String data) {

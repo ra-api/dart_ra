@@ -3,7 +3,7 @@ part of 'data_types.dart';
 class StringDataType extends DataType<String, String> {
   final RegExp? pattern;
   final bool trim;
-  const StringDataType({this.pattern, this.trim = false});
+  const StringDataType({this.pattern, this.trim = false, super.initial});
 
   @override
   FutureOr<String> convert(String data) {

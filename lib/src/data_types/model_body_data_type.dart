@@ -6,7 +6,7 @@ typedef TransformCallback<T> = T Function(JsonType value);
 final class ModelBodyDataType<T> extends DataType<Uint8List, T> {
   final TransformCallback<T> onTransform;
 
-  const ModelBodyDataType({required this.onTransform});
+  const ModelBodyDataType({required this.onTransform, super.initial});
 
   @override
   FutureOr<T> convert(Uint8List data) {

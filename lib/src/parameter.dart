@@ -10,12 +10,13 @@ abstract class Parameter<I, O> {
   /// имя параметра, по этому имени значение параметра можно
   /// получить из [MethodContext]
   final String id;
+  final bool optional;
 
   final DataType<I, O> dataType;
 
   /// Изначальное значение, если значение не задано то параметр
   /// считается обязательным
-  final O? initial;
+  // final O? initial;
 
   /// Описание параметра, думаю о том чтобы сделать это поле обязательным
   final String? summary;
@@ -24,10 +25,10 @@ abstract class Parameter<I, O> {
     required this.id,
     required this.dataType,
     this.summary,
-    this.initial,
+    this.optional = false,
   });
 
-  bool get isRequired => initial == null;
+  bool get isRequired => !optional;
 
   FutureOr<I?> extract(DataSourceContext ctx);
 }

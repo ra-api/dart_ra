@@ -1,7 +1,7 @@
 part of 'data_types.dart';
 
 class DateTimeDataType extends DataType<String, DateTime> {
-  const DateTimeDataType();
+  const DateTimeDataType({super.initial});
 
   @override
   FutureOr<DateTime> convert(String data) {
