@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 
 @immutable
-class RequestContext {
+final class RequestContext {
   final String httpMethod;
   final Uri uri;
   final Map<String, String> queries;

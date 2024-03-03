@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 
 @immutable
-class ResponseContext {
+final class ResponseContext {
   final int statusCode;
   final Uint8List body;
   final Map<String, String> headers;
