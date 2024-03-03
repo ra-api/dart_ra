@@ -19,17 +19,22 @@ Future<void> main() async {
   /// доступен перечень всех методов
   ///
   /// Перед запуском надо установить зависимости, dart pub get в консоли
-  final server = await Server(
+
+  final server = Server(
     currentApiVersion: ApiVersion.v2.version,
-    port: 3000,
+    provider: ShelfServerProvider(port: 3000, onServe: _onServe),
     packages: const [
-      // SubPackage(path: 'star-wars', package: CartPackage()),
       CartPackage(),
     ],
     verbose: true,
-    poweredBy: 'MAB',
-  ).create();
+  );
 
+  await server.serve();
+}
+
+void _onServe(server) {
   server.idleTimeout;
   server.autoCompress = true;
+
+  print('🚀Serving at http://${server.address.host}:${server.port}');
 }

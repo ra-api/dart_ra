@@ -72,7 +72,7 @@ final class ApiHandler {
       final ctx = await _methodContext(
         handler: handler,
         queries: queries,
-        headers: queries,
+        headers: headers,
         body: body,
       );
       return (await handler.method.handle(ctx))..decl(MethodDecl(handler));

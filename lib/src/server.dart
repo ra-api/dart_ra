@@ -1,90 +1,63 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:mab/mab.dart';
+import 'package:mab/src/request_context.dart';
 import 'package:meta/meta.dart';
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import 'handler.dart';
+import 'server_provider.dart';
 
-/// Класс который реализует server на основе shelf
 @immutable
 final class Server {
-  final int port;
   final List<Package> packages;
   final String? poweredBy;
   final double currentApiVersion;
   final bool verbose;
+  final ServerProvider provider;
 
   const Server({
     required this.currentApiVersion,
     required this.packages,
-    this.port = 80,
+    required this.provider,
     this.poweredBy,
     this.verbose = false,
   });
 
-  Future<HttpServer> create() async {
-    final server = await shelf_io.serve(
-      _handler,
-      'localhost',
-      port,
-      poweredByHeader: poweredBy,
-    );
+  Future<void> serve() async => await provider.init(_methodHandler);
 
-    print('🚀Serving at http://${server.address.host}:${server.port}');
+  Future<MethodResponse> _methodHandler(RequestContext ctx) async {
+    final url = ctx.uri;
 
-    return server;
-  }
-
-  FutureOr<Response> _handler(Request request) async {
-    final url = request.url;
-    if (!url.path.contains('api/')) {
-      return Response.badRequest();
-    }
+    final path = url.path.substring(4).split('.');
+    final method = path.removeLast();
+    final package = path.join('.');
 
     final handler = ApiHandler(
       currentApiVersion: currentApiVersion,
       packages: packages,
       verbose: verbose,
     );
-    final path = url.path.substring(4).split('.');
-    final method = path.removeLast();
-    final package = path.join('.');
 
-    final res = await handler.handle(
+    return handler.handle(
       package: package,
       method: method,
-      version: _version(request),
-      queries: _queries(request),
-      headers: request.headers,
-      body: await _body(request),
-      httpMethod: request.method,
+      version: _versionNew(ctx),
+      queries: _queriesNew(ctx),
+      headers: ctx.headers,
+      body: ctx.body,
+      httpMethod: ctx.httpMethod,
     );
-
-    return res.build();
   }
 
-  Future<Uint8List> _body(Request request) async {
-    final bytes = await request.read().fold<List<int>>(
-      <int>[],
-      (previous, element) => previous..addAll(element),
-    );
-
-    return Uint8List.fromList(bytes);
-  }
-
-  Map<String, String> _queries(Request request) {
-    final queries = Map.of(request.url.queryParameters);
-    queries['v'] = _version(request).toString();
+  Map<String, String> _queriesNew(RequestContext ctx) {
+    final queries = Map.of(ctx.uri.queryParameters);
+    queries['v'] = _versionNew(ctx).toString();
 
     return queries;
   }
 
-  double _version(Request request) {
-    final queryVersion = request.url.queryParameters['v'];
+  double _versionNew(RequestContext ctx) {
+    final queryVersion = ctx.uri.queryParameters['v'];
     if (queryVersion == null) {
       return currentApiVersion;
     }
