@@ -8,13 +8,13 @@ import '../../../implements/implements.dart';
 final class ReportMethod extends ProxyMethod {
   @override
   Future<MethodProxyResponse> handle(MethodContext ctx) async {
-    final fromDate = ctx.value<DateTime>('from');
-    final to = fromDate.add(Duration(days: ctx.value<int>('count')));
-
-    final person = ctx.value<Person>('body');
-    print(person.name);
-
-    print('from $fromDate to $to');
+    // final fromDate = ctx.value<DateTime>('from');
+    // final to = fromDate.add(Duration(days: ctx.value<int>('count')));
+    //
+    // final person = ctx.value<Person>('body');
+    // print(person.name);
+    //
+    // print('from $fromDate to $to');
 
     final List<Map<String, dynamic>> data = <Map<String, dynamic>>[
       {'name': 'Isaque', 'phone': '22 2777-2339', 'age': '32'},

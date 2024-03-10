@@ -15,6 +15,7 @@ dependencies:
       ref: 1.0.4+7
   mab:
     path: ../
+  hotreloader: ^4.2.0
 
 dev_dependencies:
   lints: ^2.1.0

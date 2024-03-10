@@ -1,5 +1,6 @@
 import 'package:mab/mab.dart';
 
+import 'hot_reload.dart';
 import 'packages/packages.dart';
 
 enum ApiVersion {
@@ -29,7 +30,10 @@ Future<void> main() async {
     verbose: true,
   );
 
-  await server.serve();
+  await HotReload(
+    server: server,
+    onLog: (log) => print('[UPD] $log'),
+  ).serve();
 }
 
 void _onServe(server) {

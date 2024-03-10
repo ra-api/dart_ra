@@ -11,6 +11,7 @@ export 'src/exceptions/exceptions.dart';
 export 'src/method.dart';
 export 'src/method_constraint.dart';
 export 'src/method_context.dart';
+export 'src/method_decl.dart';
 export 'src/method_parameter.dart';
 export 'src/method_response.dart';
 export 'src/package.dart';
