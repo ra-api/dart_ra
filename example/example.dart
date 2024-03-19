@@ -31,6 +31,7 @@ Future<void> main() async {
   );
 
   await HotReload(
+    enable: false,
     server: server,
     onLog: (log) => print('[UPD] $log'),
   ).serve();

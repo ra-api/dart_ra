@@ -1,5 +1,6 @@
 part of 'data_types.dart';
 
+@immutable
 class DateTimeDataType extends DataType<String, DateTime> {
   const DateTimeDataType({super.initial});
 

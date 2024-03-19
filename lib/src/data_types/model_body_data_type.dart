@@ -3,6 +3,7 @@ part of 'data_types.dart';
 typedef TransformCallback<T> = T Function(JsonType value);
 
 /// DataType который позволяет преобразовать body в заданную модель
+@immutable
 final class ModelBodyDataType<T> extends DataType<Uint8List, T> {
   final TransformCallback<T> onTransform;
 

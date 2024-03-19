@@ -1,5 +1,6 @@
 part of 'data_types.dart';
 
+@immutable
 class IntDataType extends DataType<String, int> {
   const IntDataType({super.initial});
 

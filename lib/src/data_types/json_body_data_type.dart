@@ -1,5 +1,6 @@
 part of 'data_types.dart';
 
+@immutable
 class JsonBodyDataType extends DataType<Uint8List, JsonType> {
   const JsonBodyDataType({super.initial});
 
