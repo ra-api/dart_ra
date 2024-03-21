@@ -26,12 +26,13 @@ Future<void> main() async {
     provider: ShelfServerProvider(port: 3000, onServe: _onServe),
     packages: const [
       CartPackage(),
+      UtilPackage(),
     ],
     verbose: true,
   );
 
   await HotReload(
-    enable: false,
+    enable: true,
     server: server,
     onLog: (log) => print('[UPD] $log'),
   ).serve();
@@ -42,4 +43,22 @@ void _onServe(server) {
   server.autoCompress = true;
 
   print('🚀Serving at http://${server.address.host}:${server.port}');
+}
+
+final class UtilPackage extends Package {
+  const UtilPackage();
+  @override
+  List<Method<Object>> get methods {
+    return [
+      PostmanCollectionMethod(
+        host: Uri.parse('localhost:3000'),
+        collectionName: 'Example API',
+        methodName: 'postman',
+        variables: {'count': '15', 'limit': '20'},
+      ),
+    ];
+  }
+
+  @override
+  String get name => 'util';
 }

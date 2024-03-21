@@ -10,19 +10,19 @@ abstract base class PackageParameter<I, O> extends Parameter<I, O> {
   final PackageDataSource source;
   final List<MethodConstraint>? constraints;
 
-  const PackageParameter({
+  PackageParameter({
     required super.id,
     required this.source,
     required super.dataType,
     this.constraints,
     super.summary,
-  });
+  }) : super(dataSource: source.toDataSource());
 }
 
 /// Header параметр, задаем изначально нужный [source]
 @immutable
 base class PackageHeaderParameter<T> extends PackageParameter<String, T> {
-  const PackageHeaderParameter({
+  PackageHeaderParameter({
     required super.id,
     required super.dataType,
     super.constraints,

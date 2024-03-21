@@ -2,7 +2,7 @@
 # Created by `dart pub`
 .dart_tool/
 
-# Avoid committing pubspec.lock for library packages; see
+# Avoid committing pubspec.lock for library methods; see
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 *.idea

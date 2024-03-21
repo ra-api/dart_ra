@@ -9,7 +9,7 @@
 # If you want a smaller set of lints you can change this to specify
 # 'package:lints/core.yaml'. These are just the most critical lints
 # (the recommended set includes the core lints).
-# The core lints are also what is used by pub.dev for scoring packages.
+# The core lints are also what is used by pub.dev for scoring methods.
 
 include: package:lints/recommended.yaml
 
