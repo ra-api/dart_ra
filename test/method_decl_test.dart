@@ -115,5 +115,6 @@ RegistryItem _registryItem({
     ]),
     version: version,
     httpMethod: httpMethod,
+    plugins: [],
   );
 }

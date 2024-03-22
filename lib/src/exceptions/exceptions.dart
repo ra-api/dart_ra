@@ -14,8 +14,9 @@ part 'wrong_method_version.dart';
 
 abstract base class ApiException implements Exception {
   final int statusCode;
+  final bool reported;
 
-  const ApiException({required this.statusCode});
+  const ApiException({required this.statusCode, this.reported = false});
 
   String get reason;
 

@@ -17,6 +17,7 @@ void main() {
         httpMethod: 'GET',
         package: FixturePackage(fakeName: 'foo'),
         version: 1,
+        plugins: [],
       ),
     );
     final ctx = MethodContext(

@@ -16,17 +16,20 @@ final class ApiHandler {
 
   /// Пакеты с которыми запускается сервер
   final List<Package> packages;
+  final List<Plugin> plugins;
 
   /// Реестр методов, представление дерева в список
   late final Registry _registry = Registry(
     packages: packages,
     currentApiVersion: currentApiVersion,
+    plugins: plugins,
   );
 
   ApiHandler({
     required this.currentApiVersion,
     required this.packages,
     required this.verbose,
+    required this.plugins,
   });
 
   RegistryItem _findMethod({
@@ -81,10 +84,17 @@ final class ApiHandler {
       return (await handler.method.handle(methodCtx))
         ..decl(MethodDecl(handler));
     } on ApiException catch (err) {
+      _performEventErrorHandle(err);
       return _apiErrorResponse(err);
     } on Object {
       rethrow;
     }
+  }
+
+  void _performEventErrorHandle(ApiException exception) {
+    plugins.whereType<EventErrorHandle>().forEach((event) {
+      event.onErrorHandle(exception);
+    });
   }
 
   void _checkBaseEndpoint({required Uri uri, required String baseEndpoint}) {

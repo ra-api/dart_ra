@@ -5,7 +5,7 @@ final class MethodContextInvalidIdException extends ApiException {
 
   const MethodContextInvalidIdException({
     required this.id,
-  }) : super(statusCode: 500);
+  }) : super(statusCode: 500, reported: true);
 
   @override
   String get reason {

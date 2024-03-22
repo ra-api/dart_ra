@@ -1,14 +1,20 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
+import 'package:mab/src/plugin/plugin_data.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 final class Registry {
   final double currentApiVersion;
   final List<Package> packages;
+  final List<Plugin> plugins;
   final List<RegistryItem> _methods = [];
 
-  Registry({required this.packages, required this.currentApiVersion}) {
+  Registry({
+    required this.packages,
+    required this.currentApiVersion,
+    required this.plugins,
+  }) {
     for (final package in packages) {
       if (package.methods.isEmpty) {
         continue;
@@ -29,6 +35,12 @@ final class Registry {
   }
 
   void _addToRegistry({required Package package, required Method method}) {
+    final allPlugins = <PluginData>[
+      ...plugins.map((e) {
+        return PluginData(plugin: e, scope: PluginScope.global);
+      }).toList(growable: false),
+    ];
+
     _methods.add(
       RegistryItem(
         key: _key(
@@ -40,6 +52,7 @@ final class Registry {
         method: method,
         package: package,
         version: method.version ?? currentApiVersion,
+        plugins: allPlugins,
       ),
     );
   }
@@ -97,6 +110,7 @@ final class RegistryItem {
   final Method method;
   final double version;
   final String httpMethod;
+  final List<PluginData> plugins;
 
   const RegistryItem({
     required this.key,
@@ -104,6 +118,7 @@ final class RegistryItem {
     required this.package,
     required this.version,
     required this.httpMethod,
+    required this.plugins,
   });
 
   List<Parameter> get params {

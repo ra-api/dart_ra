@@ -44,3 +44,9 @@ enum PackageDataSource {
     };
   }
 }
+
+enum PluginScope {
+  global,
+  package,
+  method,
+}

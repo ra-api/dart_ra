@@ -7,7 +7,7 @@ final class MethodContextCastException extends ApiException {
   const MethodContextCastException({
     required this.actual,
     required this.expected,
-  }) : super(statusCode: 500);
+  }) : super(statusCode: 500, reported: true);
 
   @override
   String get reason {

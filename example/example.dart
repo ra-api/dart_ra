@@ -11,6 +11,24 @@ enum ApiVersion {
   const ApiVersion(this.version);
 }
 
+final class UtilPackage extends Package {
+  const UtilPackage();
+  @override
+  List<Method<Object>> get methods {
+    return [
+      PostmanCollectionMethod(
+        host: Uri.parse('localhost:3000'),
+        collectionName: 'Example Test API',
+        methodName: 'postman',
+        variables: {'count': '15', 'limit': '20'},
+      ),
+    ];
+  }
+
+  @override
+  String get name => 'util';
+}
+
 Future<void> main() async {
   /// Конфигурируем сервер и создаем его, на выходе получаем экземпляр shelf
   /// сервера с хендлером который отвечает за роутинг, выполнение и отдачу
@@ -27,6 +45,9 @@ Future<void> main() async {
     packages: const [
       CartPackage(),
       UtilPackage(),
+    ],
+    plugins: [
+      ErrorHandlerPlugin(),
     ],
     verbose: true,
   );
@@ -45,20 +66,9 @@ void _onServe(server) {
   print('🚀Serving at http://${server.address.host}:${server.port}');
 }
 
-final class UtilPackage extends Package {
-  const UtilPackage();
+final class ErrorHandlerPlugin extends Plugin implements EventErrorHandle {
   @override
-  List<Method<Object>> get methods {
-    return [
-      PostmanCollectionMethod(
-        host: Uri.parse('localhost:3000'),
-        collectionName: 'Example Test API',
-        methodName: 'postman',
-        variables: {'count': '15', 'limit': '20'},
-      ),
-    ];
+  void onErrorHandle(ApiException exception) {
+    print(exception.reason);
   }
-
-  @override
-  String get name => 'util';
 }

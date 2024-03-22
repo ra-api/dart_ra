@@ -5,7 +5,7 @@ final class ServerNotImplementedException extends ApiException {
 
   const ServerNotImplementedException({required String reason})
       : _verboseReason = reason,
-        super(statusCode: 501);
+        super(statusCode: 501, reported: true);
 
   @override
   String get reason => 'Not implemented';

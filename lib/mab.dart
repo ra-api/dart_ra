@@ -14,6 +14,7 @@ export 'src/method_response.dart';
 export 'src/methods/methods.dart';
 export 'src/package.dart';
 export 'src/package_parameter.dart';
+export 'src/plugin/plugin.dart';
 export 'src/providers/shelf_server_provider.dart';
 export 'src/server.dart';
 export 'src/types.dart';
