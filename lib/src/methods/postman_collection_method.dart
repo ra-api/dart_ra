@@ -108,12 +108,21 @@ final class PostmanCollectionMethod extends Method<JsonType> {
       'raw': '{{host}}/${decl.package}.${decl.name}',
       'host': ['{{host}}'],
       'path': '${decl.package}.${decl.name}',
-      'query': decl.parameters.where((e) {
-        return e.dataSource == DataSource.query;
-      }).map((e) {
-        final value = variables?.containsKey(e.id) == true ? '{{${e.id}}}' : '';
-        return {'key': e.id, 'value': value, 'description': e.summary};
-      }).toList(growable: false),
+      'query': decl.parameters
+          .where((e) => e.dataSource == DataSource.query)
+          .map(_paramToQuery)
+          .toList(growable: false),
+    };
+  }
+
+  JsonType _paramToQuery(Parameter param) {
+    final value =
+        variables?.containsKey(param.id) == true ? '{{${param.id}}}' : '';
+    final label = param.isRequired ? '[required] ' : '';
+    return {
+      'key': param.id,
+      'value': value,
+      'description': '$label${param.summary ?? ''}'.trimRight(),
     };
   }
 
