@@ -1,5 +1,7 @@
 part of 'methods.dart';
 
+typedef _Registry = Map<String, List<MethodDecl>>;
+
 final class PostmanCollectionMethod extends Method<JsonType> {
   final String methodName;
   final String collectionName;
@@ -15,14 +17,38 @@ final class PostmanCollectionMethod extends Method<JsonType> {
   @override
   ResponseContentType<JsonType> get contentType => JsonContentType();
 
+  List<JsonType> _items(List<MethodDecl> items) {
+    final registry = _buildRegistry(items);
+    final res = <JsonType>[];
+    for (final package in registry.keys) {
+      final methods = registry[package]!;
+      final node = {'name': package, 'item': methods.map(_declToItem).toList()};
+
+      res.add(node);
+    }
+    return res;
+  }
+
   @override
   Future<MethodResponse<JsonType>> handle(MethodContext ctx) async {
     return response
       ..body({
         'info': _info(),
-        'item': ctx.methods.map(_declToItem).toList(),
+        'item': _items(ctx.methods).toList(growable: false),
         'variable': _variables(),
       });
+  }
+
+  _Registry _buildRegistry(List<MethodDecl> items) {
+    return items.fold({}, (acc, decl) {
+      if (acc.containsKey(decl.package)) {
+        acc[decl.package]!.add(decl);
+      } else {
+        acc.putIfAbsent(decl.package, () => [decl]);
+      }
+
+      return acc;
+    });
   }
 
   JsonType _info() {

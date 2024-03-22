@@ -52,7 +52,7 @@ final class UtilPackage extends Package {
     return [
       PostmanCollectionMethod(
         host: Uri.parse('localhost:3000'),
-        collectionName: 'Example API',
+        collectionName: 'Example Test API',
         methodName: 'postman',
         variables: {'count': '15', 'limit': '20'},
       ),
