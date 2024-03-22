@@ -1,5 +1,6 @@
 import 'package:mab/mab.dart';
 
+import 'hot_reload.dart';
 import 'packages/packages.dart';
 
 enum ApiVersion {
@@ -19,17 +20,45 @@ Future<void> main() async {
   /// доступен перечень всех методов
   ///
   /// Перед запуском надо установить зависимости, dart pub get в консоли
-  final server = await Server(
+
+  final server = Server(
     currentApiVersion: ApiVersion.v2.version,
-    port: 3000,
+    provider: ShelfServerProvider(port: 3000, onServe: _onServe),
     packages: const [
-      // SubPackage(path: 'star-wars', package: CartPackage()),
       CartPackage(),
+      UtilPackage(),
     ],
     verbose: true,
-    poweredBy: 'MAB',
-  ).create();
+  );
 
+  await HotReload(
+    enable: true,
+    server: server,
+    onLog: (log) => print('[UPD] $log'),
+  ).serve();
+}
+
+void _onServe(server) {
   server.idleTimeout;
   server.autoCompress = true;
+
+  print('🚀Serving at http://${server.address.host}:${server.port}');
+}
+
+final class UtilPackage extends Package {
+  const UtilPackage();
+  @override
+  List<Method<Object>> get methods {
+    return [
+      PostmanCollectionMethod(
+        host: Uri.parse('localhost:3000'),
+        collectionName: 'Example Test API',
+        methodName: 'postman',
+        variables: {'count': '15', 'limit': '20'},
+      ),
+    ];
+  }
+
+  @override
+  String get name => 'util';
 }

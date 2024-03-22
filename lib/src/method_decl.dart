@@ -14,6 +14,7 @@ final class MethodDecl {
 
   String get httpMethod => _registryItem.httpMethod;
   String get package => _registryItem.package.name;
+
   String get name => _registryItem.method.name;
   double get version => _registryItem.version;
   String get mimeType => _registryItem.method.contentType.mimeType;

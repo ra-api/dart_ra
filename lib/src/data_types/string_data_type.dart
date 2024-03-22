@@ -1,5 +1,6 @@
 part of 'data_types.dart';
 
+@immutable
 class StringDataType extends DataType<String, String> {
   final RegExp? pattern;
   final bool trim;

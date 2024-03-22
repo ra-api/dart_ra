@@ -1,11 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:mab/mab.dart';
 import 'package:mab/src/data_source_context.dart';
 import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
+import 'request_context.dart';
 
 /// Класс отвечающий за инициализацию [Registry], и дальнейший поиск метода
 /// по пакету, имени и версии
@@ -31,77 +30,95 @@ final class ApiHandler {
     required this.verbose,
   });
 
-  /// Метод отвечает за поиск метода из реестра, подготовки и проверки
-  /// параметров для его выполнения и получения [MethodResponse] на выходе
-  Future<MethodResponse> handle({
-    required String package,
-    required String method,
-    required double version,
-    required Map<String, String> queries,
-    required Map<String, String> headers,
-    required Uint8List body,
-    required String httpMethod,
-  }) async {
-    try {
-      final handler = _registry.find(
+  RegistryItem _findMethod({
+    required RequestContext ctx,
+    required String baseEndpoint,
+  }) {
+    final path = ctx.uri.path.substring(baseEndpoint.length + 1).split('.');
+    final method = path.removeLast();
+    final package = path.join('.');
+
+    final version = _version(ctx);
+
+    final handler = _registry.find(
+      package: package,
+      method: method,
+      version: version,
+    );
+
+    if (handler == null) {
+      final versions = _registry.availableVersions(
         package: package,
         method: method,
-        version: version,
       );
 
-      if (handler == null) {
-        final versions = _registry.availableVersions(
-          package: package,
-          method: method,
-        );
-
-        if (versions.isEmpty) {
-          throw MethodNotFoundException();
-        } else {
-          throw WrongMethodVersionException(
-            invalidVersion: version,
-            availableVersions: versions,
-          );
-        }
-      }
-
-      if (handler.httpMethod != httpMethod) {
+      if (versions.isEmpty) {
         throw MethodNotFoundException();
+      } else {
+        throw WrongMethodVersionException(
+          invalidVersion: version,
+          availableVersions: versions,
+        );
       }
-
-      final ctx = await _methodContext(
-        handler: handler,
-        queries: queries,
-        headers: queries,
-        body: body,
-      );
-      return (await handler.method.handle(ctx))..decl(MethodDecl(handler));
-    } on ApiException catch (error) {
-      final body = {
-        'error': {
-          'message': error.reason,
-          ...error.extraFields ?? {},
-          if (verbose) ...{'verbose': error.verboseFields},
-        },
-      };
-      return MethodResponse<JsonType>(JsonContentType())
-        ..statusCode(error.statusCode)
-        ..body(body);
     }
+
+    if (handler.httpMethod != ctx.httpMethod) {
+      throw MethodNotAllowed();
+    }
+
+    return handler;
+  }
+
+  Future<MethodResponse> handle({
+    required RequestContext ctx,
+    required String baseEndpoint,
+  }) async {
+    try {
+      _checkBaseEndpoint(uri: ctx.uri, baseEndpoint: baseEndpoint);
+
+      final handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
+      final methodCtx = await _methodContext(handler: handler, reqCtx: ctx);
+
+      return (await handler.method.handle(methodCtx))
+        ..decl(MethodDecl(handler));
+    } on ApiException catch (err) {
+      return _apiErrorResponse(err);
+    } on Object {
+      rethrow;
+    }
+  }
+
+  void _checkBaseEndpoint({required Uri uri, required String baseEndpoint}) {
+    if (!uri.path.startsWith('$baseEndpoint/')) {
+      throw ServerNotImplementedException(
+        reason: 'Route must be format $baseEndpoint/',
+      );
+    }
+  }
+
+  MethodResponse _apiErrorResponse(ApiException exception) {
+    final body = {
+      'error': {
+        'message': exception.reason,
+        ...exception.extraFields ?? {},
+        if (verbose) ...{'verbose': exception.verboseFields},
+      },
+    };
+    return MethodResponse<JsonType>(JsonContentType())
+      ..statusCode(exception.statusCode)
+      ..body(body);
   }
 
   Future<MethodContext> _methodContext({
     required RegistryItem handler,
-    required Map<String, String> queries,
-    required Map<String, String> headers,
-    required Uint8List body,
+    required RequestContext reqCtx,
   }) async {
     final ctx = <String, dynamic>{};
 
     final dataSourceCtx = DataSourceContext(
-      headers: headers,
-      queries: queries,
-      body: body,
+      headers: reqCtx.headers,
+      queries: reqCtx.queries,
+      body: reqCtx.body,
     );
 
     for (final param in handler.params) {
@@ -132,5 +149,14 @@ final class ApiHandler {
       current: MethodDecl(handler),
       verbose: verbose,
     );
+  }
+
+  double _version(RequestContext ctx) {
+    final queryVersion = ctx.uri.queryParameters['v'];
+    if (queryVersion == null) {
+      return currentApiVersion;
+    }
+
+    return double.tryParse(queryVersion) ?? currentApiVersion;
   }
 }

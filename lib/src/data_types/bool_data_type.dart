@@ -1,5 +1,6 @@
 part of 'data_types.dart';
 
+@immutable
 class BoolDataType extends DataType<String, bool> {
   const BoolDataType({super.initial});
   @override

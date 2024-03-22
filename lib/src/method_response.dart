@@ -1,7 +1,7 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/method_decl.dart';
+import 'package:mab/src/response_context.dart';
 import 'package:meta/meta.dart';
-import 'package:shelf/shelf.dart';
 
 enum _Key {
   statusCode,
@@ -38,7 +38,7 @@ class MethodResponse<T extends Object> {
     _data[_Key.decl] = value;
   }
 
-  Response build() {
+  ResponseContext build() {
     final statusCode = _data[_Key.statusCode] as int;
     final body = _data[_Key.body] as T;
     final headers = _data[_Key.headers] as Map<String, String>;
@@ -46,8 +46,8 @@ class MethodResponse<T extends Object> {
 
     headers['content-type'] = _contentType.mimeType;
 
-    return Response(
-      statusCode,
+    return ResponseContext(
+      statusCode: statusCode,
       body: _contentType.apply(body, decl),
       headers: headers,
     );

@@ -11,6 +11,7 @@ abstract class Parameter<I, O> {
   /// получить из [MethodContext]
   final String id;
   final bool optional;
+  final DataSource dataSource;
 
   final DataType<I, O> dataType;
 
@@ -23,6 +24,7 @@ abstract class Parameter<I, O> {
 
   const Parameter({
     required this.id,
+    required this.dataSource,
     required this.dataType,
     this.summary,
     this.optional = false,

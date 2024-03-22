@@ -2,8 +2,6 @@ import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
 import 'package:meta/meta.dart';
 
-import 'packages/core/core.dart';
-
 @immutable
 final class Registry {
   final double currentApiVersion;
@@ -11,8 +9,7 @@ final class Registry {
   final List<RegistryItem> _methods = [];
 
   Registry({required this.packages, required this.currentApiVersion}) {
-    final newPackages = [...packages, CorePackage()];
-    for (final package in newPackages) {
+    for (final package in packages) {
       if (package.methods.isEmpty) {
         continue;
       }

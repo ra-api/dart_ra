@@ -1,6 +1,3 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
 library;
 
 export 'src/content_type.dart';
@@ -11,9 +8,12 @@ export 'src/exceptions/exceptions.dart';
 export 'src/method.dart';
 export 'src/method_constraint.dart';
 export 'src/method_context.dart';
+export 'src/method_decl.dart';
 export 'src/method_parameter.dart';
 export 'src/method_response.dart';
+export 'src/methods/methods.dart';
 export 'src/package.dart';
 export 'src/package_parameter.dart';
+export 'src/providers/shelf_server_provider.dart';
 export 'src/server.dart';
 export 'src/types.dart';

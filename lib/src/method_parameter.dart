@@ -12,20 +12,20 @@ import 'types.dart';
 abstract base class MethodParameter<I, O> extends Parameter<I, O> {
   final MethodDataSource source;
 
-  const MethodParameter({
+  MethodParameter({
     required super.id,
     required this.source,
     required super.dataType,
     super.summary,
     super.optional,
     // super.initial,
-  });
+  }) : super(dataSource: source.toDataSource());
 }
 
 /// Query параметр, задаем изначально нужный [source]
 @immutable
 base class MethodQueryParameter<T> extends MethodParameter<String, T> {
-  const MethodQueryParameter({
+  MethodQueryParameter({
     required super.id,
     required super.dataType,
     super.summary,
@@ -39,7 +39,7 @@ base class MethodQueryParameter<T> extends MethodParameter<String, T> {
 /// Header параметр, задаем изначально нужный [source]
 @immutable
 base class MethodHeaderParameter<T> extends MethodParameter<String, T> {
-  const MethodHeaderParameter({
+  MethodHeaderParameter({
     required super.id,
     required super.dataType,
     super.summary,
@@ -53,7 +53,7 @@ base class MethodHeaderParameter<T> extends MethodParameter<String, T> {
 /// Header параметр, задаем изначально нужный [source]
 @immutable
 base class MethodBodyParameter<T> extends MethodParameter<Uint8List, T> {
-  const MethodBodyParameter({
+  MethodBodyParameter({
     required super.dataType,
     super.summary,
   }) : super(
