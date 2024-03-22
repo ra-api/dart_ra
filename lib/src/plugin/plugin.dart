@@ -1,22 +1,19 @@
 library;
 
+import 'package:mab/src/plugin/plugin_provider_singleton.dart';
+
 export 'plugin_events.dart';
 
-abstract class Plugin {
+abstract base class Plugin {
   const Plugin();
 }
 
-// final class RateLimiter extends Plugin
-//     implements EventBeforeRequest, EventErrorHandle {
-//   const RateLimiter();
-//
-//   @override
-//   void onBeforeRequest(MethodContext ctx) {
-//     throw UnimplementedError();
-//   }
-//
-//   @override
-//   void onErrorHandle(ApiException exception) {
-//     throw UnimplementedError();
-//   }
-// }
+abstract base class PluginProvider extends Plugin {
+  const PluginProvider();
+}
+
+abstract base class PluginConsumer<T extends PluginProvider> extends Plugin {
+  const PluginConsumer();
+
+  T provider() => PluginProviderSingleton.instance().provider<T>();
+}

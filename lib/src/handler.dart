@@ -1,5 +1,6 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/data_source_context.dart';
+import 'package:mab/src/plugin/plugin_providers.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
@@ -157,6 +158,9 @@ final class ApiHandler {
       methods: methods,
       current: MethodDecl(handler),
       verbose: verbose,
+      pluginProviders: PluginProviders(
+        providers: plugins,
+      ),
     );
   }
 

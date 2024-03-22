@@ -4,6 +4,7 @@ import 'package:mab/src/handler.dart';
 import 'package:mab/src/method_response.dart';
 import 'package:mab/src/package.dart';
 import 'package:mab/src/plugin/plugin.dart';
+import 'package:mab/src/plugin/plugin_provider_singleton.dart';
 import 'package:mab/src/request_context.dart';
 import 'package:mab/src/server_provider.dart';
 import 'package:meta/meta.dart';
@@ -28,7 +29,13 @@ final class Server {
     this.baseEndpoint = 'api',
   });
 
-  Future<void> serve() async => await provider.init(_methodHandler);
+  Future<void> serve() async {
+    // Register global plugin providers
+    PluginProviderSingleton.instance().init(
+      plugins.whereType<PluginProvider>().toList(growable: false),
+    );
+    await provider.init(_methodHandler);
+  }
 
   Future<MethodResponse> _methodHandler(RequestContext ctx) async {
     final handler = ApiHandler(

@@ -48,6 +48,7 @@ Future<void> main() async {
     ],
     plugins: [
       ErrorHandlerPlugin(),
+      DependencyPlugin(),
     ],
     verbose: true,
   );
@@ -64,6 +65,10 @@ void _onServe(server) {
   server.autoCompress = true;
 
   print('🚀Serving at http://${server.address.host}:${server.port}');
+}
+
+final class DependencyPlugin extends PluginProvider {
+  final String foo = 'bar';
 }
 
 final class ErrorHandlerPlugin extends Plugin implements EventErrorHandle {

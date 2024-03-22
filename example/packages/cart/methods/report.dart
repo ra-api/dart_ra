@@ -3,11 +3,16 @@ import 'dart:typed_data';
 import 'package:essential_xlsx/essential_xlsx.dart';
 import 'package:mab/mab.dart';
 
+import '../../../example.dart';
 import '../../../implements/implements.dart';
 
 final class ReportMethod extends ProxyMethod {
   @override
   Future<MethodProxyResponse> handle(MethodContext ctx) async {
+    final dependency = ctx.plugin<DependencyPlugin>();
+
+    print(dependency.foo);
+
     // final fromDate = ctx.value<DateTime>('from');
     // final to = fromDate.add(Duration(days: ctx.value<int>('count')));
     //

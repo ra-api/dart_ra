@@ -1,6 +1,5 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/parameter.dart';
-import 'package:mab/src/plugin/plugin_data.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -35,10 +34,8 @@ final class Registry {
   }
 
   void _addToRegistry({required Package package, required Method method}) {
-    final allPlugins = <PluginData>[
-      ...plugins.map((e) {
-        return PluginData(plugin: e, scope: PluginScope.global);
-      }).toList(growable: false),
+    final allPlugins = <Plugin>[
+      ...plugins,
     ];
 
     _methods.add(
@@ -110,7 +107,7 @@ final class RegistryItem {
   final Method method;
   final double version;
   final String httpMethod;
-  final List<PluginData> plugins;
+  final List<Plugin> plugins;
 
   const RegistryItem({
     required this.key,

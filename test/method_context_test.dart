@@ -1,4 +1,5 @@
 import 'package:mab/mab.dart';
+import 'package:mab/src/plugin/plugin_providers.dart';
 import 'package:mab/src/registry.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
@@ -21,14 +22,14 @@ void main() {
       ),
     );
     final ctx = MethodContext(
-      {
-        'baz': 1,
-        'limit': null,
-      },
-      current: decl,
-      methods: [decl],
-      verbose: false,
-    );
+        {
+          'baz': 1,
+          'limit': null,
+        },
+        current: decl,
+        methods: [decl],
+        verbose: false,
+        pluginProviders: PluginProviders(providers: []));
 
     test('value', () {
       expect(
