@@ -1,5 +1,4 @@
 import 'package:mab/mab.dart';
-import 'package:mab/src/method_decl.dart';
 import 'package:mab/src/registry.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';

@@ -11,7 +11,7 @@ final class PostmanCollectionMethod extends Method<JsonType> {
   PostmanCollectionMethod({
     required this.collectionName,
     required this.host,
-    this.methodName = 'postmanCollection',
+    this.methodName = 'postman',
     this.variables,
   });
   @override

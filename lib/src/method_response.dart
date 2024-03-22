@@ -1,5 +1,4 @@
 import 'package:mab/mab.dart';
-import 'package:mab/src/method_decl.dart';
 import 'package:mab/src/response_context.dart';
 import 'package:meta/meta.dart';
 

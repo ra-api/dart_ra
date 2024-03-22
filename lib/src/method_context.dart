@@ -1,8 +1,6 @@
 import 'package:mab/mab.dart';
 import 'package:meta/meta.dart';
 
-import 'method_decl.dart';
-
 /// Класс контекст для метода, служит, для извлечения значения параметра
 /// по имени и приведения извлеченного значения до [T]
 @immutable

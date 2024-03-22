@@ -1,6 +1,5 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/data_source_context.dart';
-import 'package:mab/src/method_decl.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
