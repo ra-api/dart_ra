@@ -1,4 +1,4 @@
-import 'package:mab/src/plugin/plugin.dart';
+import 'package:mab/src/core/plugin/plugin.dart';
 
 class PluginProviders {
   final Iterable<Plugin> _providers;

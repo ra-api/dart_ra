@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:mab/src/handler.dart';
-import 'package:mab/src/method_response.dart';
+import 'package:mab/src/core/handler.dart';
+import 'package:mab/src/core/method/method_response.dart';
+import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/core/plugin/plugin_provider_singleton.dart';
+import 'package:mab/src/core/request_context.dart';
+import 'package:mab/src/core/server_provider.dart';
 import 'package:mab/src/package.dart';
-import 'package:mab/src/plugin/plugin.dart';
-import 'package:mab/src/plugin/plugin_provider_singleton.dart';
-import 'package:mab/src/request_context.dart';
-import 'package:mab/src/server_provider.dart';
 import 'package:meta/meta.dart';
 
 @immutable

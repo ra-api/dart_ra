@@ -1,6 +1,6 @@
 library;
 
-import 'package:mab/src/plugin/plugin_provider_singleton.dart';
+import 'package:mab/src/core/plugin/plugin_provider_singleton.dart';
 
 export 'plugin_events.dart';
 

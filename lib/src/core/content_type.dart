@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:mab/src/method_decl.dart';
+import 'package:mab/src/core/method/method_decl.dart';
 import 'package:meta/meta.dart';
 
 /// Интерфейс для реализации преобразования T в бинарный вид

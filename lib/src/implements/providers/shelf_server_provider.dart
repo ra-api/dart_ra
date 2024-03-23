@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:mab/src/request_context.dart';
-import 'package:mab/src/server_provider.dart';
+import 'package:mab/src/core/request_context.dart';
+import 'package:mab/src/core/server_provider.dart';
 import 'package:meta/meta.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;

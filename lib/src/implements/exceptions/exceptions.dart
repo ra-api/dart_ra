@@ -1,7 +1,9 @@
 library exceptions;
 
-import 'package:mab/mab.dart';
-import 'package:mab/src/parameter.dart';
+import 'package:mab/src/core/data_type/data_type.dart';
+import 'package:mab/src/core/parameter/method_parameter.dart';
+import 'package:mab/src/core/parameter/parameter.dart';
+import 'package:mab/src/types.dart';
 
 part 'data_type.dart';
 part 'data_type_validate.dart';

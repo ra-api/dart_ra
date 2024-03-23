@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:mab/mab.dart';
-import 'package:mab/src/data_source_context.dart';
+import 'package:mab/src/core/data_type/data_type.dart';
+import 'package:mab/src/core/method/data_source_context.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 /// Базовый класс параметра

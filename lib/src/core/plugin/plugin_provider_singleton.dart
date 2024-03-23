@@ -1,5 +1,5 @@
-import 'package:mab/src/plugin/plugin.dart';
-import 'package:mab/src/plugin/plugin_providers.dart';
+import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/core/plugin/plugin_providers.dart';
 
 class PluginProviderSingleton {
   static final PluginProviderSingleton _singleton = PluginProviderSingleton._();

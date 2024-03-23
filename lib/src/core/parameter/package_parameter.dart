@@ -1,8 +1,7 @@
-import 'package:mab/src/parameter.dart';
+import 'package:mab/src/core/method/method_constraint.dart';
+import 'package:mab/src/core/parameter/parameter.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
-
-import 'method_constraint.dart';
-import 'types.dart';
 
 /// Параметр уровня пакет
 @immutable

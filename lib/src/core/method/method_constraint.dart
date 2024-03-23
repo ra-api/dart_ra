@@ -1,4 +1,4 @@
-import 'method.dart';
+import 'package:mab/src/core/method/method.dart';
 
 enum _ConstraintKind { allow, deny }
 

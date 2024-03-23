@@ -1,7 +1,6 @@
+import 'package:mab/src/core/method/method.dart';
+import 'package:mab/src/core/parameter/package_parameter.dart';
 import 'package:meta/meta.dart';
-
-import 'method.dart';
-import 'package_parameter.dart';
 
 /// Интерфейс для создания нового пакета, пакет это некий неймспейс для методов
 @immutable

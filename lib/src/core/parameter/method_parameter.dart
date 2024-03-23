@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:mab/src/data_source_context.dart';
-import 'package:mab/src/parameter.dart';
+import 'package:mab/src/core/method/data_source_context.dart';
+import 'package:mab/src/core/parameter/parameter.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
-
-import 'types.dart';
 
 /// Параметр уровня метод
 @immutable

@@ -1,5 +1,8 @@
-import 'package:mab/mab.dart';
-import 'package:mab/src/parameter.dart';
+import 'package:mab/src/core/method/method.dart';
+import 'package:mab/src/core/parameter/parameter.dart';
+import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/package.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 @immutable
