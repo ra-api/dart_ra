@@ -135,15 +135,14 @@ final class ApiHandler {
       final raw = await param.extract(dataSourceCtx);
 
       try {
-        ctx.putIfAbsent(param.id, () async {
-          if (raw == null && !param.isRequired) {
-            return param.dataType.initial;
-          }
-          final dataTypeCtx = DataTypeCtx(
-            pluginRegistry: handler.pluginRegistry,
-          );
-          return await param.dataType.convert(raw, dataTypeCtx);
-        });
+        final val = (raw == null && !param.isRequired)
+            ? param.dataType.initial
+            : await param.dataType.convert(
+                raw,
+                DataTypeCtx(
+                  pluginRegistry: handler.pluginRegistry,
+                ));
+        ctx.putIfAbsent(param.id, () => val);
       } on ApiException {
         rethrow;
       } on Object catch (e, st) {
