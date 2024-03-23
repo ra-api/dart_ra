@@ -2,6 +2,8 @@ import 'package:mab/mab.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
+import '../fixtures/fixture_data_type_context.dart';
+
 void main() {
   group('DoubleDataType tests', () {
     final dataType = DoubleDataType();
@@ -18,7 +20,8 @@ void main() {
         test(
           'Input ${testCase.input} expect value ${testCase.expected}',
           () async {
-            final res = await dataType.convert(testCase.input);
+            final ctx = fixtureDataTypeCtx(testCase.input);
+            final res = await dataType.convert(ctx);
             expect(
               res,
               equals(testCase.expected),
@@ -29,9 +32,9 @@ void main() {
     });
 
     test('Failed convert', () async {
-      final payload = 'hello world';
+      final ctx = fixtureDataTypeCtx('hello world');
       expect(
-        () => dataType.convert(payload),
+        () => dataType.convert(ctx),
         throwsA(isA<DataTypeValidateException>()),
       );
     });

@@ -1,6 +1,8 @@
 import 'package:mab/mab.dart';
 import 'package:test/test.dart';
 
+import '../fixtures/fixture_data_type_context.dart';
+
 void main() {
   group('BoolDataType tests', () {
     _checkCases();
@@ -36,19 +38,21 @@ void _checkWrongCases() {
 }
 
 void _checkExceptions(String input) {
+  final ctx = fixtureDataTypeCtx(input);
   test('Check datatype logic if $input, must be throw exception', () {
     final datatype = BoolDataType();
     expect(
-      () => datatype.convert(input),
+      () => datatype.convert(ctx),
       throwsA(isA<DataTypeValidateException>()),
     );
   });
 }
 
 void _checkLogic(String input, bool expected) {
+  final ctx = fixtureDataTypeCtx(input);
   test('Check datatype logic if $input, must be expected $expected', () {
     final datatype = BoolDataType();
-    final actual = datatype.convert(input);
+    final actual = datatype.convert(ctx);
     expect(actual, equals(expected));
   });
 }

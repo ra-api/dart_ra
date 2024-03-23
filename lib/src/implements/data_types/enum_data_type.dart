@@ -10,9 +10,9 @@ final class EnumDataType<T extends Enum> extends DataType<String, T> {
     required this.onMap,
   });
   @override
-  FutureOr<T> convert(String data) {
+  FutureOr<T> convert(DataTypeContext<String> ctx) {
     try {
-      return onMap(data);
+      return onMap(ctx.data);
     } on Object {
       throw DataTypeValidateException(dataType: this);
     }
