@@ -1,6 +1,7 @@
 import 'package:mab/src/core/method/method.dart';
 import 'package:mab/src/core/parameter/parameter.dart';
 import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:mab/src/package.dart';
 import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
@@ -52,7 +53,7 @@ final class Registry {
         method: method,
         package: package,
         version: method.version ?? currentApiVersion,
-        plugins: allPlugins,
+        pluginRegistry: PluginRegistry(plugins: allPlugins),
       ),
     );
   }
@@ -110,7 +111,7 @@ final class RegistryItem {
   final Method method;
   final double version;
   final String httpMethod;
-  final List<Plugin> plugins;
+  final PluginRegistry pluginRegistry;
 
   const RegistryItem({
     required this.key,
@@ -118,7 +119,7 @@ final class RegistryItem {
     required this.package,
     required this.version,
     required this.httpMethod,
-    required this.plugins,
+    required this.pluginRegistry,
   });
 
   List<Parameter> get params {

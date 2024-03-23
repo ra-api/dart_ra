@@ -5,9 +5,9 @@ class JsonBodyDataType extends DataType<Uint8List, JsonType> {
   const JsonBodyDataType({super.initial});
 
   @override
-  FutureOr<JsonType> convert(DataTypeContext<Uint8List> ctx) {
+  FutureOr<JsonType> convert(Uint8List data, DataTypeCtx ctx) {
     try {
-      return jsonDecode(utf8.decode(ctx.data));
+      return jsonDecode(utf8.decode(data));
     } on Object {
       throw DataTypeValidateException(dataType: this);
     }

@@ -1,18 +1,16 @@
 import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_providers.dart';
+import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-final class DataTypeContext<I> {
-  final I data;
-  final PluginProviders _pluginProviders;
+final class DataTypeCtx {
+  final PluginRegistry _pluginRegistry;
 
-  const DataTypeContext({
-    required this.data,
-    required PluginProviders pluginProviders,
-  }) : _pluginProviders = pluginProviders;
+  const DataTypeCtx({
+    required PluginRegistry pluginRegistry,
+  }) : _pluginRegistry = pluginRegistry;
 
   T plugin<T extends PluginProvider>() {
-    return _pluginProviders.provider<T>();
+    return _pluginRegistry.provider<T>();
   }
 }

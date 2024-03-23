@@ -10,17 +10,17 @@ void main() {
     final dataType = JsonBodyDataType();
 
     test('Success convert', () async {
-      final ctx = fixtureDataTypeCtx(utf8.encode('{"foo": "bar"}'));
+      final ctx = fixtureDataTypeCtx();
 
-      final res = await dataType.convert(ctx);
+      final res = await dataType.convert(utf8.encode('{"foo": "bar"}'), ctx);
       expect(res['foo'], equals('bar'));
     });
 
     test('Failed convert', () async {
-      final ctx = fixtureDataTypeCtx(utf8.encode('hello world'));
+      final ctx = fixtureDataTypeCtx();
 
       expect(
-        () => dataType.convert(ctx),
+        () => dataType.convert(utf8.encode('hello world'), ctx),
         throwsA(isA<DataTypeValidateException>()),
       );
     });

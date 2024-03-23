@@ -7,8 +7,8 @@ class StringDataType extends DataType<String, String> {
   const StringDataType({this.pattern, this.trim = false, super.initial});
 
   @override
-  FutureOr<String> convert(DataTypeContext<String> ctx) {
-    final newData = trim ? ctx.data.trim() : ctx.data;
+  FutureOr<String> convert(String data, DataTypeCtx ctx) {
+    final newData = trim ? data.trim() : data;
 
     if (pattern == null) {
       return newData;

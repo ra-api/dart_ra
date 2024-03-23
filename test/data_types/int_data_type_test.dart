@@ -8,13 +8,13 @@ void main() {
     final dataType = IntDataType();
 
     test('Success convert', () async {
-      final res = await dataType.convert(fixtureDataTypeCtx('1'));
+      final res = await dataType.convert('1', fixtureDataTypeCtx());
       expect(res, equals(1));
     });
 
     test('Failed convert', () async {
       expect(
-        () => dataType.convert(fixtureDataTypeCtx('hello world')),
+        () => dataType.convert('hello world', fixtureDataTypeCtx()),
         throwsA(isA<DataTypeValidateException>()),
       );
     });

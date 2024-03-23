@@ -38,21 +38,21 @@ void _checkWrongCases() {
 }
 
 void _checkExceptions(String input) {
-  final ctx = fixtureDataTypeCtx(input);
+  final ctx = fixtureDataTypeCtx();
   test('Check datatype logic if $input, must be throw exception', () {
     final datatype = BoolDataType();
     expect(
-      () => datatype.convert(ctx),
+      () => datatype.convert(input, ctx),
       throwsA(isA<DataTypeValidateException>()),
     );
   });
 }
 
 void _checkLogic(String input, bool expected) {
-  final ctx = fixtureDataTypeCtx(input);
+  final ctx = fixtureDataTypeCtx();
   test('Check datatype logic if $input, must be expected $expected', () {
     final datatype = BoolDataType();
-    final actual = datatype.convert(ctx);
+    final actual = datatype.convert(input, ctx);
     expect(actual, equals(expected));
   });
 }

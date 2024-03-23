@@ -12,12 +12,12 @@ final class AnyOfDataType<I, O> extends DataType<I, O> {
   });
 
   @override
-  FutureOr<O> convert(DataTypeContext<I> ctx) {
-    if (!input.contains(ctx.data)) {
+  FutureOr<O> convert(I data, DataTypeCtx ctx) {
+    if (!input.contains(data)) {
       throw DataTypeValidateException(dataType: this);
     }
 
-    return _dataType.convert(ctx);
+    return _dataType.convert(data, ctx);
   }
 
   @override

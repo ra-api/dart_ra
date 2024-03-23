@@ -20,8 +20,8 @@ void main() {
         test(
           'Input ${testCase.input} expect value ${testCase.expected}',
           () async {
-            final ctx = fixtureDataTypeCtx(testCase.input);
-            final res = await dataType.convert(ctx);
+            final ctx = fixtureDataTypeCtx();
+            final res = await dataType.convert(testCase.input, ctx);
             expect(
               res,
               equals(testCase.expected),
@@ -32,9 +32,9 @@ void main() {
     });
 
     test('Failed convert', () async {
-      final ctx = fixtureDataTypeCtx('hello world');
+      final ctx = fixtureDataTypeCtx();
       expect(
-        () => dataType.convert(ctx),
+        () => dataType.convert('hello world', ctx),
         throwsA(isA<DataTypeValidateException>()),
       );
     });

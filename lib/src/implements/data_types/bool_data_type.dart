@@ -13,12 +13,12 @@ class BoolDataType extends DataType<String, bool> {
   }
 
   @override
-  FutureOr<bool> convert(DataTypeContext<String> ctx) {
+  FutureOr<bool> convert(String data, DataTypeCtx ctx) {
     final allowed = <String>{
       ..._positive,
       ..._negative,
     };
-    final str = ctx.data.toLowerCase();
+    final str = data.toLowerCase();
     if (!allowed.contains(str)) {
       throw DataTypeValidateException(dataType: this);
     }

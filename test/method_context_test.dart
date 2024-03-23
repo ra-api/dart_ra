@@ -1,5 +1,5 @@
 import 'package:mab/mab.dart';
-import 'package:mab/src/core/plugin/plugin_providers.dart';
+import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:mab/src/core/registry.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
@@ -18,18 +18,19 @@ void main() {
         httpMethod: 'GET',
         package: FixturePackage(fakeName: 'foo'),
         version: 1,
-        plugins: [],
+        pluginRegistry: PluginRegistry(plugins: []),
       ),
     );
     final ctx = MethodContext(
-        {
-          'baz': 1,
-          'limit': null,
-        },
-        current: decl,
-        methods: [decl],
-        verbose: false,
-        pluginProviders: PluginProviders(providers: []));
+      {
+        'baz': 1,
+        'limit': null,
+      },
+      current: decl,
+      methods: [decl],
+      verbose: false,
+      pluginRegistry: PluginRegistry(plugins: []),
+    );
 
     test('value', () {
       expect(

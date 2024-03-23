@@ -1,6 +1,6 @@
 import 'package:mab/src/core/method/method_decl.dart';
 import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_providers.dart';
+import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:mab/src/implements/exceptions/exceptions.dart';
 import 'package:meta/meta.dart';
 
@@ -9,18 +9,18 @@ import 'package:meta/meta.dart';
 @immutable
 final class MethodContext {
   final Map<String, dynamic> _context;
-  final PluginProviders _pluginProviders;
+  final PluginRegistry _pluginRegistry;
   final List<MethodDecl> methods;
   final MethodDecl current;
   final bool verbose;
 
   const MethodContext(
     this._context, {
-    required PluginProviders pluginProviders,
+    required PluginRegistry pluginRegistry,
     required this.current,
     required this.methods,
     required this.verbose,
-  }) : _pluginProviders = pluginProviders;
+  }) : _pluginRegistry = pluginRegistry;
 
   /// Позволяет достать значение из контекста по id параметра
   T value<T>(String id) {
@@ -41,6 +41,6 @@ final class MethodContext {
   }
 
   T plugin<T extends PluginProvider>() {
-    return _pluginProviders.provider<T>();
+    return _pluginRegistry.provider<T>();
   }
 }

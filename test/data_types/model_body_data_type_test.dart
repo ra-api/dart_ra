@@ -11,15 +11,15 @@ void main() {
 
     test('Success convert', () async {
       final jsonStr = '{"bar": "baz"}';
-      final ctx = fixtureDataTypeCtx(utf8.encode(jsonStr));
-      final res = await dataType.convert(ctx);
+      final ctx = fixtureDataTypeCtx();
+      final res = await dataType.convert(utf8.encode(jsonStr), ctx);
       expect(res.bar, equals('baz'));
     });
 
     test('Failed convert', () async {
-      final ctx = fixtureDataTypeCtx(utf8.encode('hello world'));
+      final ctx = fixtureDataTypeCtx();
       expect(
-        () => dataType.convert(ctx),
+        () => dataType.convert(utf8.encode('hello world'), ctx),
         throwsA(isA<DataTypeValidateException>()),
       );
     });

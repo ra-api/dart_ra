@@ -1,13 +1,6 @@
+import 'package:mab/mab.dart';
+import 'package:mab/src/core/data_type/data_type_context.dart';
 import 'package:mab/src/core/method/data_source_context.dart';
-import 'package:mab/src/core/method/method_context.dart';
-import 'package:mab/src/core/method/method_decl.dart';
-import 'package:mab/src/core/method/method_response.dart';
-import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_providers.dart';
-import 'package:mab/src/implements/content_types/content_types.dart';
-import 'package:mab/src/implements/exceptions/exceptions.dart';
-import 'package:mab/src/package.dart';
-import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
@@ -142,11 +135,15 @@ final class ApiHandler {
       final raw = await param.extract(dataSourceCtx);
 
       try {
-        final val = (raw == null && !param.isRequired)
-            ? param.dataType.initial
-            : await param.dataType.convert(raw);
-
-        ctx.putIfAbsent(param.id, () => val);
+        ctx.putIfAbsent(param.id, () async {
+          if (raw == null && !param.isRequired) {
+            return param.dataType.initial;
+          }
+          final dataTypeCtx = DataTypeCtx(
+            pluginRegistry: handler.pluginRegistry,
+          );
+          return await param.dataType.convert(raw, dataTypeCtx);
+        });
       } on ApiException {
         rethrow;
       } on Object catch (e, st) {
@@ -165,9 +162,7 @@ final class ApiHandler {
       methods: methods,
       current: MethodDecl(handler),
       verbose: verbose,
-      pluginProviders: PluginProviders(
-        providers: plugins,
-      ),
+      pluginRegistry: handler.pluginRegistry,
     );
   }
 

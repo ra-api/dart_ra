@@ -19,5 +19,9 @@ abstract class DataType<I, O> {
   /// Конвертирование данных из I в O, например из строки в булево или
   /// целочисленное значение, так как заголовки и query параметры это всегда
   /// строки, то штука весьма полезная
-  FutureOr<O> convert(DataTypeContext<I> ctx);
+  FutureOr<O> convert(I data, DataTypeCtx ctx);
+
+  I castToInput(dynamic data) {
+    return data as I;
+  }
 }
