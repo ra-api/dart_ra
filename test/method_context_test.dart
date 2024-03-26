@@ -21,7 +21,7 @@ void main() {
         pluginRegistry: PluginRegistry(plugins: []),
       ),
     );
-    final ctx = MethodContext(
+    final ctx = MethodCtx(
       {
         'baz': 1,
         'limit': null,

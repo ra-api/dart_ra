@@ -37,7 +37,7 @@ final class Server {
     await provider.init(_methodHandler);
   }
 
-  Future<MethodResponse> _methodHandler(RequestContext ctx) async {
+  Future<MethodResponse> _methodHandler(RequestCtx ctx) async {
     final handler = ApiHandler(
       currentApiVersion: currentApiVersion,
       packages: packages,

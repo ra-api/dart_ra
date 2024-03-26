@@ -30,7 +30,7 @@ final class ShelfServerProvider extends ServerProvider {
   Handler _handler(HandlerCallback callback) {
     return (Request request) async {
       final body = await _body(request);
-      final ctx = RequestContext(
+      final ctx = RequestCtx(
         httpMethod: request.method,
         uri: request.url,
         queries: request.url.queryParameters,

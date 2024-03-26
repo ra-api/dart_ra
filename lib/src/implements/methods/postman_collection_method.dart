@@ -30,7 +30,7 @@ final class PostmanCollectionMethod extends Method<JsonType> {
   }
 
   @override
-  Future<MethodResponse<JsonType>> handle(MethodContext ctx) async {
+  Future<MethodResponse<JsonType>> handle(MethodCtx ctx) async {
     return response
       ..body({
         'info': _info(),

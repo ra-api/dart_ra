@@ -34,7 +34,7 @@ final class ApiHandler {
   });
 
   RegistryItem _findMethod({
-    required RequestContext ctx,
+    required RequestCtx ctx,
     required String baseEndpoint,
   }) {
     final path = ctx.uri.path.substring(baseEndpoint.length + 1).split('.');
@@ -73,7 +73,7 @@ final class ApiHandler {
   }
 
   Future<MethodResponse> handle({
-    required RequestContext ctx,
+    required RequestCtx ctx,
     required String baseEndpoint,
   }) async {
     try {
@@ -119,9 +119,9 @@ final class ApiHandler {
       ..body(body);
   }
 
-  Future<MethodContext> _methodContext({
+  Future<MethodCtx> _methodContext({
     required RegistryItem handler,
-    required RequestContext reqCtx,
+    required RequestCtx reqCtx,
   }) async {
     final ctx = <String, dynamic>{};
 
@@ -156,7 +156,7 @@ final class ApiHandler {
     final methods =
         _registry.methods.map(MethodDecl.new).toList(growable: false);
 
-    return MethodContext(
+    return MethodCtx(
       ctx,
       methods: methods,
       current: MethodDecl(handler),
@@ -165,7 +165,7 @@ final class ApiHandler {
     );
   }
 
-  double _version(RequestContext ctx) {
+  double _version(RequestCtx ctx) {
     final queryVersion = ctx.uri.queryParameters['v'];
     if (queryVersion == null) {
       return currentApiVersion;

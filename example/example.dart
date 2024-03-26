@@ -48,7 +48,9 @@ Future<void> main() async {
     ],
     plugins: [
       ErrorHandlerPlugin(),
-      DependencyPlugin(),
+      DependencyPlugin(
+        options: DependencyOptions(),
+      ),
     ],
     verbose: true,
   );
@@ -67,8 +69,26 @@ void _onServe(server) {
   print('🚀Serving at http://${server.address.host}:${server.port}');
 }
 
-final class DependencyPlugin extends PluginProvider {
+final class DependencyOptions extends PluginOptions {
   final String foo = 'bar';
+}
+
+final class DependencyPlugin extends PluginProvider<DependencyOptions>
+    implements EventErrorHandle {
+  DependencyPlugin({required super.options});
+
+  @override
+  void onErrorHandle(ApiException exception) {
+    print(exception.reason);
+  }
+}
+
+final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
+    implements EventErrorHandle {
+  @override
+  void onErrorHandle(ApiException exception) {
+    print(options.foo);
+  }
 }
 
 final class ErrorHandlerPlugin extends Plugin implements EventErrorHandle {

@@ -12,8 +12,8 @@ class PluginProviderSingleton {
 
   late final PluginRegistry _registry;
 
-  T provider<T extends PluginProvider>() {
-    return _registry.provider<T>();
+  T options<T extends PluginOptions>() {
+    return _registry.provider<PluginProvider<T>>().options;
   }
 
   void init(Iterable<Plugin> plugins) {

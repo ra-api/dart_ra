@@ -10,8 +10,12 @@ final class PluginRegistry {
     required Iterable<Plugin> plugins,
   }) : _plugins = plugins;
 
-  T provider<T>() {
+  T provider<T extends PluginProvider>() {
     return _plugins.whereType<T>().first;
+  }
+
+  T options<T extends PluginOptions>() {
+    return _plugins.whereType<PluginProvider<T>>().first.options;
   }
 
   List<T> _pluginByEvent<T>() {

@@ -8,8 +8,8 @@ import '../../../implements/implements.dart';
 
 final class ReportMethod extends ProxyMethod {
   @override
-  Future<MethodProxyResponse> handle(MethodContext ctx) async {
-    final dependency = ctx.plugin<DependencyPlugin>();
+  Future<MethodProxyResponse> handle(MethodCtx ctx) async {
+    final dependency = ctx.options<DependencyOptions>();
 
     print(dependency.foo);
 

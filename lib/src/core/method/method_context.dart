@@ -7,14 +7,14 @@ import 'package:meta/meta.dart';
 /// Класс контекст для метода, служит, для извлечения значения параметра
 /// по имени и приведения извлеченного значения до [T]
 @immutable
-final class MethodContext {
+final class MethodCtx {
   final Map<String, dynamic> _context;
   final PluginRegistry _pluginRegistry;
   final List<MethodDecl> methods;
   final MethodDecl current;
   final bool verbose;
 
-  const MethodContext(
+  const MethodCtx(
     this._context, {
     required PluginRegistry pluginRegistry,
     required this.current,
@@ -40,7 +40,7 @@ final class MethodContext {
     return val;
   }
 
-  T plugin<T extends PluginProvider>() {
-    return _pluginRegistry.provider<T>();
+  T options<T extends PluginOptions>() {
+    return _pluginRegistry.options<T>();
   }
 }

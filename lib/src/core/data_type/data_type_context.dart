@@ -10,7 +10,7 @@ final class DataTypeCtx {
     required PluginRegistry pluginRegistry,
   }) : _pluginRegistry = pluginRegistry;
 
-  T plugin<T extends PluginProvider>() {
-    return _pluginRegistry.provider<T>();
+  T options<T extends PluginOptions>() {
+    return _pluginRegistry.options<T>();
   }
 }

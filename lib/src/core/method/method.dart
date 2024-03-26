@@ -24,7 +24,7 @@ abstract base class Method<O extends Object> {
 
   /// Место для имплементаци бизнес логики и формирования
   /// ответа сервера на запрос
-  Future<MethodResponse<O>> handle(MethodContext ctx);
+  Future<MethodResponse<O>> handle(MethodCtx ctx);
 
   /// Getter для отправки ответа
   MethodResponse<O> get response => MethodResponse<O>(contentType);

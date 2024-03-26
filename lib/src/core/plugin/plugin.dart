@@ -8,12 +8,17 @@ abstract base class Plugin {
   const Plugin();
 }
 
-abstract base class PluginProvider extends Plugin {
-  const PluginProvider();
+abstract base class PluginOptions {}
+
+abstract base class PluginProvider<O extends PluginOptions> extends Plugin {
+  final O options;
+  const PluginProvider({required this.options});
 }
 
-abstract base class PluginConsumer<T extends PluginProvider> extends Plugin {
+abstract base class PluginConsumer<T extends PluginOptions> extends Plugin {
   const PluginConsumer();
 
-  T provider() => PluginProviderSingleton.instance().provider<T>();
+  T get options {
+    return PluginProviderSingleton.instance().options<T>();
+  }
 }

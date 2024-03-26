@@ -37,7 +37,7 @@ class MethodResponse<T extends Object> {
     _data[_Key.decl] = value;
   }
 
-  ResponseContext build() {
+  ResponseCtx build() {
     final statusCode = _data[_Key.statusCode] as int;
     final body = _data[_Key.body] as T;
     final headers = _data[_Key.headers] as Map<String, String>;
@@ -45,7 +45,7 @@ class MethodResponse<T extends Object> {
 
     headers['content-type'] = _contentType.mimeType;
 
-    return ResponseContext(
+    return ResponseCtx(
       statusCode: statusCode,
       body: _contentType.apply(body, decl),
       headers: headers,

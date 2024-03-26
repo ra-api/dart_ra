@@ -4,7 +4,7 @@ import 'package:mab/src/core/registry.dart';
 import 'package:meta/meta.dart';
 
 /// Информация о методе, используется в core.spec но планируется,
-/// что в том или ином виде будет добавлено в [MethodContext]
+/// что в том или ином виде будет добавлено в [MethodCtx]
 @immutable
 final class MethodDecl {
   final RegistryItem _registryItem;

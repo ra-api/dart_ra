@@ -20,7 +20,7 @@ final class _Method extends Method {
   ResponseContentType<Object> get contentType => throw UnimplementedError();
 
   @override
-  Future<MethodResponse> handle(MethodContext ctx) {
+  Future<MethodResponse> handle(MethodCtx ctx) {
     throw UnimplementedError();
   }
 
