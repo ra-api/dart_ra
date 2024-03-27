@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:essential_xlsx/essential_xlsx.dart';
 import 'package:mab/mab.dart';
 
-import '../../../example.dart';
 import '../../../implements/implements.dart';
+import '../../../implements/plugins/dependency_plugin.dart';
 
 final class ReportMethod extends ProxyMethod {
   @override

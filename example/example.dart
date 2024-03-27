@@ -1,7 +1,9 @@
 import 'package:mab/mab.dart';
 
 import 'hot_reload.dart';
+import 'implements/plugins/dependency_plugin.dart';
 import 'packages/packages.dart';
+import 'packages/util/util.dart';
 
 enum ApiVersion {
   v1(1.0),
@@ -9,24 +11,6 @@ enum ApiVersion {
 
   final double version;
   const ApiVersion(this.version);
-}
-
-final class UtilPackage extends Package {
-  const UtilPackage();
-  @override
-  List<Method<Object>> get methods {
-    return [
-      PostmanCollectionMethod(
-        host: Uri.parse('localhost:3000'),
-        collectionName: 'Example Test API',
-        methodName: 'postman',
-        variables: {'count': '15', 'limit': '20'},
-      ),
-    ];
-  }
-
-  @override
-  String get name => 'util';
 }
 
 Future<void> main() async {
@@ -67,20 +51,3 @@ void _onServe(server) {
 
   print('🚀Serving at http://${server.address.host}:${server.port}');
 }
-
-final class DependencyOptions extends PluginOptions {
-  final String foo = 'bar';
-}
-
-final class DependencyPlugin extends PluginProvider<DependencyOptions>
-    implements ErrorHandleHook {
-  DependencyPlugin({required super.options});
-
-  @override
-  void onErrorHandle(event) {
-    print(event.exception.statusCode);
-  }
-}
-
-final class DependencyConsumerPlugin
-    extends PluginConsumer<DependencyOptions> {}
