@@ -2,7 +2,10 @@ import 'dart:core';
 
 import 'package:mab/src/core/plugin/plugin.dart';
 import 'package:mab/src/core/plugin/plugin_registry.dart';
+import 'package:meta/meta.dart';
 
+@internal
+@immutable
 class PluginProviderSingleton {
   static final PluginProviderSingleton _singleton = PluginProviderSingleton._();
 

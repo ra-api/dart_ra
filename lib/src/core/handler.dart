@@ -1,6 +1,7 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/core/data_type/data_type_context.dart';
 import 'package:mab/src/core/method/data_source_context.dart';
+import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
@@ -84,18 +85,33 @@ final class ApiHandler {
 
       return (await handler.method.handle(methodCtx))
         ..decl(MethodDecl(handler));
-    } on ApiException catch (err) {
-      _performEventErrorHandle(err);
-      return _apiErrorResponse(err);
-    } on Object {
-      rethrow;
+    } on ApiException catch (exception, stackTrace) {
+      _performEventErrorHandle(
+        ErrorHandleEvent(
+          exception: exception,
+          stackTrace: stackTrace,
+        ),
+      );
+      return _apiErrorResponse(exception);
+    } catch (error, stackTrace) {
+      final exception = ServerInternalException(
+        reason: 'Method unexpected internal error',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      _performEventErrorHandle(
+        ErrorHandleEvent(
+          exception: exception,
+          stackTrace: stackTrace,
+        ),
+      );
+      return _apiErrorResponse(exception);
     }
   }
 
-  void _performEventErrorHandle(ApiException exception) {
-    plugins.whereType<EventErrorHandle>().forEach((event) {
-      event.onErrorHandle(exception);
-    });
+  void _performEventErrorHandle(ErrorHandleEvent event) {
+    final pluginRegistry = PluginRegistry(plugins: plugins);
+    pluginRegistry.performErrorHandle(event);
   }
 
   void _checkBaseEndpoint({required Uri uri, required String baseEndpoint}) {

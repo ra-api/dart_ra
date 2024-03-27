@@ -1,7 +1,7 @@
 import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/implements/exceptions/exceptions.dart';
 import 'package:meta/meta.dart';
 
+@internal
 @immutable
 final class PluginRegistry {
   final Iterable<Plugin> _plugins;
@@ -22,9 +22,9 @@ final class PluginRegistry {
     return _plugins.whereType<T>().toList(growable: false);
   }
 
-  void performErrorHandle(ApiException exception) {
-    _pluginByEvent<EventErrorHandle>().forEach((element) {
-      element.onErrorHandle(exception);
-    });
+  void performErrorHandle(ErrorHandleEvent event) {
+    for (final hook in _pluginByEvent<ErrorHandleHook>()) {
+      hook.onErrorHandle(event);
+    }
   }
 }

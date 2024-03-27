@@ -47,7 +47,6 @@ Future<void> main() async {
       UtilPackage(),
     ],
     plugins: [
-      ErrorHandlerPlugin(),
       DependencyPlugin(
         options: DependencyOptions(),
       ),
@@ -74,26 +73,14 @@ final class DependencyOptions extends PluginOptions {
 }
 
 final class DependencyPlugin extends PluginProvider<DependencyOptions>
-    implements EventErrorHandle {
+    implements ErrorHandleHook {
   DependencyPlugin({required super.options});
 
   @override
-  void onErrorHandle(ApiException exception) {
-    print(exception.reason);
+  void onErrorHandle(event) {
+    print(event.exception.statusCode);
   }
 }
 
-final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
-    implements EventErrorHandle {
-  @override
-  void onErrorHandle(ApiException exception) {
-    print(options.foo);
-  }
-}
-
-final class ErrorHandlerPlugin extends Plugin implements EventErrorHandle {
-  @override
-  void onErrorHandle(ApiException exception) {
-    print(exception.reason);
-  }
-}
+final class DependencyConsumerPlugin
+    extends PluginConsumer<DependencyOptions> {}

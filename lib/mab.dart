@@ -9,7 +9,7 @@ export 'src/core/method/method_decl.dart';
 export 'src/core/method/method_response.dart';
 export 'src/core/parameter/method_parameter.dart';
 export 'src/core/parameter/package_parameter.dart';
-export 'src/core/plugin/plugin.dart';
+export 'src/core/plugin/plugin.dart' hide PluginHook;
 export 'src/core/server.dart';
 export 'src/implements/implements.dart';
 export 'src/package.dart';
