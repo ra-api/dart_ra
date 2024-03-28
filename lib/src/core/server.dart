@@ -7,6 +7,7 @@ import 'package:mab/src/core/plugin/plugin_provider_singleton.dart';
 import 'package:mab/src/core/request_context.dart';
 import 'package:mab/src/core/server_provider.dart';
 import 'package:mab/src/package.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -19,7 +20,7 @@ final class Server {
   final String baseEndpoint;
   final List<Plugin> plugins;
 
-  const Server({
+  Server({
     required this.currentApiVersion,
     required this.packages,
     required this.provider,
@@ -29,22 +30,26 @@ final class Server {
     this.baseEndpoint = 'api',
   });
 
-  Future<void> serve() async {
-    // Register global plugin providers
-    PluginProviderSingleton.instance().init(
-      plugins.whereType<PluginProvider>().toList(growable: false),
-    );
-    await provider.init(_methodHandler);
-  }
+  late final ApiHandler handler;
 
-  Future<MethodResponse> _methodHandler(RequestCtx ctx) async {
-    final handler = ApiHandler(
+  Future<void> serve() async {
+    handler = ApiHandler(
       currentApiVersion: currentApiVersion,
       packages: packages,
       verbose: verbose,
       plugins: plugins,
     );
+    // Register global plugin providers
+    PluginProviderSingleton.instance().init(
+      plugins
+          .whereType<PluginProvider>()
+          .map((e) => PluginData(plugin: e, scope: PluginScope.global))
+          .toList(growable: false),
+    );
+    await provider.init(_methodHandler);
+  }
 
+  Future<MethodResponse> _methodHandler(RequestCtx ctx) async {
     return handler.handle(
       ctx: ctx,
       baseEndpoint: baseEndpoint,

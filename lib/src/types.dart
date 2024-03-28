@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 typedef JsonType = Map<String, dynamic>;
 
 enum DataSource {
@@ -43,4 +45,10 @@ enum PackageDataSource {
       PackageDataSource.cookie => DataSource.cookie,
     };
   }
+}
+
+@internal
+enum PluginScope {
+  global,
+  method,
 }

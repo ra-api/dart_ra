@@ -19,7 +19,7 @@ class PluginProviderSingleton {
     return _registry.provider<PluginProvider<T>>().options;
   }
 
-  void init(Iterable<Plugin> plugins) {
+  void init(Iterable<PluginData> plugins) {
     try {
       _registry = PluginRegistry(plugins: plugins);
     } catch (_, st) {

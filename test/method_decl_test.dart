@@ -1,5 +1,4 @@
 import 'package:mab/mab.dart';
-import 'package:mab/src/core/plugin/plugin_registry.dart';
 import 'package:mab/src/core/registry.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
@@ -116,6 +115,6 @@ RegistryItem _registryItem({
     ]),
     version: version,
     httpMethod: httpMethod,
-    pluginRegistry: PluginRegistry(plugins: []),
+    plugins: [],
   );
 }

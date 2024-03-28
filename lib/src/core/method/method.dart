@@ -31,4 +31,6 @@ abstract base class Method<O extends Object> {
 
   /// Набор параметров метода
   List<MethodParameter> get params => [];
+
+  List<Plugin> get plugins => [];
 }

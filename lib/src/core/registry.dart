@@ -38,9 +38,14 @@ final class Registry {
   }
 
   void _addToRegistry({required Package package, required Method method}) {
-    final allPlugins = <Plugin>[
-      ...plugins,
-    ];
+    for (var plugin in method.plugins) {
+      if (plugin is PluginProvider) {
+        throw ArgumentError(
+          'Invalid plugin ${plugin.runtimeType} in method ${method.runtimeType}, '
+          'available plugin types for method: Plugin or PluginConsumer',
+        );
+      }
+    }
 
     _methods.add(
       RegistryItem(
@@ -53,15 +58,16 @@ final class Registry {
         method: method,
         package: package,
         version: method.version ?? currentApiVersion,
-        pluginRegistry: PluginRegistry(plugins: allPlugins),
+        plugins: plugins,
       ),
     );
   }
 
   String _httpMethod(Method method) {
     try {
-      method.params
-          .firstWhere((element) => element.source == MethodDataSource.body);
+      method.params.firstWhere((element) {
+        return element.source == MethodDataSource.body;
+      });
       return 'POST';
     } on Object {
       return 'GET';
@@ -111,7 +117,7 @@ final class RegistryItem {
   final Method method;
   final double version;
   final String httpMethod;
-  final PluginRegistry pluginRegistry;
+  final Iterable<Plugin> plugins;
 
   const RegistryItem({
     required this.key,
@@ -119,8 +125,20 @@ final class RegistryItem {
     required this.package,
     required this.version,
     required this.httpMethod,
-    required this.pluginRegistry,
+    required this.plugins,
   });
+
+  PluginRegistry get pluginRegistry {
+    final pluginsData = [
+      ...plugins.map((e) {
+        return PluginData(plugin: e, scope: PluginScope.global);
+      }),
+      ...method.plugins.map((e) {
+        return PluginData(plugin: e, scope: PluginScope.method);
+      }),
+    ];
+    return PluginRegistry(plugins: pluginsData);
+  }
 
   List<Parameter> get params {
     final packageParams = package.params.where((element) {

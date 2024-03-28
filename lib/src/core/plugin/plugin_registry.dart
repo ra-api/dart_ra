@@ -1,13 +1,14 @@
 import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 @internal
 @immutable
 final class PluginRegistry {
-  final Iterable<Plugin> _plugins;
+  final Iterable<PluginData> _plugins;
 
   const PluginRegistry({
-    required Iterable<Plugin> plugins,
+    required Iterable<PluginData> plugins,
   }) : _plugins = plugins;
 
   T provider<T extends PluginProvider>() {
@@ -15,15 +16,28 @@ final class PluginRegistry {
   }
 
   T options<T extends PluginOptions>() {
-    return _plugins.whereType<PluginProvider<T>>().first.options;
+    return _plugins
+        .map((e) => e.plugin)
+        .whereType<PluginProvider<T>>()
+        .first
+        .options;
   }
 
-  List<T> _pluginByEvent<T>() {
-    return _plugins.whereType<T>().toList(growable: false);
+  List<T> _pluginByHook<T extends PluginHook>(Set<PluginScope> scopes) {
+    return _plugins
+        .where((element) => scopes.contains(element.scope))
+        .map((e) => e.plugin)
+        .whereType<T>()
+        .toList(growable: false);
   }
 
   void performErrorHandle(ErrorHandleEvent event) {
-    for (final hook in _pluginByEvent<ErrorHandleHook>()) {
+    final plugins = _pluginByHook<ErrorHandleHook>({
+      PluginScope.global,
+      PluginScope.method,
+    });
+
+    for (final hook in plugins) {
       hook.onErrorHandle(event);
     }
   }

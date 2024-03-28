@@ -13,6 +13,8 @@ final class ReportMethod extends ProxyMethod {
 
     print(dependency.foo);
 
+    // throw Exception('huy');
+
     // final fromDate = ctx.value<DateTime>('from');
     // final to = fromDate.add(Duration(days: ctx.value<int>('count')));
     //
@@ -44,6 +46,13 @@ final class ReportMethod extends ProxyMethod {
     final bytes = simplexlsx.build();
 
     return response..body(Uint8List.fromList(bytes));
+  }
+
+  @override
+  List<Plugin> get plugins {
+    return [
+      DependencyConsumerPlugin(),
+    ];
   }
 
   @override

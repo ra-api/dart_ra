@@ -1,7 +1,9 @@
 import 'package:mab/mab.dart';
 import 'package:mab/src/core/data_type/data_type_context.dart';
 import 'package:mab/src/core/method/data_source_context.dart';
+import 'package:mab/src/core/plugin/plugin.dart';
 import 'package:mab/src/core/plugin/plugin_registry.dart';
+import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
 import 'registry.dart';
@@ -21,18 +23,18 @@ final class ApiHandler {
   final List<Plugin> plugins;
 
   /// Реестр методов, представление дерева в список
-  late final Registry _registry = Registry(
-    packages: packages,
-    currentApiVersion: currentApiVersion,
-    plugins: plugins,
-  );
+  final Registry _registry;
 
   ApiHandler({
     required this.currentApiVersion,
     required this.packages,
     required this.verbose,
     required this.plugins,
-  });
+  }) : _registry = Registry(
+          packages: packages,
+          currentApiVersion: currentApiVersion,
+          plugins: plugins,
+        );
 
   RegistryItem _findMethod({
     required RequestCtx ctx,
@@ -110,7 +112,9 @@ final class ApiHandler {
   }
 
   void _performEventErrorHandle(ErrorHandleEvent event) {
-    final pluginRegistry = PluginRegistry(plugins: plugins);
+    final pluginRegistry = PluginRegistry(plugins: plugins.map((e) {
+      return PluginData(plugin: e, scope: PluginScope.global);
+    }));
     pluginRegistry.performErrorHandle(event);
   }
 

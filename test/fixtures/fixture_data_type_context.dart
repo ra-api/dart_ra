@@ -3,7 +3,7 @@ import 'package:mab/src/core/plugin/plugin.dart';
 import 'package:mab/src/core/plugin/plugin_registry.dart';
 
 DataTypeCtx fixtureDataTypeCtx<T>({
-  List<Plugin> plugins = const [],
+  List<PluginData> plugins = const [],
 }) {
   return DataTypeCtx(
     pluginRegistry: PluginRegistry(

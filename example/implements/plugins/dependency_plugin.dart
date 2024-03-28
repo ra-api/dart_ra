@@ -10,6 +10,8 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
 
   @override
   void onErrorHandle(event) {
+    print(event.exception.reported);
+    print(event.exception.reason);
     print(event.exception.statusCode);
   }
 }
