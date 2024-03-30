@@ -38,7 +38,7 @@ final class ShelfServerProvider extends ServerProvider {
         body: body,
       );
 
-      final res = (await callback(ctx)).build();
+      final res = (await callback(ctx));
 
       return Response(
         res.statusCode,

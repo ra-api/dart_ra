@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:mab/mab.dart';
 import 'package:mab/src/core/data_type/data_type_context.dart';
 import 'package:mab/src/core/method/data_source_context.dart';
 import 'package:mab/src/core/plugin/plugin.dart';
 import 'package:mab/src/core/plugin/plugin_registry.dart';
+import 'package:mab/src/core/response_context.dart';
 import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
@@ -35,6 +38,14 @@ final class ApiHandler {
           currentApiVersion: currentApiVersion,
           plugins: plugins,
         );
+
+  PluginRegistry get _globalPluginRegistry {
+    return PluginRegistry(
+      plugins: plugins.map(
+        (e) => PluginData(plugin: e, scope: PluginScope.global),
+      ),
+    );
+  }
 
   RegistryItem _findMethod({
     required RequestCtx ctx,
@@ -75,7 +86,7 @@ final class ApiHandler {
     return handler;
   }
 
-  Future<MethodResponse> handle({
+  Future<ResponseCtx> handle({
     required RequestCtx ctx,
     required String baseEndpoint,
   }) async {
@@ -85,37 +96,43 @@ final class ApiHandler {
       final handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
       final methodCtx = await _methodContext(handler: handler, reqCtx: ctx);
 
-      return (await handler.method.handle(methodCtx))
+      var methodResponse = (await handler.method.handle(methodCtx))
         ..decl(MethodDecl(handler));
+
+      return await handler.pluginRegistry.performMethodResponse(
+        MethodResponseEvent(
+          request: ctx,
+          response: methodResponse.build(),
+        ),
+      );
     } on ApiException catch (exception, stackTrace) {
-      _performEventErrorHandle(
+      _globalPluginRegistry.performErrorHandle(
         ErrorHandleEvent(
           exception: exception,
           stackTrace: stackTrace,
         ),
       );
-      return _apiErrorResponse(exception);
+      return _apiErrorResponse(
+        exception: exception,
+        request: ctx,
+      );
     } catch (error, stackTrace) {
       final exception = ServerInternalException(
         reason: 'Method unexpected internal error',
         error: error,
         stackTrace: stackTrace,
       );
-      _performEventErrorHandle(
+      _globalPluginRegistry.performErrorHandle(
         ErrorHandleEvent(
           exception: exception,
           stackTrace: stackTrace,
         ),
       );
-      return _apiErrorResponse(exception);
+      return _apiErrorResponse(
+        exception: exception,
+        request: ctx,
+      );
     }
-  }
-
-  void _performEventErrorHandle(ErrorHandleEvent event) {
-    final pluginRegistry = PluginRegistry(plugins: plugins.map((e) {
-      return PluginData(plugin: e, scope: PluginScope.global);
-    }));
-    pluginRegistry.performErrorHandle(event);
   }
 
   void _checkBaseEndpoint({required Uri uri, required String baseEndpoint}) {
@@ -126,7 +143,8 @@ final class ApiHandler {
     }
   }
 
-  MethodResponse _apiErrorResponse(ApiException exception) {
+  FutureOr<ResponseCtx> _apiErrorResponse(
+      {required ApiException exception, required RequestCtx request}) async {
     final body = {
       'error': {
         'message': exception.reason,
@@ -134,9 +152,17 @@ final class ApiHandler {
         if (verbose) ...{'verbose': exception.verboseFields},
       },
     };
-    return MethodResponse<JsonType>(JsonContentType())
+
+    final methodResponse = MethodResponse<JsonType>(JsonContentType())
       ..statusCode(exception.statusCode)
       ..body(body);
+
+    return await _globalPluginRegistry.performMethodResponse(
+      MethodResponseEvent(
+        request: request,
+        response: methodResponse.build(),
+      ),
+    );
   }
 
   Future<MethodCtx> _methodContext({

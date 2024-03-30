@@ -1,5 +1,6 @@
 part of 'hooks.dart';
 
+/// Error handle event
 final class ErrorHandleEvent {
   final ApiException exception;
   final StackTrace stackTrace;

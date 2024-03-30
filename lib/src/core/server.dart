@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:mab/src/core/handler.dart';
-import 'package:mab/src/core/method/method_response.dart';
 import 'package:mab/src/core/plugin/plugin.dart';
 import 'package:mab/src/core/plugin/plugin_provider_singleton.dart';
 import 'package:mab/src/core/request_context.dart';
+import 'package:mab/src/core/response_context.dart';
 import 'package:mab/src/core/server_provider.dart';
 import 'package:mab/src/package.dart';
 import 'package:mab/src/types.dart';
@@ -49,7 +49,7 @@ final class Server {
     await provider.init(_methodHandler);
   }
 
-  Future<MethodResponse> _methodHandler(RequestCtx ctx) async {
+  Future<ResponseCtx> _methodHandler(RequestCtx ctx) async {
     return handler.handle(
       ctx: ctx,
       baseEndpoint: baseEndpoint,

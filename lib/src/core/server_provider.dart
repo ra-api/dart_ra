@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:mab/mab.dart';
 import 'package:mab/src/core/request_context.dart';
+import 'package:mab/src/core/response_context.dart';
 import 'package:meta/meta.dart';
 
-typedef HandlerCallback = Future<MethodResponse> Function(RequestCtx ctx);
+typedef HandlerCallback = Future<ResponseCtx> Function(RequestCtx ctx);
 
 @immutable
 abstract base class ServerProvider {

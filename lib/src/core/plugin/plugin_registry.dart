@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:mab/src/core/plugin/plugin.dart';
+import 'package:mab/src/core/response_context.dart';
 import 'package:mab/src/types.dart';
 import 'package:meta/meta.dart';
 
@@ -40,5 +43,23 @@ final class PluginRegistry {
     for (final hook in plugins) {
       hook.onErrorHandle(event);
     }
+  }
+
+  FutureOr<ResponseCtx> performMethodResponse(MethodResponseEvent event) async {
+    final plugins = _pluginByHook<MethodResponseHook>({
+      PluginScope.global,
+      PluginScope.method,
+    });
+    var response = event.response;
+    for (final hook in plugins) {
+      response = await hook.onMethodResponse(
+        MethodResponseEvent(
+          request: event.request,
+          response: response,
+        ),
+      );
+    }
+
+    return response;
   }
 }

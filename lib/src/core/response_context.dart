@@ -13,4 +13,16 @@ final class ResponseCtx {
     required this.body,
     required this.headers,
   });
+
+  ResponseCtx copyWith({
+    int? statusCode,
+    Uint8List? body,
+    Map<String, String>? headers,
+  }) {
+    return ResponseCtx(
+      statusCode: statusCode ?? this.statusCode,
+      body: body ?? this.body,
+      headers: headers ?? this.headers,
+    );
+  }
 }
