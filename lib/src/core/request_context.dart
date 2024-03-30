@@ -17,4 +17,18 @@ final class RequestCtx {
     required this.headers,
     required this.body,
   });
+
+  RequestCtx copyWith({
+    Map<String, String>? queries,
+    Map<String, String>? headers,
+    Uint8List? body,
+  }) {
+    return RequestCtx(
+      httpMethod: httpMethod,
+      uri: uri,
+      queries: queries ?? this.queries,
+      headers: headers ?? this.queries,
+      body: body ?? this.body,
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:mab/mab.dart';
+import 'package:mab/src/core/request_context.dart';
 import 'package:mab/src/core/response_context.dart';
 
 final class DependencyOptions extends PluginOptions {
@@ -8,8 +9,8 @@ final class DependencyOptions extends PluginOptions {
 }
 
 final class DependencyPlugin extends PluginProvider<DependencyOptions>
-    implements ErrorHandleHook {
-  DependencyPlugin({required super.options});
+    implements ErrorHandleHook, MethodRequestHook {
+  const DependencyPlugin({required super.options});
 
   @override
   void onErrorHandle(event) {
@@ -17,13 +18,18 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
     print(event.exception.reason);
     print(event.exception.statusCode);
   }
+
+  @override
+  FutureOr<RequestCtx> onMethodRequest(MethodRequestEvent event) {
+    print('${event.request.httpMethod}: ${event.request.uri}');
+    return event.request;
+  }
 }
 
 final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
     implements MethodResponseHook {
   @override
   FutureOr<ResponseCtx> onMethodResponse(MethodResponseEvent event) {
-    print(event.request.uri);
     final headers = event.response.headers;
 
     return event.response.copyWith(

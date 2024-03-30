@@ -1,11 +1,12 @@
 part of 'hooks.dart';
 
-/// Error handle event
+/// Method response event
+@immutable
 final class MethodResponseEvent {
   final RequestCtx request;
   final ResponseCtx response;
 
-  MethodResponseEvent({
+  const MethodResponseEvent({
     required this.request,
     required this.response,
   });

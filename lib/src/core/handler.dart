@@ -94,8 +94,12 @@ final class ApiHandler {
       _checkBaseEndpoint(uri: ctx.uri, baseEndpoint: baseEndpoint);
 
       final handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
-      final methodCtx = await _methodContext(handler: handler, reqCtx: ctx);
 
+      final request = await handler.pluginRegistry.performMethodRequest(
+        MethodRequestEvent(request: ctx),
+      );
+
+      final methodCtx = await _methodContext(handler: handler, reqCtx: request);
       var methodResponse = (await handler.method.handle(methodCtx))
         ..decl(MethodDecl(handler));
 
@@ -106,6 +110,10 @@ final class ApiHandler {
         ),
       );
     } on ApiException catch (exception, stackTrace) {
+      final request = await _globalPluginRegistry.performMethodRequest(
+        MethodRequestEvent(request: ctx),
+      );
+
       _globalPluginRegistry.performErrorHandle(
         ErrorHandleEvent(
           exception: exception,
@@ -114,9 +122,13 @@ final class ApiHandler {
       );
       return _apiErrorResponse(
         exception: exception,
-        request: ctx,
+        request: request,
       );
     } catch (error, stackTrace) {
+      final request = await _globalPluginRegistry.performMethodRequest(
+        MethodRequestEvent(request: ctx),
+      );
+
       final exception = ServerInternalException(
         reason: 'Method unexpected internal error',
         error: error,
@@ -130,7 +142,7 @@ final class ApiHandler {
       );
       return _apiErrorResponse(
         exception: exception,
-        request: ctx,
+        request: request,
       );
     }
   }

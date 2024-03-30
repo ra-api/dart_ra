@@ -24,4 +24,8 @@ DataType для создания конвертера и валидатора (�
 
 ### Hooks ###
 
-**ErrorHandleHook** - Выброс события с информацией об ошибке *ErrorHandleEvent*
+**ErrorHandleHook** (global, method) - Выброс события с информацией об ошибке *ErrorHandleEvent*
+
+**MethodResponseHook** (global, method) - Изменение ResponseCtx *MethodResponseEvent*
+
+**MethodRequestHook** (global, method) - Изменение RequestCtx *MethodRequestEvent*
