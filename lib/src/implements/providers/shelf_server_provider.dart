@@ -19,8 +19,8 @@ final class ShelfServerProvider extends ServerProvider {
   @override
   Future<void> init(handler) async {
     final server = await shelf_io.serve(
-      Pipeline().addHandler(_handler(handler)),
-      'localhost',
+      _handler(handler),
+      '127.0.0.1',
       port,
     );
 

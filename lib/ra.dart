@@ -13,6 +13,7 @@ export 'src/core/plugin/plugin.dart' hide PluginHook, PluginData;
 export 'src/core/request_context.dart';
 export 'src/core/response_context.dart';
 export 'src/core/server.dart';
+export 'src/core/server_provider.dart';
 export 'src/implements/implements.dart';
 export 'src/package.dart';
 export 'src/types.dart' hide PluginScope;
