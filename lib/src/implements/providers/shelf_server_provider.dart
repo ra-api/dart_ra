@@ -20,7 +20,7 @@ final class ShelfServerProvider extends ServerProvider {
   Future<void> init(handler) async {
     final server = await shelf_io.serve(
       _handler(handler),
-      '127.0.0.1',
+      '0.0.0.0',
       port,
     );
 
