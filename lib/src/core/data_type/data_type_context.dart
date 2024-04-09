@@ -1,5 +1,5 @@
-import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_registry.dart';
+import 'package:ra_core/src/core/plugin/plugin.dart';
+import 'package:ra_core/src/core/plugin/plugin_registry.dart';
 import 'package:meta/meta.dart';
 
 @immutable

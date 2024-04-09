@@ -1,5 +1,5 @@
 // Базовый класс для метода
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 import 'package:meta/meta.dart';
 
 /// Базовый класс, для задания нового метода

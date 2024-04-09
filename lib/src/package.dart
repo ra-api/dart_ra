@@ -1,5 +1,5 @@
-import 'package:mab/src/core/method/method.dart';
-import 'package:mab/src/core/parameter/package_parameter.dart';
+import 'package:ra_core/src/core/method/method.dart';
+import 'package:ra_core/src/core/parameter/package_parameter.dart';
 import 'package:meta/meta.dart';
 
 /// Интерфейс для создания нового пакета, пакет это некий неймспейс для методов

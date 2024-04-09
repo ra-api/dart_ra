@@ -1,5 +1,5 @@
 import 'package:hotreloader/hotreloader.dart';
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 
 typedef OnLogCallback = void Function(String log);
 

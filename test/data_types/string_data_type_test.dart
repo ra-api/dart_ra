@@ -1,4 +1,4 @@
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 import 'package:test/test.dart';
 
 import '../fixtures/fixture_data_type_context.dart';

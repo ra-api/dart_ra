@@ -1,6 +1,6 @@
-import 'package:mab/mab.dart';
-import 'package:mab/src/core/plugin/plugin_registry.dart';
-import 'package:mab/src/core/registry.dart';
+import 'package:ra_core/mab.dart';
+import 'package:ra_core/src/core/plugin/plugin_registry.dart';
+import 'package:ra_core/src/core/registry.dart';
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 

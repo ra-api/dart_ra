@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:mab/src/core/method/data_source_context.dart';
-import 'package:mab/src/core/parameter/parameter.dart';
-import 'package:mab/src/types.dart';
+import 'package:ra_core/src/core/method/data_source_context.dart';
+import 'package:ra_core/src/core/parameter/parameter.dart';
+import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
 
 /// Параметр уровня метод

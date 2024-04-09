@@ -1,6 +1,6 @@
-import 'package:mab/src/core/method/method_constraint.dart';
-import 'package:mab/src/core/parameter/parameter.dart';
-import 'package:mab/src/types.dart';
+import 'package:ra_core/src/core/method/method_constraint.dart';
+import 'package:ra_core/src/core/parameter/parameter.dart';
+import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
 
 /// Параметр уровня пакет

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:mab/src/core/data_type/data_type_context.dart';
+import 'package:ra_core/src/core/data_type/data_type_context.dart';
 import 'package:meta/meta.dart';
 
 /// Интерфейс для реализации извлечения данных из запроса валидации, конвертации

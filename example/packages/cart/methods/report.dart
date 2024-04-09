@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:essential_xlsx/essential_xlsx.dart';
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 
 import '../../../implements/implements.dart';
 import '../../../implements/plugins/dependency_plugin.dart';
@@ -12,8 +12,6 @@ final class ReportMethod extends ProxyMethod {
     final dependency = ctx.options<DependencyOptions>();
 
     print(dependency.foo);
-
-    // throw Exception('huy');
 
     // final fromDate = ctx.value<DateTime>('from');
     // final to = fromDate.add(Duration(days: ctx.value<int>('count')));

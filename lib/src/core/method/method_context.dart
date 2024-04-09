@@ -1,7 +1,7 @@
-import 'package:mab/src/core/method/method_decl.dart';
-import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_registry.dart';
-import 'package:mab/src/implements/exceptions/exceptions.dart';
+import 'package:ra_core/src/core/method/method_decl.dart';
+import 'package:ra_core/src/core/plugin/plugin.dart';
+import 'package:ra_core/src/core/plugin/plugin_registry.dart';
+import 'package:ra_core/src/implements/exceptions/exceptions.dart';
 import 'package:meta/meta.dart';
 
 /// Класс контекст для метода, служит, для извлечения значения параметра

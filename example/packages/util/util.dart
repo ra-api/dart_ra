@@ -1,4 +1,4 @@
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 
 final class UtilPackage extends Package {
   const UtilPackage();

@@ -1,5 +1,5 @@
-import 'package:mab/mab.dart';
-import 'package:mab/src/core/response_context.dart';
+import 'package:ra_core/mab.dart';
+import 'package:ra_core/src/core/response_context.dart';
 import 'package:meta/meta.dart';
 
 enum _Key {

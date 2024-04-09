@@ -1,9 +1,9 @@
-import 'package:mab/src/core/method/method.dart';
-import 'package:mab/src/core/parameter/parameter.dart';
-import 'package:mab/src/core/plugin/plugin.dart';
-import 'package:mab/src/core/plugin/plugin_registry.dart';
-import 'package:mab/src/package.dart';
-import 'package:mab/src/types.dart';
+import 'package:ra_core/src/core/method/method.dart';
+import 'package:ra_core/src/core/parameter/parameter.dart';
+import 'package:ra_core/src/core/plugin/plugin.dart';
+import 'package:ra_core/src/core/plugin/plugin_registry.dart';
+import 'package:ra_core/src/package.dart';
+import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
 
 @immutable

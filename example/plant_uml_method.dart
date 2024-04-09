@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:mab/mab.dart';
+import 'package:ra_core/mab.dart';
 
 final class PlantUmlMethod extends Method<String> {
   final String projectName;

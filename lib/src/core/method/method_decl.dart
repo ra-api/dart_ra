@@ -1,6 +1,6 @@
-import 'package:mab/mab.dart';
-import 'package:mab/src/core/parameter/parameter.dart';
-import 'package:mab/src/core/registry.dart';
+import 'package:ra_core/mab.dart';
+import 'package:ra_core/src/core/parameter/parameter.dart';
+import 'package:ra_core/src/core/registry.dart';
 import 'package:meta/meta.dart';
 
 /// Информация о методе, используется в core.spec но планируется,
