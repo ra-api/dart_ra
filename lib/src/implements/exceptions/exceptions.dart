@@ -1,9 +1,9 @@
 library exceptions;
 
-import 'package:ra_core/src/core/data_type/data_type.dart';
-import 'package:ra_core/src/core/parameter/method_parameter.dart';
-import 'package:ra_core/src/core/parameter/parameter.dart';
-import 'package:ra_core/src/types.dart';
+import 'package:ra/src/core/data_type/data_type.dart';
+import 'package:ra/src/core/parameter/method_parameter.dart';
+import 'package:ra/src/core/parameter/parameter.dart';
+import 'package:ra/src/types.dart';
 
 part 'data_type.dart';
 part 'data_type_validate.dart';

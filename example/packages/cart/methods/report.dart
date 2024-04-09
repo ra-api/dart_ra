@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:essential_xlsx/essential_xlsx.dart';
-import 'package:ra_core/mab.dart';
+import 'package:ra/ra.dart';
 
 import '../../../implements/implements.dart';
 import '../../../implements/plugins/dependency_plugin.dart';

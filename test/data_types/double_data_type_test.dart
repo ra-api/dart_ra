@@ -1,5 +1,5 @@
-import 'package:ra_core/mab.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/ra.dart';
 import 'package:test/test.dart';
 
 import '../fixtures/fixture_data_type_context.dart';

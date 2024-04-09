@@ -1,6 +1,5 @@
-import 'package:ra_core/src/core/method/method.dart';
-import 'package:ra_core/src/core/parameter/package_parameter.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/ra.dart';
 
 /// Интерфейс для создания нового пакета, пакет это некий неймспейс для методов
 @immutable

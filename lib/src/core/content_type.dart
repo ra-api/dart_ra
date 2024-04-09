@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:ra_core/src/core/method/method_decl.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/method/method_decl.dart';
 
 /// Интерфейс для реализации преобразования T в бинарный вид
 @immutable

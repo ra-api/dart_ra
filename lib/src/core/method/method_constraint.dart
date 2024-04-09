@@ -1,4 +1,4 @@
-import 'package:ra_core/src/core/method/method.dart';
+import 'package:ra/src/core/method/method.dart';
 
 enum _ConstraintKind { allow, deny }
 

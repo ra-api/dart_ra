@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:ra_core/src/core/handler.dart';
-import 'package:ra_core/src/core/plugin/plugin.dart';
-import 'package:ra_core/src/core/plugin/plugin_provider_singleton.dart';
-import 'package:ra_core/src/core/request_context.dart';
-import 'package:ra_core/src/core/response_context.dart';
-import 'package:ra_core/src/core/server_provider.dart';
-import 'package:ra_core/src/package.dart';
-import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/handler.dart';
+import 'package:ra/src/core/plugin/plugin.dart';
+import 'package:ra/src/core/plugin/plugin_provider_singleton.dart';
+import 'package:ra/src/core/request_context.dart';
+import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server_provider.dart';
+import 'package:ra/src/package.dart';
+import 'package:ra/src/types.dart';
 
 @immutable
 final class Server {

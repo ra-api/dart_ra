@@ -1,7 +1,9 @@
-import 'package:ra_core/mab.dart';
-import 'package:ra_core/src/core/parameter/parameter.dart';
-import 'package:ra_core/src/core/registry.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/parameter/method_parameter.dart';
+import 'package:ra/src/core/parameter/package_parameter.dart';
+import 'package:ra/src/core/parameter/parameter.dart';
+import 'package:ra/src/core/registry.dart';
+import 'package:ra/src/types.dart';
 
 /// Информация о методе, используется в core.spec но планируется,
 /// что в том или ином виде будет добавлено в [MethodCtx]

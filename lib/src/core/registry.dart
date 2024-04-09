@@ -1,10 +1,10 @@
-import 'package:ra_core/src/core/method/method.dart';
-import 'package:ra_core/src/core/parameter/parameter.dart';
-import 'package:ra_core/src/core/plugin/plugin.dart';
-import 'package:ra_core/src/core/plugin/plugin_registry.dart';
-import 'package:ra_core/src/package.dart';
-import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/method/method.dart';
+import 'package:ra/src/core/parameter/parameter.dart';
+import 'package:ra/src/core/plugin/plugin.dart';
+import 'package:ra/src/core/plugin/plugin_registry.dart';
+import 'package:ra/src/package.dart';
+import 'package:ra/src/types.dart';
 
 @immutable
 final class Registry {

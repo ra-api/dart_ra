@@ -1,6 +1,6 @@
 // Базовый класс для метода
-import 'package:ra_core/mab.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/ra.dart';
 
 /// Базовый класс, для задания нового метода
 @immutable

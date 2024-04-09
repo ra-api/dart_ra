@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:ra_core/mab.dart';
-import 'package:ra_core/src/core/request_context.dart';
-import 'package:ra_core/src/core/response_context.dart';
+import 'package:ra/ra.dart';
 
 final class DependencyOptions extends PluginOptions {
   final String foo = 'bar';

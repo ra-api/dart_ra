@@ -1,4 +1,4 @@
-import 'package:ra_core/mab.dart';
+import 'package:ra/ra.dart';
 
 import '../../plant_uml_method.dart';
 import 'methods/methods.dart';

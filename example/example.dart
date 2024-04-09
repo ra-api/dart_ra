@@ -1,4 +1,4 @@
-import 'package:ra_core/mab.dart';
+import 'package:ra/ra.dart';
 
 import 'hot_reload.dart';
 import 'implements/plugins/dependency_plugin.dart';

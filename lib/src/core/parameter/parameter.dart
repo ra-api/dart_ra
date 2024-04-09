@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:ra_core/src/core/data_type/data_type.dart';
-import 'package:ra_core/src/core/method/data_source_context.dart';
-import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/data_type/data_type.dart';
+import 'package:ra/src/core/method/data_source_context.dart';
+import 'package:ra/src/types.dart';
 
 /// Базовый класс параметра
 @immutable

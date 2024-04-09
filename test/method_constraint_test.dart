@@ -1,4 +1,4 @@
-import 'package:ra_core/mab.dart';
+import 'package:ra/ra.dart';
 import 'package:test/test.dart';
 
 void main() {

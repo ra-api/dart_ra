@@ -9,7 +9,7 @@ environment:
 dependencies:
   drift: ^2.15.0
   essential_xlsx: ^2.0.0
-  ra_core:
+  ra:
     path: ../
   hotreloader: ^4.2.0
 

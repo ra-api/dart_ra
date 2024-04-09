@@ -1,5 +1,5 @@
-import 'package:ra_core/mab.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/ra.dart';
 
 @immutable
 final class FixtureMethod extends Method {

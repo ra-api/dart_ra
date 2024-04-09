@@ -1,8 +1,6 @@
-library;
-
-import 'package:ra_core/src/core/plugin/plugin_provider_singleton.dart';
-import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/plugin/plugin_provider_singleton.dart';
+import 'package:ra/src/types.dart';
 
 export 'hooks/hooks.dart';
 

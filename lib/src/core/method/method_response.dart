@@ -1,6 +1,7 @@
-import 'package:ra_core/mab.dart';
-import 'package:ra_core/src/core/response_context.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/content_type.dart';
+import 'package:ra/src/core/method/method_decl.dart';
+import 'package:ra/src/core/response_context.dart';
 
 enum _Key {
   statusCode,

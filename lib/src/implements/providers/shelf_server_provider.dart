@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:ra_core/src/core/request_context.dart';
-import 'package:ra_core/src/core/server_provider.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/request_context.dart';
+import 'package:ra/src/core/server_provider.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 

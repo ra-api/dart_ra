@@ -1,8 +1,8 @@
-import 'package:ra_core/src/core/method/method_decl.dart';
-import 'package:ra_core/src/core/plugin/plugin.dart';
-import 'package:ra_core/src/core/plugin/plugin_registry.dart';
-import 'package:ra_core/src/implements/exceptions/exceptions.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/method/method_decl.dart';
+import 'package:ra/src/core/plugin/plugin.dart';
+import 'package:ra/src/core/plugin/plugin_registry.dart';
+import 'package:ra/src/implements/exceptions/exceptions.dart';
 
 /// Класс контекст для метода, служит, для извлечения значения параметра
 /// по имени и приведения извлеченного значения до [T]

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:ra_core/src/core/method/data_source_context.dart';
+import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:test/test.dart';
 
 void main() {

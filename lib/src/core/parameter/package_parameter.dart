@@ -1,7 +1,7 @@
-import 'package:ra_core/src/core/method/method_constraint.dart';
-import 'package:ra_core/src/core/parameter/parameter.dart';
-import 'package:ra_core/src/types.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/method/method_constraint.dart';
+import 'package:ra/src/core/parameter/parameter.dart';
+import 'package:ra/src/types.dart';
 
 /// Параметр уровня пакет
 @immutable

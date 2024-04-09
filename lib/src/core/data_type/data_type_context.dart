@@ -1,6 +1,6 @@
-import 'package:ra_core/src/core/plugin/plugin.dart';
-import 'package:ra_core/src/core/plugin/plugin_registry.dart';
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/plugin/plugin.dart';
+import 'package:ra/src/core/plugin/plugin_registry.dart';
 
 @immutable
 final class DataTypeCtx {
