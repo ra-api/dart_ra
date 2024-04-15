@@ -49,5 +49,5 @@ void _onServe(server) {
   server.idleTimeout;
   server.autoCompress = true;
 
-  print('🚀Serving at http://${server.address.host}:${server.port}');
+  print('🚀Serving at http://${server.ipAddress.host}:${server.port}');
 }

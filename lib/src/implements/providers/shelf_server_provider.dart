@@ -12,15 +12,20 @@ typedef OnServeCallback = void Function(HttpServer);
 
 @immutable
 final class ShelfServerProvider extends ServerProvider {
+  final String? ipAddress;
   final OnServeCallback? onServe;
 
-  const ShelfServerProvider({required super.port, this.onServe});
+  const ShelfServerProvider({
+    required super.port,
+    this.ipAddress,
+    this.onServe,
+  });
 
   @override
   Future<void> init(handler) async {
     final server = await shelf_io.serve(
       _handler(handler),
-      '0.0.0.0',
+      InternetAddress.tryParse(ipAddress ?? '127.0.0.1')!,
       port,
     );
 
