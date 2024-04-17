@@ -25,7 +25,7 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
 }
 
 final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
-    implements MethodResponseHook {
+    implements MethodResponseHook, ErrorHandleHook {
   @override
   FutureOr<ResponseCtx> onMethodResponse(MethodResponseEvent event) {
     final headers = event.response.headers;
@@ -33,5 +33,12 @@ final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
     return event.response.copyWith(
       headers: headers..putIfAbsent('foo', () => 'bar'),
     );
+  }
+
+  @override
+  void onErrorHandle(event) {
+    print(event.exception.reported);
+    print(event.exception.reason);
+    print(event.exception.statusCode);
   }
 }

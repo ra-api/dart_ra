@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ra/ra.dart';
 
 import 'hot_reload.dart';
@@ -13,7 +15,9 @@ enum ApiVersion {
   const ApiVersion(this.version);
 }
 
-Future<void> main() async {
+Future<void> main(args) async {
+  print(args);
+
   /// Конфигурируем сервер и создаем его, на выходе получаем экземпляр shelf
   /// сервера с хендлером который отвечает за роутинг, выполнение и отдачу
   /// ответа клиенту, с сервером дальше можем делать что нам угодно.
@@ -39,15 +43,14 @@ Future<void> main() async {
   );
 
   await HotReload(
-    enable: true,
     server: server,
     onLog: (log) => print('[UPD] $log'),
   ).serve();
 }
 
-void _onServe(server) {
+void _onServe(HttpServer server) {
   server.idleTimeout;
   server.autoCompress = true;
 
-  print('🚀Serving at http://${server.ipAddress.host}:${server.port}');
+  print('🚀Serving at http://${server.address.host}:${server.port}');
 }

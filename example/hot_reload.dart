@@ -1,17 +1,26 @@
+import 'dart:io';
+
 import 'package:hotreloader/hotreloader.dart';
 import 'package:ra/ra.dart';
 
 typedef OnLogCallback = void Function(String log);
 
 final class HotReload {
-  final bool enable;
   final Server server;
   final OnLogCallback? onLog;
 
-  const HotReload({required this.server, this.enable = true, this.onLog});
+  const HotReload({required this.server, this.onLog});
 
   Future<void> serve() async {
-    if (enable) {
+    bool isVmServiceEnabled = false;
+    for (final arg in Platform.executableArguments) {
+      if (arg.startsWith('--enable-vm-service')) {
+        isVmServiceEnabled = true;
+        break;
+      }
+    }
+
+    if (isVmServiceEnabled) {
       await HotReloader.create(onAfterReload: _onAfterReload);
     }
 

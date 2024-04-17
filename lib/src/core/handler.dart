@@ -94,10 +94,10 @@ final class ApiHandler {
     required RequestCtx ctx,
     required String baseEndpoint,
   }) async {
+    RegistryItem? handler;
     try {
       _checkBaseEndpoint(uri: ctx.uri, baseEndpoint: baseEndpoint);
-
-      final handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
+      handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
 
       final request = await handler.pluginRegistry.performMethodRequest(
         MethodRequestEvent(request: ctx),
@@ -113,32 +113,22 @@ final class ApiHandler {
           response: methodResponse.build(),
         ),
       );
-    } on ApiException catch (exception, stackTrace) {
-      final request = await _globalPluginRegistry.performMethodRequest(
-        MethodRequestEvent(request: ctx),
-      );
-
-      _globalPluginRegistry.performErrorHandle(
-        ErrorHandleEvent(
-          exception: exception,
-          stackTrace: stackTrace,
-        ),
-      );
-      return _apiErrorResponse(
-        exception: exception,
-        request: request,
-      );
     } catch (error, stackTrace) {
-      final request = await _globalPluginRegistry.performMethodRequest(
+      final registry =
+          handler != null ? handler.pluginRegistry : _globalPluginRegistry;
+      final request = await registry.performMethodRequest(
         MethodRequestEvent(request: ctx),
       );
 
-      final exception = ServerInternalException(
-        reason: 'Method unexpected internal error',
-        error: error,
-        stackTrace: stackTrace,
-      );
-      _globalPluginRegistry.performErrorHandle(
+      final exception = error is ApiException
+          ? error
+          : ServerInternalException(
+              reason: 'Method unexpected internal error',
+              error: error,
+              stackTrace: stackTrace,
+            );
+
+      registry.performErrorHandle(
         ErrorHandleEvent(
           exception: exception,
           stackTrace: stackTrace,
