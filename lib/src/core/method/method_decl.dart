@@ -55,6 +55,6 @@ final class MethodDecl {
   }
 
   String _source(Parameter param) {
-    return param.dataSource.source;
+    return param.source.source;
   }
 }

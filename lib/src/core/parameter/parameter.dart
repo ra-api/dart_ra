@@ -1,10 +1,13 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/data_type/data_type.dart';
 import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/types.dart';
+
+export 'body_parameter.dart';
+export 'header_parameter.dart';
+export 'query_parameter.dart';
 
 /// Базовый класс параметра
 @immutable
@@ -13,7 +16,7 @@ abstract class Parameter<I, O> {
   /// получить из [MethodContext]
   final String id;
   final bool optional;
-  final DataSource dataSource;
+  final DataSource source;
 
   final DataType<I, O> dataType;
 
@@ -22,7 +25,7 @@ abstract class Parameter<I, O> {
 
   const Parameter({
     required this.id,
-    required this.dataSource,
+    required this.source,
     required this.dataType,
     this.summary,
     this.optional = false,
@@ -31,49 +34,6 @@ abstract class Parameter<I, O> {
   bool get isRequired => !optional;
 
   FutureOr<I?> extract(DataSourceContext ctx);
-}
-
-@immutable
-base class QueryParameter<O> extends Parameter<String, O> {
-  const QueryParameter({
-    required super.id,
-    required super.dataType,
-    super.optional,
-    super.summary,
-  }) : super(dataSource: DataSource.query);
-
-  @override
-  FutureOr<String?> extract(DataSourceContext ctx) {
-    return ctx.query(id);
-  }
-}
-
-@immutable
-base class HeaderParameter<O> extends Parameter<String, O> {
-  const HeaderParameter({
-    required super.id,
-    required super.dataType,
-    super.optional,
-    super.summary,
-  }) : super(dataSource: DataSource.query);
-
-  @override
-  FutureOr<String?> extract(DataSourceContext ctx) {
-    return ctx.query(id);
-  }
-}
-
-base class BodyParameter<O> extends Parameter<Uint8List, O> {
-  BodyParameter({
-    required super.dataType,
-    super.optional,
-    super.summary,
-  }) : super(dataSource: DataSource.query, id: 'body');
-
-  @override
-  FutureOr<Uint8List> extract(DataSourceContext ctx) {
-    return ctx.body;
-  }
 }
 
 @internal

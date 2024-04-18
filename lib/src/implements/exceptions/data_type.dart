@@ -17,7 +17,7 @@ final class DataTypeException extends ApiException {
     final fields = {
       'required': parameter.isRequired,
       'summary': parameter.summary,
-      'source': parameter.dataSource.name
+      'source': parameter.source.name
     };
 
     return fields;

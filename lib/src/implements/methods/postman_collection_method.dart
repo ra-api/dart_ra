@@ -77,7 +77,7 @@ final class PostmanCollectionMethod extends Method<JsonType> {
 
   List<JsonType> _declToHeaders(MethodDecl decl) {
     return decl.parameters.where((element) {
-      return element.dataSource == DataSource.header;
+      return element.source == DataSource.header;
     }).map((e) {
       final value =
           variables?.containsKey(e.id) == true ? '{{${e.id}}' : ':${e.id}';
@@ -109,7 +109,7 @@ final class PostmanCollectionMethod extends Method<JsonType> {
       'host': ['{{host}}'],
       'path': '${decl.package}.${decl.name}',
       'query': decl.parameters
-          .where((e) => e.dataSource == DataSource.query)
+          .where((e) => e.source == DataSource.query)
           .map(_paramToQuery)
           .toList(growable: false),
     };
