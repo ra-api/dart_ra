@@ -66,7 +66,7 @@ final class Registry {
   String _httpMethod(Method method) {
     try {
       method.params.firstWhere((element) {
-        return element.source == MethodDataSource.body;
+        return element.dataSource == DataSource.body;
       });
       return 'POST';
     } on Object {
@@ -140,26 +140,26 @@ final class RegistryItem {
     return PluginRegistry(plugins: pluginsData);
   }
 
-  List<Parameter> get params {
-    final packageParams = package.params.where((element) {
-      if (element.constraints?.isNotEmpty == true) {
-        bool res = false;
-        for (final constraint in element.constraints!) {
-          if (constraint.allow(method)) {
-            res = true;
-            break;
-          }
-        }
-
-        return res;
-      }
-
-      return true;
-    }).toList(growable: false);
+  List<ParameterData> get paramsData {
+    // final packageParams = package.params.where((element) {
+    //   if (element.constraints?.isNotEmpty == true) {
+    //     bool res = false;
+    //     for (final constraint in element.constraints!) {
+    //       if (constraint.allow(method)) {
+    //         res = true;
+    //         break;
+    //       }
+    //     }
+    //
+    //     return res;
+    //   }
+    //
+    //   return true;
+    // }).toList(growable: false);
 
     return [
-      ...method.params,
-      ...packageParams,
+      ...method.params.map(ParameterData.method),
+      ...package.params.map(ParameterData.package),
     ];
   }
 }

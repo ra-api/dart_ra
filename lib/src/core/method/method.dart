@@ -30,7 +30,7 @@ abstract base class Method<O extends Object> {
   MethodResponse<O> get response => MethodResponse<O>(contentType);
 
   /// Набор параметров метода
-  List<MethodParameter> get params => [];
+  List<Parameter> get params => [];
 
   List<Plugin> get plugins => [];
 }

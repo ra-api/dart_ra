@@ -1,6 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:ra/src/core/parameter/method_parameter.dart';
-import 'package:ra/src/core/parameter/package_parameter.dart';
 import 'package:ra/src/core/parameter/parameter.dart';
 import 'package:ra/src/core/registry.dart';
 import 'package:ra/src/types.dart';
@@ -24,7 +22,9 @@ final class MethodDecl {
   }
 
   List<Parameter> get parameters {
-    return _registryItem.params;
+    return _registryItem.paramsData.map((e) {
+      return e.parameter;
+    }).toList(growable: false);
   }
 
   JsonType export() {
@@ -37,7 +37,7 @@ final class MethodDecl {
       'mimeType': mimeType,
     };
 
-    if (_registryItem.params.isNotEmpty) {
+    if (_registryItem.paramsData.isNotEmpty) {
       final params = parameters.map(
         (e) {
           return {
@@ -55,14 +55,6 @@ final class MethodDecl {
   }
 
   String _source(Parameter param) {
-    if (param is MethodParameter) {
-      return param.source.source;
-    }
-
-    if (param is PackageParameter) {
-      return param.source.source;
-    }
-
-    throw UnimplementedError();
+    return param.dataSource.source;
   }
 }

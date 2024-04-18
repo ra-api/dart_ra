@@ -52,3 +52,9 @@ enum PluginScope {
   global,
   method,
 }
+
+@internal
+enum ParameterScope {
+  method,
+  package,
+}
