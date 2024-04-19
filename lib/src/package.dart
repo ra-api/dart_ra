@@ -12,5 +12,5 @@ abstract base class Package {
   /// Методы, которые входят в пакет
   List<Method> get methods;
 
-  List<PackageParameter> get params => [];
+  List<Parameter> get params => [];
 }

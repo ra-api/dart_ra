@@ -17,13 +17,8 @@ final class DataTypeException extends ApiException {
     final fields = {
       'required': parameter.isRequired,
       'summary': parameter.summary,
+      'source': parameter.source.name
     };
-
-    if (parameter is MethodParameter) {
-      final methodParam = parameter as MethodParameter;
-      fields.putIfAbsent('source', () => methodParam.source.name);
-      fields.putIfAbsent('dataType', () => methodParam.dataType.summary);
-    }
 
     return fields;
   }

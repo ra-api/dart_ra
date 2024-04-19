@@ -54,19 +54,19 @@ final class ReportMethod extends ProxyMethod {
   }
 
   @override
-  List<MethodParameter> get params {
+  List<Parameter> get params {
     return [
-      MethodQueryParameter(
+      QueryParameter(
         id: 'from',
         dataType: DateTimeDataType(),
         optional: true,
       ),
-      MethodQueryParameter(
+      QueryParameter(
         id: 'count',
         dataType: IntDataType(initial: 5),
         optional: true,
       ),
-      MethodQueryParameter(
+      QueryParameter(
         id: 'search',
         dataType: StringDataType(
           pattern: RegExp(r'^\d{3}-\d{2}$'),
@@ -74,7 +74,7 @@ final class ReportMethod extends ProxyMethod {
         ),
       ),
       LimitParameter(),
-      MethodBodyParameter(
+      BodyParameter(
         dataType: ModelBodyDataType<Person>(
           onTransform: Person.fromJson,
         ),

@@ -4,7 +4,7 @@ final class FixturePackage extends Package {
   final String? fakeName;
 
   final List<Method>? fakeMethods;
-  final List<PackageParameter>? fakeParams;
+  final List<Parameter>? fakeParams;
 
   const FixturePackage({
     this.fakeName,
@@ -19,7 +19,7 @@ final class FixturePackage extends Package {
   String get name => _fake(fakeName);
 
   @override
-  List<PackageParameter> get params => _fake(fakeParams);
+  List<Parameter> get params => _fake(fakeParams);
 
   T _fake<T>(T? value) => value ?? (throw UnimplementedError());
 }

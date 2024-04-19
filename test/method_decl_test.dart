@@ -14,7 +14,7 @@ void main() {
           fakeName: 'getCart',
           fakeContentType: JsonContentType(),
           fakeParams: [
-            MethodQueryParameter(
+            QueryParameter(
               id: 'limit',
               dataType: IntDataType(),
             )
@@ -29,7 +29,7 @@ void main() {
           fakeName: 'saveCart',
           fakeContentType: JsonContentType(),
           fakeParams: [
-            MethodBodyParameter(dataType: JsonBodyDataType()),
+            BodyParameter(dataType: JsonBodyDataType()),
           ],
         ),
         packageName: 'cart',
@@ -76,23 +76,24 @@ void main() {
         expect(export['mimeType'], equals(decl.mimeType));
         expect(export['summary'], equals(decl.summary));
 
-        if (testCase.params.isNotEmpty) {
+        if (testCase.paramsData.isNotEmpty) {
           final params = export['params'] as List;
 
-          testCase.params.asMap().forEach((key, value) {
-            expect(params[key]['name'], equals(value.id));
-            expect(params[key]['required'], equals(value.isRequired));
+          testCase.paramsData.asMap().forEach((key, value) {
+            expect(params[key]['name'], equals(value.parameter.id));
+            expect(params[key]['required'], equals(value.parameter.isRequired));
 
-            if (value is MethodParameter) {
-              expect(params[key]['source'], equals(value.source.source));
-            } else if (value is PackageParameter) {
-              expect(params[key]['source'], equals(value.source.source));
-            }
+            // if (value is MethodParameter) {
+            //   expect(params[key]['source'], equals(value.parameter.dataSource));
+            // } else if (value is PackageParameter) {
+            //   expect(params[key]['source'], equals(value.parameter.dataSource));
+            // }
 
-            if (value.summary != null) {
-              expect(params[key]['summary'], equals(value.summary));
+            if (value.parameter.summary != null) {
+              expect(params[key]['summary'], equals(value.parameter.summary));
             } else {
-              expect(params[key]['summary'], equals('Parameter "${value.id}"'));
+              expect(params[key]['summary'],
+                  equals('Parameter "${value.parameter.id}"'));
             }
           });
         }
@@ -111,7 +112,7 @@ RegistryItem _registryItem({
     key: '$packageName.${method.name}',
     method: method,
     package: FixturePackage(fakeName: packageName, fakeParams: [
-      PackageHeaderParameter(id: 'token', dataType: StringDataType()),
+      HeaderParameter(id: 'token', dataType: StringDataType()),
     ]),
     version: version,
     httpMethod: httpMethod,

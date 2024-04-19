@@ -24,14 +24,11 @@ final class CartPackage extends Package {
   }
 
   @override
-  List<PackageParameter> get params {
+  List<Parameter> get params {
     return [
-      PackageHeaderParameter(
+      HeaderParameter(
         id: 'auth',
         dataType: BoolDataType(initial: true),
-        constraints: [
-          MethodConstraint<ReportMethod>.deny(),
-        ],
       ),
     ];
   }

@@ -38,15 +38,6 @@ final class Registry {
   }
 
   void _addToRegistry({required Package package, required Method method}) {
-    for (var plugin in method.plugins) {
-      if (plugin is PluginProvider) {
-        throw ArgumentError(
-          'Invalid plugin ${plugin.runtimeType} in method ${method.runtimeType}, '
-          'available plugin types for method: Plugin or PluginConsumer',
-        );
-      }
-    }
-
     _methods.add(
       RegistryItem(
         key: _key(
@@ -66,7 +57,7 @@ final class Registry {
   String _httpMethod(Method method) {
     try {
       method.params.firstWhere((element) {
-        return element.source == MethodDataSource.body;
+        return element.source == DataSource.body;
       });
       return 'POST';
     } on Object {
@@ -119,14 +110,32 @@ final class RegistryItem {
   final String httpMethod;
   final Iterable<Plugin> plugins;
 
-  const RegistryItem({
+  RegistryItem({
     required this.key,
     required this.method,
     required this.package,
     required this.version,
     required this.httpMethod,
     required this.plugins,
-  });
+  }) {
+    for (var plugin in method.plugins) {
+      if (plugin is PluginProvider) {
+        throw ArgumentError(
+          'Invalid plugin ${plugin.runtimeType} in method ${method.runtimeType}, '
+          'available plugin types for method: Plugin or PluginConsumer',
+        );
+      }
+    }
+
+    for (final param in paramsData) {
+      if (!param.scope.allowSources.contains(param.parameter.source)) {
+        throw ArgumentError(
+          'Invalid parameter scope ${param.parameter.source} in parameter ${param.parameter.id}, '
+          'available scopes: ${param.scope.allowSources}',
+        );
+      }
+    }
+  }
 
   PluginRegistry get pluginRegistry {
     final pluginsData = [
@@ -140,26 +149,12 @@ final class RegistryItem {
     return PluginRegistry(plugins: pluginsData);
   }
 
-  List<Parameter> get params {
-    final packageParams = package.params.where((element) {
-      if (element.constraints?.isNotEmpty == true) {
-        bool res = false;
-        for (final constraint in element.constraints!) {
-          if (constraint.allow(method)) {
-            res = true;
-            break;
-          }
-        }
-
-        return res;
-      }
-
-      return true;
-    }).toList(growable: false);
-
-    return [
-      ...method.params,
-      ...packageParams,
+  List<ParameterData> get paramsData {
+    final params = [
+      ...method.params.map(ParameterData.method),
+      ...package.params.map(ParameterData.package),
     ];
+
+    return params;
   }
 }

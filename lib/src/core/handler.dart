@@ -183,23 +183,23 @@ final class ApiHandler {
       body: reqCtx.body,
     );
 
-    for (final param in handler.params) {
-      final raw = await param.extract(dataSourceCtx);
+    for (final paramData in handler.paramsData) {
+      final raw = await paramData.parameter.extract(dataSourceCtx);
 
       try {
-        final val = (raw == null && !param.isRequired)
-            ? param.dataType.initial
-            : await param.dataType.convert(
+        final val = (raw == null && !paramData.parameter.isRequired)
+            ? paramData.parameter.dataType.initial
+            : await paramData.parameter.dataType.convert(
                 raw,
                 DataTypeCtx(
                   pluginRegistry: handler.pluginRegistry,
                 ));
-        ctx.putIfAbsent(param.id, () => val);
+        ctx.putIfAbsent(paramData.parameter.id, () => val);
       } on ApiException {
         rethrow;
       } on Object catch (e, st) {
         throw Error.throwWithStackTrace(
-          DataTypeException(parameter: param),
+          DataTypeException(parameter: paramData.parameter),
           st,
         );
       }

@@ -21,17 +21,17 @@ final class CartSaveMethod extends JsonMethod {
   }
 
   @override
-  List<MethodParameter> get params {
+  List<Parameter> get params {
     return [
       /// Задаем query параметр preview который если не передан
       /// будет равен false, то есть не обязателен
-      MethodQueryParameter(
+      QueryParameter(
         id: 'preview',
         dataType: BoolDataType(initial: false),
         summary: 'Предпросмотр промоакций для заказа',
       ),
 
-      MethodBodyParameter(dataType: JsonBodyDataType()),
+      BodyParameter(dataType: JsonBodyDataType()),
     ];
   }
 }
