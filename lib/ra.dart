@@ -8,8 +8,6 @@ export 'src/core/method/method_context.dart';
 export 'src/core/method/method_decl.dart';
 export 'src/core/method/method_response.dart';
 export 'src/core/parameter/parameter.dart' hide ParameterData;
-// export 'src/core/parameter/method_parameter.dart';
-// export 'src/core/parameter/package_parameter.dart';
 export 'src/core/plugin/plugin.dart' hide PluginHook, PluginData;
 export 'src/core/request_context.dart';
 export 'src/core/response_context.dart';

@@ -8,11 +8,18 @@ final class PostmanCollectionMethod extends Method<JsonType> {
   final Uri host;
   final Map<String, String?>? variables;
 
+  @override
+  final List<Plugin> plugins;
+  @override
+  final List<Parameter> params;
+
   PostmanCollectionMethod({
     required this.collectionName,
     required this.host,
     this.methodName = 'postman',
     this.variables,
+    this.plugins = const [],
+    this.params = const [],
   });
   @override
   ResponseContentType<JsonType> get contentType => JsonContentType();

@@ -116,9 +116,6 @@ final class ApiHandler {
     } catch (error, stackTrace) {
       final registry =
           handler != null ? handler.pluginRegistry : _globalPluginRegistry;
-      final request = await registry.performMethodRequest(
-        MethodRequestEvent(request: ctx),
-      );
 
       final exception = error is ApiException
           ? error
@@ -136,7 +133,7 @@ final class ApiHandler {
       );
       return _apiErrorResponse(
         exception: exception,
-        request: request,
+        request: ctx,
       );
     }
   }

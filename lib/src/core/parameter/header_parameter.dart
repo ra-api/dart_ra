@@ -16,6 +16,6 @@ base class HeaderParameter<O> extends Parameter<String, O> {
 
   @override
   FutureOr<String?> extract(DataSourceContext ctx) {
-    return ctx.query(id);
+    return ctx.header(id);
   }
 }

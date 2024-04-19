@@ -16,7 +16,8 @@ final class PluginRegistry {
   }) : _plugins = plugins;
 
   T provider<T extends PluginProvider>() {
-    return _plugins.whereType<T>().first;
+    print(T.runtimeType);
+    return _plugins.map((e) => e.plugin).whereType<T>().first;
   }
 
   T options<T extends PluginOptions>() {

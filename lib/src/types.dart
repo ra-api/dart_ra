@@ -5,6 +5,7 @@ typedef JsonType = Map<String, dynamic>;
 enum DataSource {
   query('query'),
   header('header'),
+  path('path'),
   body('body');
 
   final String source;

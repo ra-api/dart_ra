@@ -1,6 +1,6 @@
 name: ra_example
 description: A starting point for Dart libraries or applications.
-version: 1.0.0
+version: 0.7.5-pre
 publish_to: 'none'
 
 environment:
@@ -9,9 +9,10 @@ environment:
 dependencies:
   drift: ^2.15.0
   essential_xlsx: ^2.0.0
+  meta: ^1.14.0
   ra:
     path: ../
-  hotreloader: ^4.2.0
+  token_bucket: ^0.9.7-pre
 
 dev_dependencies:
   lints: ^2.1.0

@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:ra/ra.dart';
+import 'package:token_bucket/token_bucket.dart';
 
-import 'hot_reload.dart';
 import 'implements/plugins/dependency_plugin.dart';
+import 'implements/plugins/rate_limit_plugin.dart';
 import 'packages/packages.dart';
 import 'packages/util/util.dart';
 
@@ -36,14 +37,16 @@ Future<void> main(args) async {
       DependencyPlugin(
         options: DependencyOptions(),
       ),
+      RateLimitProvider(
+        options: RateLimitOptions(
+          storage: MemoryBucketStorage(),
+        ),
+      )
     ],
     verbose: true,
   );
 
-  await HotReload(
-    server: server,
-    onLog: (log) => print('[UPD] $log'),
-  ).serve();
+  await server.serve();
 }
 
 void _onServe(HttpServer server) {

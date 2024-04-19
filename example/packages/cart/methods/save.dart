@@ -1,6 +1,8 @@
 import 'package:ra/ra.dart';
+import 'package:token_bucket/token_bucket.dart';
 
 import '../../../implements/implements.dart';
+import '../../../implements/plugins/rate_limit_plugin.dart';
 
 final class CartSaveMethod extends JsonMethod {
   CartSaveMethod();
@@ -18,6 +20,17 @@ final class CartSaveMethod extends JsonMethod {
 
     /// response это getter который реализован в Json
     return response..body(cart);
+  }
+
+  @override
+  List<Plugin> get plugins {
+    return [
+      RateLimitConsumer(
+        capacity: 3,
+        frequency: RefillFrequency.minute,
+        bucketId: (ctx) => 'bucketId-${ctx.queries['preview']}',
+      )
+    ];
   }
 
   @override
