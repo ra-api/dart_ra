@@ -30,6 +30,10 @@ class MethodResponse<T extends Object> {
     (_data[_Key.headers] as Map).putIfAbsent(name, () => value);
   }
 
+  void headers(Map<String, String> headers) {
+    (_data[_Key.headers] as Map).addAll(headers);
+  }
+
   void body(T value) {
     _data[_Key.body] = value;
   }

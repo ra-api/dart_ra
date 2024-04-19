@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
+import 'package:ra/src/core/api_exception.dart';
 import 'package:ra/src/core/data_type/data_type_context.dart';
 import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/core/method/method_context.dart';
@@ -146,8 +147,10 @@ final class ApiHandler {
     }
   }
 
-  FutureOr<ResponseCtx> _apiErrorResponse(
-      {required ApiException exception, required RequestCtx request}) async {
+  FutureOr<ResponseCtx> _apiErrorResponse({
+    required ApiException exception,
+    required RequestCtx request,
+  }) async {
     final body = {
       'error': {
         'message': exception.reason,
@@ -158,6 +161,7 @@ final class ApiHandler {
 
     final methodResponse = MethodResponse<JsonType>(JsonContentType())
       ..statusCode(exception.statusCode)
+      ..headers(exception.headers)
       ..body(body);
 
     return await _globalPluginRegistry.performMethodResponse(

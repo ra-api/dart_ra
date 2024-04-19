@@ -79,6 +79,13 @@ final class ManyRequestException extends ApiException {
   String get reason => 'Many requests';
 
   @override
+  Map<String, String> get headers {
+    return {
+      'x-remain-to-refill-ms': remainToRefill.toString(),
+    };
+  }
+
+  @override
   JsonType? get verboseFields {
     return {'remainToRefill': '$remainToRefill ms'};
   }

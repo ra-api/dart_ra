@@ -1,5 +1,6 @@
 library;
 
+export 'src/core/api_exception.dart';
 export 'src/core/content_type.dart';
 export 'src/core/data_type/data_type.dart';
 export 'src/core/method/method.dart';

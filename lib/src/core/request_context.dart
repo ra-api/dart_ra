@@ -31,4 +31,14 @@ final class RequestCtx {
       body: body ?? this.body,
     );
   }
+
+  RequestCtx mergeHeaders(Map<String, String> headers) {
+    if (headers.isNotEmpty) {
+      final newHeaders = Map<String, String>.from(this.headers)
+        ..addAll(headers);
+      print(newHeaders);
+      return copyWith(headers: newHeaders);
+    }
+    return this;
+  }
 }
