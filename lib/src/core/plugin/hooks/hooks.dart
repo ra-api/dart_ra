@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/api_exception.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server/server.dart';
 
 part 'error_handle_hook.dart';
 part 'method_request_hook.dart';

@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/content_type.dart';
 import 'package:ra/src/core/method/method_decl.dart';
-import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server/server.dart';
 
 /// Enum representing keys for the method response data.
 enum _Key {
@@ -50,8 +50,8 @@ class MethodResponse<T extends Object> {
     _data[_Key.decl] = value;
   }
 
-  /// Builds the method response into a [ResponseContext].
-  ResponseContext build() {
+  /// Builds the method response into a [ServerResponse].
+  ServerResponse build() {
     final statusCode = _data[_Key.statusCode] as int;
     final body = _data[_Key.body] as T;
     final headers = _data[_Key.headers] as Map<String, String>;
@@ -60,7 +60,7 @@ class MethodResponse<T extends Object> {
     // Set content-type header
     headers['content-type'] = _contentType.mimeType;
 
-    return ResponseContext(
+    return ServerResponse(
       statusCode: statusCode,
       body: _contentType.apply(body, decl),
       headers: headers,

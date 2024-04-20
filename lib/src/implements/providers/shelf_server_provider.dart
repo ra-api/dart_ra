@@ -3,8 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/server_provider.dart';
+import 'package:ra/src/core/server/server.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -39,7 +38,7 @@ final class ShelfServerProvider extends ServerProvider {
   Handler _handler(HandlerCallback callback) {
     return (Request request) async {
       final body = await _body(request);
-      final ctx = RequestContext(
+      final ctx = ServerRequest(
         httpMethod: request.method,
         uri: request.url,
         queries: request.url.queryParameters,

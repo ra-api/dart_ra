@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server/server_request.dart';
+import 'package:ra/src/core/server/server_response.dart';
 
 /// Callback signature for request handling.
-typedef HandlerCallback = Future<ResponseContext> Function(RequestContext ctx);
+typedef HandlerCallback = Future<ServerResponse> Function(
+    ServerRequest request);
 
 /// Base class for server providers.
 @immutable

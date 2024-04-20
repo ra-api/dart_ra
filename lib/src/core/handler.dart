@@ -10,8 +10,7 @@ import 'package:ra/src/core/method/method_response.dart';
 import 'package:ra/src/core/plugin/plugin.dart';
 import 'package:ra/src/core/plugin/plugin_registry.dart';
 import 'package:ra/src/core/registry.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server/server.dart';
 import 'package:ra/src/implements/content_types/content_types.dart';
 import 'package:ra/src/implements/exceptions/exceptions.dart';
 import 'package:ra/src/package.dart';
@@ -53,7 +52,7 @@ final class ApiHandler {
   }
 
   RegistryItem _findMethod({
-    required RequestContext ctx,
+    required ServerRequest ctx,
     required String baseEndpoint,
   }) {
     final path = ctx.uri.path.substring(baseEndpoint.length + 1).split('.');
@@ -91,8 +90,8 @@ final class ApiHandler {
     return handler;
   }
 
-  Future<ResponseContext> handle({
-    required RequestContext ctx,
+  Future<ServerResponse> handle({
+    required ServerRequest ctx,
     required String baseEndpoint,
   }) async {
     RegistryItem? handler;
@@ -100,11 +99,12 @@ final class ApiHandler {
       _checkBaseEndpoint(uri: ctx.uri, baseEndpoint: baseEndpoint);
       handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
 
-      final request = await handler.pluginRegistry.performMethodRequest(
+      final newRequest = await handler.pluginRegistry.performMethodRequest(
         MethodRequestEvent(request: ctx),
       );
 
-      final methodCtx = await _methodContext(handler: handler, reqCtx: request);
+      final methodCtx =
+          await _methodContext(handler: handler, request: newRequest);
       var methodResponse = (await handler.method.handle(methodCtx))
         ..decl(MethodDecl(handler));
 
@@ -147,9 +147,9 @@ final class ApiHandler {
     }
   }
 
-  FutureOr<ResponseContext> _apiErrorResponse({
+  FutureOr<ServerResponse> _apiErrorResponse({
     required ApiException exception,
-    required RequestContext request,
+    required ServerRequest request,
   }) async {
     final body = {
       'error': {
@@ -174,14 +174,14 @@ final class ApiHandler {
 
   Future<MethodContext> _methodContext({
     required RegistryItem handler,
-    required RequestContext reqCtx,
+    required ServerRequest request,
   }) async {
-    final ctx = <String, dynamic>{};
+    final methodCtx = <String, dynamic>{};
 
     final dataSourceCtx = DataSourceContext(
-      headers: reqCtx.headers,
-      queries: reqCtx.queries,
-      body: reqCtx.body,
+      headers: request.headers,
+      queries: request.queries,
+      body: request.body,
     );
 
     for (final paramData in handler.paramsData) {
@@ -195,7 +195,7 @@ final class ApiHandler {
                 DataTypeContext(
                   pluginRegistry: handler.pluginRegistry,
                 ));
-        ctx.putIfAbsent(paramData.parameter.id, () => val);
+        methodCtx.putIfAbsent(paramData.parameter.id, () => val);
       } on ApiException {
         rethrow;
       } on Object catch (e, st) {
@@ -210,7 +210,7 @@ final class ApiHandler {
         _registry.methods.map(MethodDecl.new).toList(growable: false);
 
     return MethodContext(
-      ctx,
+      methodCtx,
       methods: methods,
       current: MethodDecl(handler),
       verbose: verbose,
@@ -218,8 +218,8 @@ final class ApiHandler {
     );
   }
 
-  double _version(RequestContext ctx) {
-    final queryVersion = ctx.uri.queryParameters['v'];
+  double _version(ServerRequest request) {
+    final queryVersion = request.uri.queryParameters['v'];
     if (queryVersion == null) {
       return currentApiVersion;
     }

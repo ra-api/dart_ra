@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/plugin/plugin.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/response_context.dart';
+import 'package:ra/src/core/server/server.dart';
 import 'package:ra/src/types.dart';
 
 /// A registry for managing plugins and handling plugin-related events.
@@ -57,7 +56,7 @@ class PluginRegistry {
   }
 
   /// Performs method response handling for the given method response event.
-  FutureOr<ResponseContext> performMethodResponse(
+  FutureOr<ServerResponse> performMethodResponse(
       MethodResponseEvent event) async {
     final plugins = _pluginByHook<MethodResponseHook>({
       PluginScope.global,
@@ -77,8 +76,7 @@ class PluginRegistry {
   }
 
   /// Performs method request handling for the given method request event.
-  FutureOr<RequestContext> performMethodRequest(
-      MethodRequestEvent event) async {
+  FutureOr<ServerRequest> performMethodRequest(MethodRequestEvent event) async {
     final plugins = _pluginByHook<MethodRequestHook>({
       PluginScope.global,
       PluginScope.method,

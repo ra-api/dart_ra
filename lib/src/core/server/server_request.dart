@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 /// Represents the context of an HTTP request.
 @immutable
-class RequestContext {
+class ServerRequest {
   /// The HTTP method of the request (e.g., GET, POST).
   final String httpMethod;
 
@@ -20,14 +20,14 @@ class RequestContext {
   /// The body of the request as a byte array.
   final Uint8List body;
 
-  /// Constructs a [RequestContext] instance with the specified parameters.
+  /// Constructs a [ServerRequest] instance with the specified parameters.
   ///
   /// [httpMethod] is the HTTP method of the request.
   /// [uri] is the URI of the request.
   /// [queries] are the query parameters of the request as a map of strings.
   /// [headers] are the headers of the request as a map of strings.
   /// [body] is the body of the request as a byte array.
-  const RequestContext({
+  const ServerRequest({
     required this.httpMethod,
     required this.uri,
     required this.queries,
@@ -35,17 +35,17 @@ class RequestContext {
     required this.body,
   });
 
-  /// Creates a copy of this [RequestContext] with the specified properties replaced.
+  /// Creates a copy of this [ServerRequest] with the specified properties replaced.
   ///
   /// [queries] (optional) are the new query parameters of the request.
   /// [headers] (optional) are the new headers of the request.
   /// [body] (optional) is the new body of the request.
-  RequestContext copyWith({
+  ServerRequest copyWith({
     Map<String, String>? queries,
     Map<String, String>? headers,
     Uint8List? body,
   }) {
-    return RequestContext(
+    return ServerRequest(
       httpMethod: httpMethod,
       uri: uri,
       queries: queries ?? this.queries,
@@ -60,8 +60,8 @@ class RequestContext {
   /// the existing headers of this request, replacing any existing headers
   /// with the same keys.
   ///
-  /// Returns a new [RequestContext] with the merged headers.
-  RequestContext mergeHeaders(Map<String, String> headers) {
+  /// Returns a new [ServerRequest] with the merged headers.
+  ServerRequest mergeHeaders(Map<String, String> headers) {
     if (headers.isNotEmpty) {
       final newHeaders = Map<String, String>.from(this.headers);
       newHeaders.addAll(headers);

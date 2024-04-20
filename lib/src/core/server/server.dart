@@ -4,11 +4,15 @@ import 'package:meta/meta.dart';
 import 'package:ra/src/core/handler.dart';
 import 'package:ra/src/core/plugin/plugin.dart';
 import 'package:ra/src/core/plugin/plugin_provider_singleton.dart';
-import 'package:ra/src/core/request_context.dart';
-import 'package:ra/src/core/response_context.dart';
-import 'package:ra/src/core/server_provider.dart';
+import 'package:ra/src/core/server/server_provider.dart';
+import 'package:ra/src/core/server/server_request.dart';
+import 'package:ra/src/core/server/server_response.dart';
 import 'package:ra/src/package.dart';
 import 'package:ra/src/types.dart';
+
+export 'server_provider.dart';
+export 'server_request.dart';
+export 'server_response.dart';
 
 /// Represents a server instance that serves HTTP requests.
 @immutable
@@ -60,9 +64,9 @@ class Server {
   }
 
   /// Handles incoming HTTP requests.
-  Future<ResponseContext> _methodHandler(RequestContext ctx) async {
+  Future<ServerResponse> _methodHandler(ServerRequest request) async {
     return handler.handle(
-      ctx: ctx,
+      ctx: request,
       baseEndpoint: baseEndpoint,
     );
   }

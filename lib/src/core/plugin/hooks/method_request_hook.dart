@@ -4,7 +4,7 @@ part of 'hooks.dart';
 @immutable
 class MethodRequestEvent {
   /// The request context associated with the event.
-  final RequestContext request;
+  final ServerRequest request;
 
   /// Constructs a [MethodRequestEvent] with the specified request context.
   const MethodRequestEvent({
@@ -19,5 +19,5 @@ abstract class MethodRequestHook extends PluginHook {
 
   /// Handles the method request event.
   @internal
-  FutureOr<RequestContext> onMethodRequest(MethodRequestEvent event);
+  FutureOr<ServerRequest> onMethodRequest(MethodRequestEvent event);
 }
