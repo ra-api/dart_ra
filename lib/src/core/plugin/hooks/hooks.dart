@@ -9,6 +9,7 @@ part 'error_handle_hook.dart';
 part 'method_request_hook.dart';
 part 'method_response_hook.dart';
 
+/// Base class for plugin hooks.
 @immutable
 @internal
 class PluginHook {

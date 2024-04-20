@@ -5,7 +5,7 @@ class DoubleDataType extends DataType<String, double> {
   const DoubleDataType({super.initial});
 
   @override
-  FutureOr<double> convert(String data, DataTypeCtx ctx) {
+  FutureOr<double> convert(String data, DataTypeContext ctx) {
     try {
       return double.parse(data);
     } on Object {

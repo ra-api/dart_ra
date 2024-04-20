@@ -21,7 +21,7 @@ final class RateLimitProvider extends PluginProvider<RateLimitOptions> {
 }
 
 /// Callback signature for generating bucket IDs.
-typedef BucketIdCallback = String Function(RequestCtx ctx);
+typedef BucketIdCallback = String Function(RequestContext ctx);
 
 /// Consumer for rate limiting functionality.
 @immutable
@@ -46,14 +46,17 @@ final class RateLimitConsumer extends PluginConsumer<RateLimitOptions>
   });
 
   @override
-  FutureOr<RequestCtx> onMethodRequest(MethodRequestEvent event) async {
+  FutureOr<RequestContext> onMethodRequest(MethodRequestEvent event) async {
     final bucket = TokenBucket(
       capacity: capacity,
       storage: options.storage,
       frequency: frequency,
     );
 
-    final state = await bucket.consume(bucketId: 'bucketId', coast: coast);
+    final state = await bucket.consume(
+      bucketId: bucketId(event.request),
+      coast: coast,
+    );
     if (!state.consumed) {
       throw ManyRequestException(remainToRefill: state.remainToRefill);
     }

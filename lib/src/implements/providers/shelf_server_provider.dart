@@ -8,8 +8,10 @@ import 'package:ra/src/core/server_provider.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
+/// Type definition for the callback invoked when the server is served.
 typedef OnServeCallback = void Function(HttpServer);
 
+/// A provider for a server using the Shelf framework.
 @immutable
 final class ShelfServerProvider extends ServerProvider {
   final String? ipAddress;
@@ -21,6 +23,7 @@ final class ShelfServerProvider extends ServerProvider {
     this.onServe,
   });
 
+  /// Initializes the server and starts listening for incoming requests.
   @override
   Future<void> init(handler) async {
     final server = await shelf_io.serve(
@@ -32,10 +35,11 @@ final class ShelfServerProvider extends ServerProvider {
     onServe?.call(server);
   }
 
+  /// Constructs a Shelf handler to process incoming requests.
   Handler _handler(HandlerCallback callback) {
     return (Request request) async {
       final body = await _body(request);
-      final ctx = RequestCtx(
+      final ctx = RequestContext(
         httpMethod: request.method,
         uri: request.url,
         queries: request.url.queryParameters,
@@ -53,6 +57,7 @@ final class ShelfServerProvider extends ServerProvider {
     };
   }
 
+  /// Reads and retrieves the body of the incoming request.
   Future<Uint8List> _body(Request request) async {
     final bytes = await request.read().fold<List<int>>(
       <int>[],

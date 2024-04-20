@@ -13,7 +13,7 @@ class BoolDataType extends DataType<String, bool> {
   }
 
   @override
-  FutureOr<bool> convert(String data, DataTypeCtx ctx) {
+  FutureOr<bool> convert(String data, DataTypeContext ctx) {
     final allowed = <String>{
       ..._positive,
       ..._negative,

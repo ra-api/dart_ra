@@ -11,7 +11,7 @@ abstract base class JsonMethod extends Method<JsonResponse> {
   ResponseContentType<JsonResponse> get contentType => MethodJsonContentType();
 
   @override
-  Future<MethodJsonResponse> handle(MethodCtx ctx);
+  Future<MethodJsonResponse> handle(MethodContext ctx);
 
   /// Этот метод должен возвращать [MethodResponse] но так как мы выше
   /// спрятали дженерики то переопределяем этот метод чтобы он возвращал

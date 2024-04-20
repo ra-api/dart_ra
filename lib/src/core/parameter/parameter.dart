@@ -9,18 +9,22 @@ export 'body_parameter.dart';
 export 'header_parameter.dart';
 export 'query_parameter.dart';
 
-/// Базовый класс параметра
+/// Base class for parameters.
 @immutable
 abstract class Parameter<I, O> {
-  /// имя параметра, по этому имени значение параметра можно
-  /// получить из [MethodContext]
+  /// The identifier of the parameter, used to retrieve the parameter's value from [MethodContext].
   final String id;
+
+  /// Indicates whether the parameter is optional.
   final bool optional;
+
+  /// The data source of the parameter.
   final DataSource source;
 
+  /// The data type of the parameter.
   final DataType<I, O> dataType;
 
-  /// Описание параметра, думаю о том чтобы сделать это поле обязательным
+  /// A description of the parameter.
   final String? summary;
 
   const Parameter({
@@ -31,15 +35,21 @@ abstract class Parameter<I, O> {
     this.optional = false,
   });
 
+  /// Returns true if the parameter is required, false otherwise.
   bool get isRequired => !optional;
 
+  /// Extracts the value of the parameter from the provided data source context.
   FutureOr<I?> extract(DataSourceContext ctx);
 }
 
+/// Represents data about a parameter, including the parameter itself and its scope.
 @internal
 @immutable
 final class ParameterData {
+  /// The parameter instance.
   final Parameter parameter;
+
+  /// The scope of the parameter.
   final ParameterScope scope;
 
   const ParameterData({
@@ -47,6 +57,7 @@ final class ParameterData {
     required this.scope,
   });
 
+  /// Constructs a [ParameterData] instance for a method parameter.
   factory ParameterData.method(Parameter parameter) {
     return ParameterData(
       parameter: parameter,
@@ -54,6 +65,7 @@ final class ParameterData {
     );
   }
 
+  /// Constructs a [ParameterData] instance for a package parameter.
   factory ParameterData.package(Parameter parameter) {
     return ParameterData(
       parameter: parameter,

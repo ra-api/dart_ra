@@ -1,16 +1,18 @@
 import 'package:meta/meta.dart';
 import 'package:ra/ra.dart';
 
-/// Интерфейс для создания нового пакета, пакет это некий неймспейс для методов
+/// Abstract base class representing a package.
 @immutable
 abstract base class Package {
   const Package();
 
-  /// Имя пакета, рекомендуется чтобы это было одно слово, пакет ~= фича
+  /// Getter for the name of the package.
   String get name;
 
-  /// Методы, которые входят в пакет
+  /// Getter for the methods provided by the package.
   List<Method> get methods;
 
+  /// Getter for the parameters provided by the package.
+  /// Defaults to an empty list.
   List<Parameter> get params => [];
 }

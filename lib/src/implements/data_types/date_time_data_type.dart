@@ -5,7 +5,7 @@ class DateTimeDataType extends DataType<String, DateTime> {
   const DateTimeDataType({super.initial});
 
   @override
-  FutureOr<DateTime> convert(String data, DataTypeCtx ctx) {
+  FutureOr<DateTime> convert(String data, DataTypeContext ctx) {
     try {
       return DateTime.parse(data);
     } on Object {

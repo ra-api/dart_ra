@@ -5,7 +5,7 @@ class IntDataType extends DataType<String, int> {
   const IntDataType({super.initial});
 
   @override
-  FutureOr<int> convert(String data, DataTypeCtx ctx) {
+  FutureOr<int> convert(String data, DataTypeContext ctx) {
     try {
       return int.parse(data);
     } on Object {

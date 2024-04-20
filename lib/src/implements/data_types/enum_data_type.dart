@@ -10,7 +10,7 @@ final class EnumDataType<T extends Enum> extends DataType<String, T> {
     required this.onMap,
   });
   @override
-  FutureOr<T> convert(String data, DataTypeCtx ctx) {
+  FutureOr<T> convert(String data, DataTypeContext ctx) {
     try {
       return onMap(data);
     } on Object {

@@ -4,7 +4,7 @@ abstract base class ProxyMethod extends Method<Uint8List> {
   String get mimeType;
 
   @override
-  Future<MethodProxyResponse> handle(MethodCtx ctx);
+  Future<MethodProxyResponse> handle(MethodContext ctx);
 
   /// Создаем contentType и прокидываем через конструктор какой
   /// нам надо mimeType

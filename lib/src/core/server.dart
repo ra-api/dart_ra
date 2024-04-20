@@ -10,8 +10,9 @@ import 'package:ra/src/core/server_provider.dart';
 import 'package:ra/src/package.dart';
 import 'package:ra/src/types.dart';
 
+/// Represents a server instance that serves HTTP requests.
 @immutable
-final class Server {
+class Server {
   final List<Package> packages;
   final String? poweredBy;
   final double currentApiVersion;
@@ -20,6 +21,15 @@ final class Server {
   final String baseEndpoint;
   final List<Plugin> plugins;
 
+  /// Constructs a [Server] instance with the specified parameters.
+  ///
+  /// [currentApiVersion] is the current version of the API.
+  /// [packages] is a list of packages served by the server.
+  /// [provider] is the server provider.
+  /// [plugins] is a list of plugins to be used.
+  /// [poweredBy] is an optional string representing the server name or framework.
+  /// [verbose] determines whether the server logs verbose output.
+  /// [baseEndpoint] is the base endpoint of the server's API.
   Server({
     required this.currentApiVersion,
     required this.packages,
@@ -32,6 +42,7 @@ final class Server {
 
   late final ApiHandler handler;
 
+  /// Starts serving HTTP requests.
   Future<void> serve() async {
     handler = ApiHandler(
       currentApiVersion: currentApiVersion,
@@ -39,7 +50,6 @@ final class Server {
       verbose: verbose,
       plugins: plugins,
     );
-    // Register global plugin providers
     PluginProviderSingleton.instance().init(
       plugins
           .whereType<PluginProvider>()
@@ -49,7 +59,8 @@ final class Server {
     await provider.init(_methodHandler);
   }
 
-  Future<ResponseCtx> _methodHandler(RequestCtx ctx) async {
+  /// Handles incoming HTTP requests.
+  Future<ResponseContext> _methodHandler(RequestContext ctx) async {
     return handler.handle(
       ctx: ctx,
       baseEndpoint: baseEndpoint,

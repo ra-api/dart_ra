@@ -1,19 +1,23 @@
 part of 'hooks.dart';
 
-/// Method request event
+/// Represents a method request event.
 @immutable
-final class MethodRequestEvent {
-  final RequestCtx request;
+class MethodRequestEvent {
+  /// The request context associated with the event.
+  final RequestContext request;
 
+  /// Constructs a [MethodRequestEvent] with the specified request context.
   const MethodRequestEvent({
     required this.request,
   });
 }
 
+/// Abstract interface for method request hooks.
 @immutable
-abstract interface class MethodRequestHook extends PluginHook {
+abstract class MethodRequestHook extends PluginHook {
   const MethodRequestHook();
 
+  /// Handles the method request event.
   @internal
-  FutureOr<RequestCtx> onMethodRequest(MethodRequestEvent event);
+  FutureOr<RequestContext> onMethodRequest(MethodRequestEvent event);
 }

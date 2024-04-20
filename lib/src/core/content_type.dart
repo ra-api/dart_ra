@@ -3,13 +3,13 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/method/method_decl.dart';
 
-/// Интерфейс для реализации преобразования T в бинарный вид
+/// Interface for implementing conversion of type T to binary form.
 @immutable
 abstract class ResponseContentType<T extends Object> {
-  /// С байтами работать проще всего, поэтому наш T мы ковертируем в байты
+  /// Since working with bytes is the simplest, we convert our T to bytes.
   Uint8List apply(T data, MethodDecl? decl);
 
-  /// Это строка, которая будет добавлять в ответ сервера заголовок content-type
+  /// This string will be added to the server response header as the content-type.
   String get mimeType;
 
   const ResponseContentType();

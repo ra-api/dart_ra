@@ -4,7 +4,6 @@ export 'src/core/api_exception.dart';
 export 'src/core/content_type.dart';
 export 'src/core/data_type/data_type.dart';
 export 'src/core/method/method.dart';
-export 'src/core/method/method_constraint.dart';
 export 'src/core/method/method_context.dart';
 export 'src/core/method/method_decl.dart';
 export 'src/core/method/method_response.dart';

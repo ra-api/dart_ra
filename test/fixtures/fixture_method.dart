@@ -16,7 +16,7 @@ final class FixtureMethod extends Method {
   ResponseContentType get contentType => _fake(fakeContentType);
 
   @override
-  Future<MethodResponse> handle(MethodCtx ctx) {
+  Future<MethodResponse> handle(MethodContext ctx) {
     throw UnimplementedError();
   }
 

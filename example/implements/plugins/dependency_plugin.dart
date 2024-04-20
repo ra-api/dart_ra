@@ -18,7 +18,7 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
   }
 
   @override
-  FutureOr<RequestCtx> onMethodRequest(MethodRequestEvent event) {
+  FutureOr<RequestContext> onMethodRequest(MethodRequestEvent event) {
     print('${event.request.httpMethod}: ${event.request.uri}');
     return event.request;
   }
@@ -27,7 +27,7 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
 final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
     implements MethodResponseHook, ErrorHandleHook {
   @override
-  FutureOr<ResponseCtx> onMethodResponse(MethodResponseEvent event) {
+  FutureOr<ResponseContext> onMethodResponse(MethodResponseEvent event) {
     final headers = event.response.headers;
 
     return event.response.copyWith(

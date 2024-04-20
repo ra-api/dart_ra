@@ -53,7 +53,7 @@ final class ApiHandler {
   }
 
   RegistryItem _findMethod({
-    required RequestCtx ctx,
+    required RequestContext ctx,
     required String baseEndpoint,
   }) {
     final path = ctx.uri.path.substring(baseEndpoint.length + 1).split('.');
@@ -91,8 +91,8 @@ final class ApiHandler {
     return handler;
   }
 
-  Future<ResponseCtx> handle({
-    required RequestCtx ctx,
+  Future<ResponseContext> handle({
+    required RequestContext ctx,
     required String baseEndpoint,
   }) async {
     RegistryItem? handler;
@@ -147,9 +147,9 @@ final class ApiHandler {
     }
   }
 
-  FutureOr<ResponseCtx> _apiErrorResponse({
+  FutureOr<ResponseContext> _apiErrorResponse({
     required ApiException exception,
-    required RequestCtx request,
+    required RequestContext request,
   }) async {
     final body = {
       'error': {
@@ -172,9 +172,9 @@ final class ApiHandler {
     );
   }
 
-  Future<MethodCtx> _methodContext({
+  Future<MethodContext> _methodContext({
     required RegistryItem handler,
-    required RequestCtx reqCtx,
+    required RequestContext reqCtx,
   }) async {
     final ctx = <String, dynamic>{};
 
@@ -192,7 +192,7 @@ final class ApiHandler {
             ? paramData.parameter.dataType.initial
             : await paramData.parameter.dataType.convert(
                 raw,
-                DataTypeCtx(
+                DataTypeContext(
                   pluginRegistry: handler.pluginRegistry,
                 ));
         ctx.putIfAbsent(paramData.parameter.id, () => val);
@@ -209,7 +209,7 @@ final class ApiHandler {
     final methods =
         _registry.methods.map(MethodDecl.new).toList(growable: false);
 
-    return MethodCtx(
+    return MethodContext(
       ctx,
       methods: methods,
       current: MethodDecl(handler),
@@ -218,7 +218,7 @@ final class ApiHandler {
     );
   }
 
-  double _version(RequestCtx ctx) {
+  double _version(RequestContext ctx) {
     final queryVersion = ctx.uri.queryParameters['v'];
     if (queryVersion == null) {
       return currentApiVersion;

@@ -1,36 +1,32 @@
-// Базовый класс для метода
 import 'package:meta/meta.dart';
 import 'package:ra/ra.dart';
 
-/// Базовый класс, для задания нового метода
+/// Base class for defining a new method.
 @immutable
 abstract base class Method<O extends Object> {
   const Method();
 
-  /// Имя метода в camelCase нотации, пока на это проверки нет
+  /// The name of the method in camelCase notation.
   String get name;
 
-  /// Произвольная строка с описанием для чего нужен этот метод,
-  /// при наличии поподает в core.spec
+  /// A description of the purpose of this method. If provided, it will be included in the core.spec.
   String? get summary => null;
 
-  /// Версия метода, метод в пакете может иметь одинаковое название но разные
-  /// версии, если версия не указана,
-  /// то будет использоваться currentApiVersion из [Server]
+  /// The version of the method. If not specified, the currentApiVersion from [Server] will be used.
   double? get version => null;
 
-  /// Content type - см [ResponseContentType]
+  /// The content type. See [ResponseContentType].
   ResponseContentType<O> get contentType;
 
-  /// Место для имплементаци бизнес логики и формирования
-  /// ответа сервера на запрос
-  Future<MethodResponse<O>> handle(MethodCtx ctx);
+  /// The method for implementing business logic and generating server responses to requests.
+  Future<MethodResponse<O>> handle(MethodContext ctx);
 
-  /// Getter для отправки ответа
+  /// Getter for sending a response.
   MethodResponse<O> get response => MethodResponse<O>(contentType);
 
-  /// Набор параметров метода
+  /// The set of parameters for the method.
   List<Parameter> get params => [];
 
+  /// The set of plugins for the method.
   List<Plugin> get plugins => [];
 }

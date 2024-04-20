@@ -21,7 +21,7 @@ void main() {
         plugins: [],
       ),
     );
-    final ctx = MethodCtx(
+    final ctx = MethodContext(
       {
         'baz': 1,
         'limit': null,

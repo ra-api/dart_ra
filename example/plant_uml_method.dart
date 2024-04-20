@@ -51,7 +51,7 @@ ${methods.join('\n')}
   }
 
   @override
-  Future<MethodResponse<String>> handle(MethodCtx ctx) async {
+  Future<MethodResponse<String>> handle(MethodContext ctx) async {
     final packages = _packages(ctx.methods);
     final umlPackages = _packagesUml(packages);
     final uml = '''

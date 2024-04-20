@@ -10,7 +10,7 @@ final class ModelBodyDataType<T> extends DataType<Uint8List, T> {
   const ModelBodyDataType({required this.onTransform, super.initial});
 
   @override
-  FutureOr<T> convert(Uint8List data, DataTypeCtx ctx) {
+  FutureOr<T> convert(Uint8List data, DataTypeContext ctx) {
     try {
       final json = jsonDecode(utf8.decode(data));
       return onTransform(json);
