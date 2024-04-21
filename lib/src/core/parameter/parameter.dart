@@ -27,12 +27,15 @@ abstract class Parameter<I, O> {
   /// A description of the parameter.
   final String? summary;
 
+  final bool lazy;
+
   const Parameter({
     required this.id,
     required this.source,
     required this.dataType,
     this.summary,
     this.optional = false,
+    this.lazy = false,
   });
 
   /// Returns true if the parameter is required, false otherwise.

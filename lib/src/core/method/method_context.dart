@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart';
-import 'package:ra/src/core/method/method_decl.dart';
-import 'package:ra/src/core/plugin/plugin.dart';
+import 'package:ra/ra.dart';
+import 'package:ra/src/core/data_type/data_type_context.dart';
+import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/core/plugin/plugin_registry.dart';
-import 'package:ra/src/implements/exceptions/exceptions.dart';
 
 /// Represents the context for a method, used to extract parameter values
 /// by name and convert the extracted value to type [T].
@@ -13,6 +15,7 @@ final class MethodContext {
 
   /// The plugin registry associated with the method context.
   final PluginRegistry _pluginRegistry;
+  final DataSourceContext _dataSourceContext;
 
   /// The list of available methods.
   final List<MethodDecl> methods;
@@ -32,22 +35,24 @@ final class MethodContext {
   /// [verbose] indicates whether verbose logging is enabled.
   const MethodContext(
     this._context, {
+    required DataSourceContext dataSourceContext,
     required PluginRegistry pluginRegistry,
     required this.current,
     required this.methods,
     required this.verbose,
-  }) : _pluginRegistry = pluginRegistry;
+  })  : _pluginRegistry = pluginRegistry,
+        _dataSourceContext = dataSourceContext;
 
   /// Retrieves the value associated with the specified [id] from the context.
   ///
   /// Throws a [MethodContextInvalidIdException] if the id is not found in the context.
   /// Throws a [MethodContextCastException] if the retrieved value cannot be cast to type [T].
-  T value<T>(String id) {
-    if (!_context.containsKey(id)) {
-      throw MethodContextInvalidIdException(id: id);
+  T value<T>({required String paramId}) {
+    if (!_context.containsKey(paramId)) {
+      throw MethodContextInvalidIdException(id: paramId);
     }
 
-    final val = _context[id];
+    final val = _context[paramId];
 
     if (val != null && val is! T) {
       throw MethodContextCastException(
@@ -59,8 +64,52 @@ final class MethodContext {
     return val;
   }
 
+  FutureOr<T?> optional<T>({required String paramId}) {
+    try {
+      return lazy(paramId: paramId);
+    } on _OptionalArgumentError {
+      return null;
+    }
+  }
+
+  Future<T> lazy<T>({required String paramId}) async {
+    // find parameter
+    final parameter = current.parameters.firstWhere((param) {
+      return param.id == paramId;
+    });
+
+    // lazy or instant value
+    if (_context.keys.contains(paramId)) {
+      final contextValue = _context[paramId];
+
+      if (parameter.optional && contextValue == null) {
+        throw _OptionalArgumentError();
+      }
+
+      return value(paramId: paramId);
+    }
+
+    final dataType = parameter.dataType;
+    final dataTypeContext = DataTypeContext(pluginRegistry: _pluginRegistry);
+    final rawData = parameter.extract(_dataSourceContext) ?? dataType.initial;
+    final validated = dataType.validate(rawData, dataTypeContext);
+    final result = await dataType.convert(validated, dataTypeContext);
+    _context.putIfAbsent(paramId, () => result);
+    if (parameter.optional && result == null) {
+      throw _OptionalArgumentError();
+    }
+    return result;
+  }
+
   /// Retrieves the options of type [T] from the plugin registry.
   T options<T extends PluginOptions>() {
     return _pluginRegistry.options<T>();
   }
+}
+
+final class _OptionalArgumentError extends ApiException {
+  const _OptionalArgumentError() : super(statusCode: 400);
+
+  @override
+  String get reason => 'Parameter value is null';
 }

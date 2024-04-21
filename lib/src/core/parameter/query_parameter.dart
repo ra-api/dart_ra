@@ -18,6 +18,7 @@ base class QueryParameter<O> extends Parameter<String, O> {
     required super.dataType,
     super.optional,
     super.summary,
+    super.lazy,
   }) : super(source: DataSource.query);
 
   /// Extracts the value of the parameter from the provided data source context.

@@ -184,23 +184,35 @@ final class ApiHandler {
       body: request.body,
     );
 
+    final dataTypeCtx = DataTypeContext(
+      pluginRegistry: handler.pluginRegistry,
+    );
+
     for (final paramData in handler.paramsData) {
+      final parameter = paramData.parameter;
+      if (parameter.lazy) {
+        continue;
+      }
+
       final raw = await paramData.parameter.extract(dataSourceCtx);
 
+      if (parameter.optional &&
+          parameter.dataType.initial == null &&
+          raw == null) {
+        methodCtx.putIfAbsent(parameter.id, () => null);
+        continue;
+      }
+
       try {
-        final val = (raw == null && !paramData.parameter.isRequired)
-            ? paramData.parameter.dataType.initial
-            : await paramData.parameter.dataType.convert(
-                raw,
-                DataTypeContext(
-                  pluginRegistry: handler.pluginRegistry,
-                ));
-        methodCtx.putIfAbsent(paramData.parameter.id, () => val);
+        final val = (raw == null && parameter.optional)
+            ? parameter.dataType.initial
+            : await parameter.dataType.convert(raw, dataTypeCtx);
+        methodCtx.putIfAbsent(parameter.id, () => val);
       } on ApiException {
         rethrow;
       } on Object catch (e, st) {
         throw Error.throwWithStackTrace(
-          DataTypeException(parameter: paramData.parameter),
+          DataTypeException(parameter: parameter),
           st,
         );
       }
@@ -211,6 +223,7 @@ final class ApiHandler {
 
     return MethodContext(
       methodCtx,
+      dataSourceContext: dataSourceCtx,
       methods: methods,
       current: MethodDecl(handler),
       verbose: verbose,

@@ -1,6 +1,5 @@
 import 'package:ra/ra.dart';
 
-import '../../plant_uml_method.dart';
 import 'methods/methods.dart';
 
 /// Демо пакет, содержит один метод
@@ -16,7 +15,6 @@ final class CartPackage extends Package {
   @override
   List<Method> get methods {
     return [
-      PlantUmlMethod(projectName: 'Example API'),
       CartSaveMethod(),
       ReportMethod(),
       // CartSaveMethodLegacy(),
