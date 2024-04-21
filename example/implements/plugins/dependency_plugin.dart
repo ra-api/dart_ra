@@ -7,7 +7,7 @@ final class DependencyOptions extends PluginOptions {
 }
 
 final class DependencyPlugin extends PluginProvider<DependencyOptions>
-    implements ErrorHandleHook, MethodRequestHook {
+    implements ErrorHandleHook, ServerRequestHook {
   const DependencyPlugin({required super.options});
 
   @override
@@ -18,16 +18,16 @@ final class DependencyPlugin extends PluginProvider<DependencyOptions>
   }
 
   @override
-  FutureOr<ServerRequest> onMethodRequest(MethodRequestEvent event) {
+  FutureOr<ServerRequest> onServerRequest(ServerRequestEvent event) {
     print('${event.request.httpMethod}: ${event.request.uri}');
     return event.request;
   }
 }
 
 final class DependencyConsumerPlugin extends PluginConsumer<DependencyOptions>
-    implements MethodResponseHook, ErrorHandleHook {
+    implements ServerResponseHook, ErrorHandleHook {
   @override
-  FutureOr<ServerResponse> onMethodResponse(MethodResponseEvent event) {
+  FutureOr<ServerResponse> onServerResponse(ServerResponseEvent event) {
     final headers = event.response.headers;
 
     return event.response.copyWith(

@@ -26,7 +26,7 @@ typedef BucketIdCallback = String Function(ServerRequest ctx);
 /// Consumer for rate limiting functionality.
 @immutable
 final class RateLimitConsumer extends PluginConsumer<RateLimitOptions>
-    implements MethodRequestHook {
+    implements ServerRequestHook {
   final int capacity;
   final RefillFrequency frequency;
   final int coast;
@@ -46,7 +46,7 @@ final class RateLimitConsumer extends PluginConsumer<RateLimitOptions>
   });
 
   @override
-  FutureOr<ServerRequest> onMethodRequest(MethodRequestEvent event) async {
+  FutureOr<ServerRequest> onServerRequest(ServerRequestEvent event) async {
     final bucket = TokenBucket(
       capacity: capacity,
       storage: options.storage,

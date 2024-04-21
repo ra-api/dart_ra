@@ -57,15 +57,15 @@ class PluginRegistry {
 
   /// Performs method response handling for the given method response event.
   FutureOr<ServerResponse> performMethodResponse(
-      MethodResponseEvent event) async {
-    final plugins = _pluginByHook<MethodResponseHook>({
+      ServerResponseEvent event) async {
+    final plugins = _pluginByHook<ServerResponseHook>({
       PluginScope.global,
       PluginScope.method,
     });
     var response = event.response;
     for (final hook in plugins) {
-      response = await hook.onMethodResponse(
-        MethodResponseEvent(
+      response = await hook.onServerResponse(
+        ServerResponseEvent(
           request: event.request,
           response: response,
         ),
@@ -76,15 +76,15 @@ class PluginRegistry {
   }
 
   /// Performs method request handling for the given method request event.
-  FutureOr<ServerRequest> performMethodRequest(MethodRequestEvent event) async {
-    final plugins = _pluginByHook<MethodRequestHook>({
+  FutureOr<ServerRequest> performMethodRequest(ServerRequestEvent event) async {
+    final plugins = _pluginByHook<ServerRequestHook>({
       PluginScope.global,
       PluginScope.method,
     });
     var request = event.request;
     for (final hook in plugins) {
-      request = await hook.onMethodRequest(
-        MethodRequestEvent(request: event.request),
+      request = await hook.onServerRequest(
+        ServerRequestEvent(request: event.request),
       );
     }
 

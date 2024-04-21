@@ -100,7 +100,7 @@ final class ApiHandler {
       handler = _findMethod(ctx: ctx, baseEndpoint: baseEndpoint);
 
       final newRequest = await handler.pluginRegistry.performMethodRequest(
-        MethodRequestEvent(request: ctx),
+        ServerRequestEvent(request: ctx),
       );
 
       final methodCtx =
@@ -109,7 +109,7 @@ final class ApiHandler {
         ..decl(MethodDecl(handler));
 
       return await handler.pluginRegistry.performMethodResponse(
-        MethodResponseEvent(
+        ServerResponseEvent(
           request: ctx,
           response: methodResponse.build(),
         ),
@@ -165,7 +165,7 @@ final class ApiHandler {
       ..body(body);
 
     return await _globalPluginRegistry.performMethodResponse(
-      MethodResponseEvent(
+      ServerResponseEvent(
         request: request,
         response: methodResponse.build(),
       ),
