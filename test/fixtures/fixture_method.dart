@@ -24,7 +24,7 @@ final class FixtureMethod extends Method {
   String get name => _fake(fakeName);
 
   @override
-  List<Parameter> get params => _fake(fakeParams);
+  List<Parameter> get params => _fake(fakeParams ?? []);
 
   T _fake<T>(T? value) => value ?? (throw UnimplementedError());
 }

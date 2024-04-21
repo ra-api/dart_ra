@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:ra/ra.dart';
+import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/core/plugin/plugin_registry.dart';
 import 'package:ra/src/core/registry.dart';
 import 'package:test/expect.dart';
@@ -14,6 +17,7 @@ void main() {
         key: 'key',
         method: FixtureMethod(
           fakeName: 'bar',
+          fakeParams: [],
         ),
         httpMethod: 'GET',
         package: FixturePackage(fakeName: 'foo'),
@@ -30,34 +34,39 @@ void main() {
       methods: [decl],
       verbose: false,
       pluginRegistry: PluginRegistry(plugins: []),
+      dataSourceContext: DataSourceContext(
+        headers: {},
+        body: Uint8List.fromList([]),
+        queries: {},
+      ),
     );
 
     test('value', () {
       expect(
-        ctx.value('baz'),
+        ctx.value(paramId: 'baz'),
         equals(1),
         reason: 'Must be return 1 as dynamic',
       );
 
       expect(
-        ctx.value('limit'),
+        ctx.value(paramId: 'limit'),
         isNull,
         reason: 'Must be return null',
       );
 
       expect(
-        ctx.value<int>('baz'),
+        ctx.value<int>(paramId: 'baz'),
         equals(1),
         reason: 'Must be return 1 as int',
       );
       expect(
-        () => ctx.value<bool>('baz'),
+        () => ctx.value<bool>(paramId: 'baz'),
         throwsA(isA<MethodContextCastException>()),
         reason: 'Cast error must be throw MethodContextCastException',
       );
 
       expect(
-        () => ctx.value<bool>('miss'),
+        () => ctx.value<bool>(paramId: 'miss'),
         throwsA(isA<MethodContextInvalidIdException>()),
         reason:
             'Invalid id error must be throw MethodContextInvalidIdException',
