@@ -39,12 +39,13 @@ extension RegistryItemExt on RegistryItem {
         }
       }
 
-      // parameter lazy or optional and datatype not initial
+      // skip convert raw if parameter lazy
       if (parameter.lazy) {
         continue;
       }
 
       try {
+        // convert raw to target type
         final val = (raw == null && parameter.optional)
             ? parameter.dataType.initial
             : await parameter.dataType.convert(raw, dataTypeCtx);

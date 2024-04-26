@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/data_type/data_type.dart';
-import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/types.dart';
 
 export 'body_parameter.dart';
@@ -38,18 +37,6 @@ abstract class Parameter<I, O> {
 
   /// Returns true if the parameter is required, false otherwise.
   bool get isRequired => !optional;
-
-  /// Extracts the value of the parameter from the provided data source context.
-  I? extract(DataSourceContext ctx) {
-    switch (source) {
-      case DataSource.query:
-        return ctx.query(id) as I?;
-      case DataSource.header:
-        return ctx.header(id) as I?;
-      case DataSource.body:
-        return ctx.body as I?;
-    }
-  }
 }
 
 /// Represents data about a parameter, including the parameter itself and its scope.
