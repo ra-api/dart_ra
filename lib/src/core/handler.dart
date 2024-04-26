@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:ra/src/core/api_exception.dart';
-import 'package:ra/src/core/data_type/data_type_context.dart';
-import 'package:ra/src/core/method/data_source_context.dart';
-import 'package:ra/src/core/method/method_context.dart';
-import 'package:ra/src/core/method/method_decl.dart';
+import 'package:ra/src/core/extensitions/extensions.dart';
 import 'package:ra/src/core/method/method_response.dart';
 import 'package:ra/src/core/plugin/plugin.dart';
 import 'package:ra/src/core/plugin/plugin_registry.dart';
@@ -103,15 +100,18 @@ final class ApiHandler {
         ServerRequestEvent(request: ctx),
       );
 
-      final methodCtx =
-          await _methodContext(handler: handler, request: newRequest);
-      var methodResponse = (await handler.method.handle(methodCtx))
-        ..decl(MethodDecl(handler));
+      final methodCtx = await handler.buildContext(
+        request: newRequest,
+        verbose: verbose,
+        methods: _registry.methods,
+      );
+
+      var methodResponse = await handler.method.handle(methodCtx);
 
       return await handler.pluginRegistry.performMethodResponse(
         ServerResponseEvent(
           request: ctx,
-          response: methodResponse.build(),
+          response: (methodResponse..decl(methodCtx.current)).build(),
         ),
       );
     } catch (error, stackTrace) {
@@ -171,65 +171,65 @@ final class ApiHandler {
       ),
     );
   }
-
-  Future<MethodContext> _methodContext({
-    required RegistryItem handler,
-    required ServerRequest request,
-  }) async {
-    final methodCtx = <String, dynamic>{};
-
-    final dataSourceCtx = DataSourceContext(
-      headers: request.headers,
-      queries: request.queries,
-      body: request.body,
-    );
-
-    final dataTypeCtx = DataTypeContext(
-      pluginRegistry: handler.pluginRegistry,
-    );
-
-    for (final paramData in handler.paramsData) {
-      final parameter = paramData.parameter;
-      if (parameter.lazy) {
-        continue;
-      }
-
-      final raw = await paramData.parameter.extract(dataSourceCtx);
-
-      if (parameter.optional &&
-          parameter.dataType.initial == null &&
-          raw == null) {
-        methodCtx.putIfAbsent(parameter.id, () => null);
-        continue;
-      }
-
-      try {
-        final val = (raw == null && parameter.optional)
-            ? parameter.dataType.initial
-            : await parameter.dataType.convert(raw, dataTypeCtx);
-        methodCtx.putIfAbsent(parameter.id, () => val);
-      } on ApiException {
-        rethrow;
-      } on Object catch (e, st) {
-        throw Error.throwWithStackTrace(
-          DataTypeException(parameter: parameter),
-          st,
-        );
-      }
-    }
-
-    final methods =
-        _registry.methods.map(MethodDecl.new).toList(growable: false);
-
-    return MethodContext(
-      methodCtx,
-      dataSourceContext: dataSourceCtx,
-      methods: methods,
-      current: MethodDecl(handler),
-      verbose: verbose,
-      pluginRegistry: handler.pluginRegistry,
-    );
-  }
+  //
+  // Future<MethodContext> _methodContext({
+  //   required RegistryItem handler,
+  //   required ServerRequest request,
+  // }) async {
+  //   final methodCtx = <String, dynamic>{};
+  //
+  //   final dataSourceCtx = DataSourceContext(
+  //     headers: request.headers,
+  //     queries: request.queries,
+  //     body: request.body,
+  //   );
+  //
+  //   final dataTypeCtx = DataTypeContext(
+  //     pluginRegistry: handler.pluginRegistry,
+  //   );
+  //
+  //   for (final paramData in handler.paramsData) {
+  //     final parameter = paramData.parameter;
+  //     if (parameter.lazy) {
+  //       continue;
+  //     }
+  //
+  //     final raw = await paramData.parameter.extract(dataSourceCtx);
+  //
+  //     if (parameter.optional &&
+  //         parameter.dataType.initial == null &&
+  //         raw == null) {
+  //       methodCtx.putIfAbsent(parameter.id, () => null);
+  //       continue;
+  //     }
+  //
+  //     try {
+  //       final val = (raw == null && parameter.optional)
+  //           ? parameter.dataType.initial
+  //           : await parameter.dataType.convert(raw, dataTypeCtx);
+  //       methodCtx.putIfAbsent(parameter.id, () => val);
+  //     } on ApiException {
+  //       rethrow;
+  //     } on Object catch (e, st) {
+  //       throw Error.throwWithStackTrace(
+  //         DataTypeException(parameter: parameter),
+  //         st,
+  //       );
+  //     }
+  //   }
+  //
+  //   final methods =
+  //       _registry.methods.map(MethodDecl.new).toList(growable: false);
+  //
+  //   return MethodContext(
+  //     methodCtx,
+  //     dataSourceContext: dataSourceCtx,
+  //     methods: methods,
+  //     current: MethodDecl(handler),
+  //     verbose: verbose,
+  //     pluginRegistry: handler.pluginRegistry,
+  //   );
+  // }
 
   double _version(ServerRequest request) {
     final queryVersion = request.uri.queryParameters['v'];

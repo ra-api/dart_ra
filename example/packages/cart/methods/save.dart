@@ -17,8 +17,10 @@ final class CartSaveMethod extends JsonMethod {
     final cart = Cart(preview: preview);
 
     final body = await ctx.lazy(paramId: 'body');
-    final body2 = await ctx.lazy(paramId: 'body');
-    final body3 = await ctx.lazy(paramId: 'body');
+
+    print(body);
+    // final body2 = await ctx.lazy(paramId: 'body');
+    // final body3 = await ctx.lazy(paramId: 'body');
 
     /// response это getter который реализован в Json
     return response..body(cart);

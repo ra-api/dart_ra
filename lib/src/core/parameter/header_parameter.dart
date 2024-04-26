@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:meta/meta.dart';
-import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/core/parameter/parameter.dart';
 import 'package:ra/src/types.dart';
 
@@ -20,10 +17,4 @@ base class HeaderParameter<O> extends Parameter<String, O> {
     super.optional,
     super.summary,
   }) : super(source: DataSource.header);
-
-  /// Extracts the value of the parameter from the provided data source context.
-  @override
-  FutureOr<String?> extract(DataSourceContext ctx) {
-    return ctx.header(id);
-  }
 }

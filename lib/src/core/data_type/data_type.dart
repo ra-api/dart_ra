@@ -18,5 +18,5 @@ abstract class DataType<I, O> {
   /// Converts data from type I to type O.
   FutureOr<O> convert(I data, DataTypeContext ctx);
 
-  I validate(I data, DataTypeContext ctx) => data;
+  bool validate(I data) => true;
 }

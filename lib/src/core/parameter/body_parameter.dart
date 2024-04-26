@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:ra/src/core/method/data_source_context.dart';
 import 'package:ra/src/core/parameter/parameter.dart';
 import 'package:ra/src/types.dart';
 
@@ -18,10 +16,4 @@ base class BodyParameter<O> extends Parameter<Uint8List, O> {
     super.summary,
     super.lazy,
   }) : super(source: DataSource.body, id: 'body');
-
-  /// Extracts the value of the parameter from the provided data source context.
-  @override
-  FutureOr<Uint8List> extract(DataSourceContext ctx) {
-    return ctx.body;
-  }
 }

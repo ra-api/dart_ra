@@ -92,8 +92,7 @@ final class MethodContext {
     final dataType = parameter.dataType;
     final dataTypeContext = DataTypeContext(pluginRegistry: _pluginRegistry);
     final rawData = parameter.extract(_dataSourceContext) ?? dataType.initial;
-    final validated = dataType.validate(rawData, dataTypeContext);
-    final result = await dataType.convert(validated, dataTypeContext);
+    final result = await dataType.convert(rawData, dataTypeContext);
     _context.putIfAbsent(paramId, () => result);
     if (parameter.optional && result == null) {
       throw _OptionalArgumentError();
