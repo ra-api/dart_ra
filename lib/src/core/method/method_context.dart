@@ -67,6 +67,15 @@ final class MethodContext {
 
   FutureOr<T?> optional<T>({required String paramId}) {
     try {
+      // find parameter
+      final parameter = current.parameters.firstWhere((param) {
+        return param.id == paramId;
+      });
+
+      if (parameter.optional && _context[paramId] == null) {
+        return null;
+      }
+
       return lazy(paramId: paramId);
     } on _OptionalArgumentError {
       return null;

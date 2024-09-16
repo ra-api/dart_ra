@@ -17,7 +17,9 @@ void main() {
         key: 'key',
         method: FixtureMethod(
           fakeName: 'bar',
-          fakeParams: [],
+          fakeParams: [
+            QueryParameter(id: 'limit', optional: true, dataType: IntDataType())
+          ],
         ),
         httpMethod: 'GET',
         package: FixturePackage(fakeName: 'foo'),
@@ -70,6 +72,20 @@ void main() {
         throwsA(isA<MethodContextInvalidIdException>()),
         reason:
             'Invalid id error must be throw MethodContextInvalidIdException',
+      );
+    });
+
+    test('optional', () async {
+      expect(
+        await ctx.optional<int>(paramId: 'limit'),
+        equals(null),
+        reason: 'Must be return 1 as int',
+      );
+
+      expect(
+        () => ctx.lazy<int>(paramId: 'limit'),
+        throwsA(isA<ApiException>()),
+        reason: 'Must be throw ApiException, limit is optional not lazy',
       );
     });
   });
